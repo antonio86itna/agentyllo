@@ -1,0 +1,13 @@
+# Normalize line endings: LF in the repo and in checkouts (WordPress/PHP tooling expects LF).
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.woff2 binary
+*.zip binary
+*.sig text eol=lf
+
+# Exclude dev-only paths from GitHub "Download ZIP"/git archive.
+/tools export-ignore
+/.github export-ignore
+/.wp-env.json export-ignore

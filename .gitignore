@@ -1,0 +1,18 @@
+node_modules/
+vendor/
+agentyllo/vendor/
+agentyllo/vendor-prefixed/
+agentyllo/assets/build/
+*.zip
+.DS_Store
+Thumbs.db
+.phpunit.result.cache
+.phpcs-cache
+npm-debug.log*
+composer.lock
+package-lock.json
+/dist/
+.wp-env.override.json
+
+# Registry signing keys — never commit
+tools/registry/keys/

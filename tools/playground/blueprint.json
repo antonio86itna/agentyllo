@@ -1,0 +1,13 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/admin.php?page=agentyllo",
+	"preferredVersions": { "php": "8.2", "wp": "latest" },
+	"features": { "networking": true },
+	"steps": [
+		{ "step": "login", "username": "admin", "password": "password" },
+		{ "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "agentyllo" }, "options": { "activate": true } },
+		{ "step": "setSiteOptions", "options": { "permalink_structure": "/%postname%/", "blogname": "Agentyllo Demo Store", "blogdescription": "Classic agents answer from your content — no API key needed" } },
+		{ "step": "runPHP", "code": "<?php require '/wordpress/wp-load.php'; wp_insert_post(array('post_title'=>'Shipping & Returns','post_status'=>'publish','post_type'=>'page','post_content'=>'<h2>Shipping</h2><p>Orders ship within 24 hours. Delivery to Italy takes 2-3 working days, Europe 4-6 days. Express delivery in 24 hours costs 9 euro.</p><h2>Returns</h2><p>You can return any item within 30 days. Refunds are processed in 5 working days.</p>')); wp_insert_post(array('post_title'=>'Contact','post_status'=>'publish','post_type'=>'page','post_content'=>'<p>Email: hello@example.test — Phone: +39 055 123456. Opening hours: Monday to Friday, 9:00–18:00.</p>')); wp_insert_post(array('post_title'=>'About us','post_status'=>'publish','post_type'=>'page','post_content'=>'<p>We are a family-run store founded in 2012, specialised in handmade leather goods crafted in Florence.</p>'));" },
+		{ "step": "runPHP", "code": "<?php require '/wordpress/wp-load.php'; if ( class_exists('Agentyllo\\Plugin') ) { $c = Agentyllo\Plugin::instance()->container(); $im = $c->get( Agentyllo\KB\Indexer\IndexManager::class ); foreach ( array('site','post') as $src ) { $im->start_full_crawl( $src ); } if ( function_exists('as_run_queue') ) { /* AS runs on the next request */ } }" }
+	]
+}

@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "sequence": 1,
+  "channel": "stable",
+  "generated_at": "2026-08-17T00:00:00Z",
+  "providers": {
+    "openai": {
+      "label": "OpenAI",
+      "base_url": "https://api.openai.com/v1",
+      "keys_url": "https://platform.openai.com/api-keys",
+      "key_prefix": "sk-",
+      "chat_models": [
+        {
+          "id": "gpt-5.6-luna",
+          "label": "GPT-5.6 Luna",
+          "hint": "Fastest and most affordable — recommended for site chat.",
+          "default": true,
+          "context": 400000,
+          "max_output": 8192,
+          "price_in": 0.2,
+          "price_out": 1.2,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "reasoning_effort": "low",
+          "quality": "good"
+        },
+        {
+          "id": "gpt-5.6-terra",
+          "label": "GPT-5.6 Terra",
+          "hint": "Balanced quality and cost.",
+          "context": 400000,
+          "max_output": 8192,
+          "price_in": 2.0,
+          "price_out": 12.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "reasoning_effort": "low",
+          "quality": "better"
+        },
+        {
+          "id": "gpt-5.6-sol",
+          "label": "GPT-5.6 Sol",
+          "hint": "Highest quality, highest cost.",
+          "context": 400000,
+          "max_output": 8192,
+          "price_in": 5.0,
+          "price_out": 30.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "reasoning_effort": "low",
+          "quality": "best"
+        }
+      ],
+      "embedding_models": [
+        {
+          "id": "text-embedding-3-small",
+          "label": "text-embedding-3-small",
+          "default": true,
+          "dimensions": 1536,
+          "multilingual": true,
+          "price_in": 0.02
+        },
+        {
+          "id": "text-embedding-3-large",
+          "label": "text-embedding-3-large",
+          "dimensions": 3072,
+          "multilingual": true,
+          "price_in": 0.13
+        }
+      ]
+    },
+    "anthropic": {
+      "label": "Anthropic",
+      "base_url": "https://api.anthropic.com/v1",
+      "api_version": "2023-06-01",
+      "keys_url": "https://console.anthropic.com/settings/keys",
+      "key_prefix": "sk-ant-",
+      "chat_models": [
+        {
+          "id": "claude-haiku-4-5",
+          "label": "Claude Haiku 4.5",
+          "hint": "Fastest and most affordable — recommended for site chat.",
+          "default": true,
+          "context": 200000,
+          "max_output": 8192,
+          "price_in": 1.0,
+          "price_out": 5.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": true,
+          "effort": false,
+          "quality": "good"
+        },
+        {
+          "id": "claude-sonnet-5",
+          "label": "Claude Sonnet 5",
+          "hint": "Balanced quality and cost.",
+          "context": 1000000,
+          "max_output": 8192,
+          "price_in": 3.0,
+          "price_out": 15.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "effort": true,
+          "quality": "better"
+        },
+        {
+          "id": "claude-opus-5",
+          "label": "Claude Opus 5",
+          "hint": "Highest quality for demanding sites.",
+          "context": 1000000,
+          "max_output": 8192,
+          "price_in": 5.0,
+          "price_out": 25.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "effort": true,
+          "quality": "best"
+        },
+        {
+          "id": "claude-fable-5",
+          "label": "Claude Fable 5",
+          "hint": "Anthropic's most capable model — premium pricing.",
+          "context": 1000000,
+          "max_output": 8192,
+          "price_in": 10.0,
+          "price_out": 50.0,
+          "streaming": true,
+          "json_schema": true,
+          "sampling": false,
+          "effort": true,
+          "quality": "best"
+        }
+      ],
+      "embedding_models": []
+    }
+  },
+  "prompts": {
+    "chat_rag": { "version": "1" }
+  },
+  "engines": [],
+  "local_models": [],
+  "kb": {
+    "elementor_widget_map_version": "1"
+  }
+}

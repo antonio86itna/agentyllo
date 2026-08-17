@@ -1,0 +1,26 @@
+{
+	"name": "agentyllo-monorepo",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Agentyllo WordPress plugin — build tooling",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js agentyllo/src-js",
+		"wp-env": "wp-env",
+		"lint:php": "cd agentyllo && for f in $(find src -name '*.php') agentyllo.php uninstall.php; do php -l \"$f\" >/dev/null || exit 1; done && echo PHP lint OK",
+		"test:php": "cd agentyllo && composer exec phpunit",
+		"package": "python3 tools/build-zip.py --no-build",
+		"release:zip": "npm run build && npm run package"
+	},
+	"devDependencies": {
+		"@wordpress/env": "^10.0.0",
+		"@wordpress/scripts": "^30.0.0"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^7.0.0",
+		"@wordpress/components": "^29.0.0",
+		"@wordpress/element": "^6.0.0",
+		"@wordpress/i18n": "^5.0.0"
+	}
+}
