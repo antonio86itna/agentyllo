@@ -9,8 +9,6 @@ Thumbs.db
 .phpunit.result.cache
 .phpcs-cache
 npm-debug.log*
-composer.lock
-package-lock.json
 /dist/
 .wp-env.override.json
 
