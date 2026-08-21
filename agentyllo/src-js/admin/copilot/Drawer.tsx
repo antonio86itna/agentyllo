@@ -231,10 +231,13 @@ export default function Drawer() {
 			<button type="button" className="agy-cp-toggle" onClick={ () => setOpen( ( v ) => ! v ) } aria-expanded={ open } aria-controls="agy-copilot" title="Ctrl+Shift+K">
 				{ open ? __( 'Close copilot', 'agentyllo' ) : __( 'Copilot', 'agentyllo' ) }
 			</button>
-			<aside id="agy-copilot" className={ 'agy-cp' + ( open ? ' is-open' : '' ) } aria-label={ __( 'Agentyllo copilot', 'agentyllo' ) } hidden={ ! open }>
+			<aside id="agy-copilot" className={ 'agy-cp' + ( open ? ' is-open' : '' ) } aria-label={ __( 'Agentyllo copilot', 'agentyllo' ) }>
 				<header className="agy-cp__header">
 					<strong>{ __( 'Copilot', 'agentyllo' ) }</strong>
 					<span className="agy-muted">{ __( 'Type /help for commands', 'agentyllo' ) }</span>
+					<button type="button" className="agy-cp__close" onClick={ () => setOpen( false ) } aria-label={ __( 'Close copilot', 'agentyllo' ) } title="Ctrl+Shift+K">
+						✕
+					</button>
 				</header>
 				<div className="agy-cp__log" ref={ logRef } role="log" aria-live="polite">
 					{ 0 === turns.length && (

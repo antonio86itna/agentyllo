@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,11 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Generated AI transparency page.
 
 == Changelog ==
+
+= 0.1.2 =
+* Fix: the admin Copilot drawer now actually closes - a CSS rule kept it permanently visible regardless of the toggle.
+* Fix: the floating Copilot button moves out of the drawer's way while it is open, so it can no longer cover the Send button; a close button was also added to the drawer header.
+* Improvement: admin pages now adapt to the drawer - content reflows beside it on wide screens, the drawer overlays on narrow screens and goes full-screen on phones, with smooth (reduced-motion-aware) transitions.
 
 = 0.1.1 =
 * Fix: hosting capability scan no longer runs its network self-test inline on the request path — the Dashboard rendered an error on single-worker hosts (WordPress Playground, Studio/wp-now); a shallow report renders instantly and the deep scan runs in the background.

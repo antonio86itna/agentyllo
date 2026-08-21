@@ -7,7 +7,7 @@
 		{ "step": "login", "username": "admin", "password": "password" },
 		{
 			"step": "installPlugin",
-			"pluginData": { "resource": "url", "url": "https://www.agentyllo.com/downloads/agentyllo-0.1.1.zip" },
+			"pluginData": { "resource": "url", "url": "https://www.agentyllo.com/downloads/agentyllo-0.1.2.zip" },
 			"options": { "activate": true }
 		},
 		{ "step": "setSiteOptions", "options": { "blogname": "Agentyllo Demo Store", "blogdescription": "Classic agents answer from your content - no API key needed" } },

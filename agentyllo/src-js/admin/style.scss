@@ -227,11 +227,15 @@
 }
 
 /* Copilot drawer */
+:root {
+	--agy-cp-w: 380px;
+}
+
 .agy-cp-toggle {
 	position: fixed;
 	right: 16px;
 	bottom: 16px;
-	z-index: 9990;
+	z-index: 9991;
 	padding: 8px 14px;
 	border-radius: 999px;
 	border: 0;
@@ -240,6 +244,13 @@
 	font-weight: 600;
 	cursor: pointer;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+	transition: right .25s ease;
+}
+
+/* Drawer open: slide the launcher out of the panel's footprint so it can
+   never sit on top of the composer's Send button. */
+body.agy-cp-open .agy-cp-toggle {
+	right: calc(var(--agy-cp-w) + 16px);
 }
 
 .agy-cp {
@@ -247,22 +258,53 @@
 	top: 32px;
 	right: 0;
 	bottom: 0;
-	width: 380px;
+	width: var(--agy-cp-w);
 	max-width: 100vw;
-	z-index: 9980;
+	z-index: 9990;
 	display: flex;
 	flex-direction: column;
 	background: #fff;
 	border-left: 1px solid #dcdcde;
 	box-shadow: -4px 0 16px rgba(0, 0, 0, .08);
+	/* Closed by default: off-canvas. visibility (not display) keeps the
+	   slide transition possible while removing it from focus/a11y order. */
+	transform: translateX(100%);
+	visibility: hidden;
+	transition: transform .25s ease, visibility 0s linear .25s;
+
+	&.is-open {
+		transform: none;
+		visibility: visible;
+		transition: transform .25s ease;
+	}
 
 	&__header {
 		padding: 12px 16px;
 		border-bottom: 1px solid #f0f0f1;
 		display: flex;
-		justify-content: space-between;
 		align-items: baseline;
 		gap: 8px;
+
+		.agy-muted {
+			flex: 1;
+		}
+	}
+
+	&__close {
+		border: 0;
+		background: transparent;
+		color: #757575;
+		font-size: 18px;
+		line-height: 1;
+		padding: 2px 6px;
+		cursor: pointer;
+		border-radius: 4px;
+
+		&:hover,
+		&:focus {
+			color: #1d2327;
+			background: #f0f0f1;
+		}
 	}
 
 	&__log {
@@ -292,8 +334,55 @@
 	}
 }
 
-body.agy-cp-open .agy-admin__main {
-	margin-right: 380px;
+/* Wide screens: the page content yields to the open drawer and reflows
+   (the card grids are auto-fill, so columns adapt on their own). */
+body.agy-cp-open .agy-admin {
+	margin-right: calc(var(--agy-cp-w) + 20px);
+}
+
+.agy-admin {
+	transition: margin-right .25s ease;
+}
+
+/* Mid-size screens: squeezing the content below one comfortable card
+   column helps nobody — let the drawer overlay instead, like the WP
+   admin menu does. */
+@media screen and (max-width: 1100px) {
+	body.agy-cp-open .agy-admin {
+		margin-right: 20px;
+	}
+}
+
+/* WP admin bar grows to 46px at 782px. */
+@media screen and (max-width: 782px) {
+	.agy-cp {
+		top: 46px;
+	}
+}
+
+/* Phones: full-screen drawer; the header close button is the way out, the
+   floating launcher would be covered by the panel itself. */
+@media screen and (max-width: 600px) {
+	:root {
+		--agy-cp-w: 100vw;
+	}
+
+	.agy-cp {
+		top: 0;
+		z-index: 99999; /* above the admin bar */
+	}
+
+	body.agy-cp-open .agy-cp-toggle {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.agy-cp,
+	.agy-cp-toggle,
+	.agy-admin {
+		transition: none;
+	}
 }
 
 .agy-cp-turn {
