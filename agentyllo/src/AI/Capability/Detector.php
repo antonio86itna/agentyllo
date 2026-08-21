@@ -42,7 +42,39 @@ final class Detector {
 	 * Return the cached report, detecting only when stale or missing.
 	 */
 	public function report(): array {
-		return $this->detect( false );
+		$cached = $this->options->get( 'capabilities' );
+		if (
+			is_array( $cached )
+			&& ( $cached['schema'] ?? 0 ) === self::SCHEMA_VERSION
+			&& ( time() - (int) ( $cached['detected_at'] ?? 0 ) ) < self::CACHE_TTL
+		) {
+			return $cached;
+		}
+
+		// Cold cache on a request path: build and persist a SHALLOW report
+		// (every cheap probe, no network self-request) so the page renders
+		// instantly, and leave the deep pass to the background sweep.
+		$report = $this->detect( true, false );
+		$this->schedule_deep_scan();
+
+		return $report;
+	}
+
+	/**
+	 * Queue one background deep scan (loopback included). Deduped; falls back
+	 * to WP-Cron when Action Scheduler is unavailable.
+	 */
+	public function schedule_deep_scan(): void {
+		if ( function_exists( 'as_enqueue_async_action' ) && function_exists( 'as_has_scheduled_action' ) ) {
+			if ( ! as_has_scheduled_action( 'agy_capabilities_rescan', array(), 'agentyllo' ) ) {
+				as_enqueue_async_action( 'agy_capabilities_rescan', array(), 'agentyllo', true );
+			}
+
+			return;
+		}
+		if ( ! wp_next_scheduled( 'agy_capabilities_rescan' ) ) {
+			wp_schedule_single_event( time() + 30, 'agy_capabilities_rescan' );
+		}
 	}
 
 	/**
@@ -50,7 +82,7 @@ final class Detector {
 	 *
 	 * @param bool $force Ignore the cache.
 	 */
-	public function detect( bool $force = false ): array {
+	public function detect( bool $force = false, bool $deep = true ): array {
 		$cached = $this->options->get( 'capabilities' );
 
 		if (
@@ -62,7 +94,7 @@ final class Detector {
 			return $cached;
 		}
 
-		$probes = $this->probe();
+		$probes = $this->probe( $deep );
 		$report = array(
 			'schema'      => self::SCHEMA_VERSION,
 			'detected_at' => time(),
@@ -78,12 +110,14 @@ final class Detector {
 		$report = (array) apply_filters( 'agy_capability_profile', $report );
 
 		/*
-		 * CLI probes see different memory/time limits than the web SAPI the
-		 * chatbot actually runs under. CLI-context reports are returned to the
-		 * caller but NEVER persisted — an empty cache seeded from CLI would
-		 * poison the web-facing tier flags for 12 hours.
+		 * WP-CLI probes see different memory/time limits than the web SAPI the
+		 * chatbot actually runs under, so wp-cli-context reports are returned
+		 * but never persisted. The check is the WP_CLI constant, NOT PHP_SAPI:
+		 * WordPress Playground / Studio (wp-now) serve real web requests with
+		 * SAPI "cli", and refusing to cache there forced a full re-probe on
+		 * every request.
 		 */
-		if ( 'cli' === PHP_SAPI ) {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			return $report;
 		}
 
@@ -153,7 +187,7 @@ final class Detector {
 	 * Run every probe. Each is wrapped so one failing host feature can never
 	 * take detection down.
 	 */
-	private function probe(): array {
+	private function probe( bool $deep = true ): array {
 		$probes = array();
 
 		$probes['php_version']     = PHP_VERSION;
@@ -193,7 +227,20 @@ final class Detector {
 		$probes['object_cache']         = (bool) wp_using_ext_object_cache();
 		$probes['page_cache_detected']  = $this->probe_page_cache_plugins();
 
-		[ $probes['loopback_ok'], $probes['loopback_ms'] ] = $this->probe_loopback();
+		/*
+		 * The loopback self-request is DEEP-ONLY: on single-worker hosts
+		 * (Playground, Studio/wp-now, minimal PHP-FPM pools) an inline
+		 * self-request can block until timeout — or deadlock outright — so it
+		 * only runs from the background rescan / the explicit re-scan button,
+		 * never on the request path that renders a page.
+		 */
+		if ( $deep ) {
+			[ $probes['loopback_ok'], $probes['loopback_ms'] ] = $this->probe_loopback();
+		} else {
+			$probes['loopback_ok'] = null;
+			$probes['loopback_ms'] = null;
+			$probes['deep_pending'] = true;
+		}
 
 		global $wpdb;
 		$probes['db_server_info'] = (string) $wpdb->db_server_info();
@@ -403,7 +450,7 @@ final class Detector {
 			$response = wp_remote_get(
 				home_url( '/' ),
 				array(
-					'timeout'   => 5,
+					'timeout'   => 3,
 					'sslverify' => false,
 					'headers'   => array( 'X-Agy-Probe' => '1' ),
 				)

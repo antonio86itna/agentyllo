@@ -394,6 +394,18 @@ final class Schema {
 		$table = $wpdb->prefix . 'agy_kb_chunks';
 
 		if ( ! isset( $caps['fulltext'] ) ) {
+			// MATCH … AGAINST is MySQL/MariaDB-only. On SQLite backends
+			// (Playground, Studio/wp-now, the sqlite-database-integration
+			// plugin) the shim may accept the ALTER without creating a real
+			// FULLTEXT index — flag it off and let BM25 carry retrieval.
+			$server = strtolower( (string) $wpdb->db_server_info() );
+			if ( ( defined( 'DB_ENGINE' ) && 'mysql' !== DB_ENGINE ) || str_contains( $server, 'sqlite' ) ) {
+				$caps['fulltext'] = false;
+				update_option( 'agy_kb_caps', $caps, false );
+
+				return;
+			}
+
 			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$existing = $wpdb->get_results( "SHOW INDEX FROM {$table} WHERE Key_name = 'ft_content'" );
 			if ( empty( $existing ) ) {

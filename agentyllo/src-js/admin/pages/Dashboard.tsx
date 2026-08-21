@@ -85,8 +85,15 @@ export default function Dashboard() {
 	}
 
 	const p = capabilities.probes || {};
+	const deepPending = !! p.deep_pending;
 	const tiers = capabilities.tiers || {};
 	const best: string = tiers.best_free_tier || 't1a';
+
+	const pendingNote = deepPending ? (
+		<p className="agy-muted">
+			{ __( 'A full hosting scan (including the network self-test) is running in the background — this report will refine itself shortly.', 'agentyllo' ) }
+		</p>
+	) : null;
 
 	const probeRows: Array< [ string, string ] > = [
 		[ __( 'PHP', 'agentyllo' ), `${ p.php_version || '—' } (${ p.sapi || '?' })` ],
@@ -157,6 +164,7 @@ export default function Dashboard() {
 					</Button>
 				</CardHeader>
 				<CardBody>
+					{ pendingNote }
 					<table className="agy-probe-table">
 						<tbody>
 							{ probeRows.map( ( [ label, value ] ) => (

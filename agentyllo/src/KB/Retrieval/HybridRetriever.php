@@ -341,8 +341,13 @@ final class HybridRetriever {
 		$sql   .= ' LIMIT %d';
 		$args[] = self::FULLTEXT_LIMIT;
 
+		// Suppress wpdb's error printing for this one query: on a backend
+		// that mis-reported FULLTEXT support the failure is expected once,
+		// handled below (flag off), and must never leak HTML into a response.
+		$suppressing = $wpdb->suppress_errors( true );
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$ids = $wpdb->get_col( $wpdb->prepare( $sql, ...$args ) );
+		$wpdb->suppress_errors( $suppressing );
 
 		if ( '' !== (string) $wpdb->last_error ) {
 			$caps['fulltext'] = false;
