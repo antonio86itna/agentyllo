@@ -92,7 +92,7 @@ final class ProbeController extends Controller {
 		header( 'Cache-Control: no-store, private' );
 		header( 'X-Accel-Buffering: no' );
 
-		@ini_set( 'zlib.output_compression', '0' );
+		@ini_set( 'zlib.output_compression', '0' ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.IniSet.Risky, Squiz.PHP.DiscouragedFunctions.Discouraged -- streaming-capability probe must try to disable buffering; failure is handled.
 		if ( function_exists( 'apache_setenv' ) ) {
 			@apache_setenv( 'no-gzip', '1' );
 		}

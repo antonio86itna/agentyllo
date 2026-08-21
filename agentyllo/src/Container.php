@@ -105,11 +105,13 @@ final class Container {
 		}
 
 		if ( ! isset( $this->definitions[ $id ] ) ) {
-			throw new \RuntimeException( \sprintf( 'Agentyllo container: unknown service "%s".', $id ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- escaped via esc_html() when WP is loaded; $id is a developer-supplied service id, never user input.
+			throw new \RuntimeException( \sprintf( 'Agentyllo container: unknown service "%s".', \function_exists( 'esc_html' ) ? \esc_html( $id ) : $id ) );
 		}
 
 		if ( isset( $this->resolving[ $id ] ) ) {
-			throw new \RuntimeException( \sprintf( 'Agentyllo container: circular dependency while resolving "%s".', $id ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- escaped via esc_html() when WP is loaded; $id is a developer-supplied service id, never user input.
+			throw new \RuntimeException( \sprintf( 'Agentyllo container: circular dependency while resolving "%s".', \function_exists( 'esc_html' ) ? \esc_html( $id ) : $id ) );
 		}
 
 		$this->resolving[ $id ] = true;

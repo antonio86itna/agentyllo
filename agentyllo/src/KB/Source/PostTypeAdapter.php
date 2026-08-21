@@ -16,6 +16,8 @@ use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * Indexes published entries of every public post type. Elementor builder
  * pages are delegated to the optional ElementorAdapter decorator (rendered

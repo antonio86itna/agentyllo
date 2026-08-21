@@ -14,6 +14,8 @@ use Closure;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * Computes coverage/staleness/quality metrics for the dashboard and refreshes
  * the corpus statistics retrieval depends on (agy_kb_avg_len) and the dynamic

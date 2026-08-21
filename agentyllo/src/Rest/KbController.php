@@ -18,6 +18,8 @@ use WP_REST_Server;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * agentyllo/v1/kb/*: coverage overview, reindex trigger, per-item include
  * toggles, and the indexed-entries listing behind the Knowledge Base page.

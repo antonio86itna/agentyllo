@@ -11,6 +11,8 @@ namespace Agentyllo\Chat;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * One open conversation per session: a session's messages append to the same
  * agy_conversations row while it stays active (last activity within 1 hour);

@@ -13,6 +13,8 @@ use Agentyllo\KB\Retrieval\HybridRetriever;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * Resolves internal link edges to document ids, answers "where should I send
  * the visitor for X", surfaces related content by co-citation, and audits the

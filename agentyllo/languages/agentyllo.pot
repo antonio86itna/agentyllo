@@ -1,0 +1,1418 @@
+# Copyright (C) 2026 Agentyllo
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Agentyllo 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/agentyllo\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-21T08:25:38+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: agentyllo\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: agentyllo.php
+#: src/Admin/Menu.php:65
+#: src/Admin/Menu.php:66
+msgid "Agentyllo"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: agentyllo.php
+msgid "https://www.agentyllo.com"
+msgstr ""
+
+#. Description of the plugin
+#: agentyllo.php
+msgid "Intelligent AI assistant for your site: classic agents, an automatic knowledge base, free local AI, and optional OpenAI/Anthropic models."
+msgstr ""
+
+#. translators: %s: current PHP version.
+#: agentyllo.php:41
+#, php-format
+msgid "Agentyllo requires PHP 8.2 or newer. This server runs PHP %s, so the plugin stays inactive."
+msgstr ""
+
+#. translators: %s: current WordPress version.
+#: agentyllo.php:61
+#, php-format
+msgid "Agentyllo requires WordPress 6.8 or newer. This site runs WordPress %s, so the plugin stays inactive."
+msgstr ""
+
+#: src/Admin/Assets.php:37
+msgid "Agentyllo admin assets are not built. Run \"npm install && npm run build\" in the plugin repository."
+msgstr ""
+
+#: src/Admin/Menu.php:37
+msgid "Dashboard"
+msgstr ""
+
+#: src/Admin/Menu.php:38
+msgid "Knowledge Base"
+msgstr ""
+
+#: src/Admin/Menu.php:39
+msgid "Conversations"
+msgstr ""
+
+#: src/Admin/Menu.php:40
+msgid "Agents"
+msgstr ""
+
+#: src/Admin/Menu.php:41
+msgid "AI Models"
+msgstr ""
+
+#: src/Admin/Menu.php:42
+msgid "Statistics"
+msgstr ""
+
+#: src/Admin/Menu.php:43
+msgid "Privacy & Legal"
+msgstr ""
+
+#: src/Admin/Menu.php:44
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Menu.php:45
+msgid "Help"
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:117
+#: src/AI/Providers/CloudProvider.php:297
+msgid "No API key saved."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:124
+msgid "No model available in the registry for this provider."
+msgstr ""
+
+#. translators: %s: model id.
+#: src/AI/Providers/CloudProvider.php:152
+#, php-format
+msgid "Connected — %s answered."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:289
+msgid "Authentication failed — check the API key."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:290
+msgid "Rate limited by the provider — try again in a minute."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:291
+msgid "Provider overloaded — try again shortly."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:292
+msgid "Provider server error."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:293
+msgid "The provider rejected the request."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:294
+msgid "The provider did not answer in time."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:295
+msgid "Could not reach the provider (network/SSL)."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:296
+msgid "The model declined to answer the probe."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:298
+msgid "No model configured."
+msgstr ""
+
+#: src/AI/Providers/CloudProvider.php:299
+msgid "Unexpected provider response."
+msgstr ""
+
+#: src/AI/Providers/LocalEndpointProvider.php:157
+msgid "No endpoint URL configured."
+msgstr ""
+
+#. translators: %s: error message.
+#: src/AI/Providers/LocalEndpointProvider.php:181
+#, php-format
+msgid "Endpoint unreachable: %s"
+msgstr ""
+
+#. translators: %d: HTTP status.
+#: src/AI/Providers/LocalEndpointProvider.php:193
+#, php-format
+msgid "Endpoint answered HTTP %d on /v1/models."
+msgstr ""
+
+#. translators: 1: models found, 2: error.
+#: src/AI/Providers/LocalEndpointProvider.php:231
+#, php-format
+msgid "Server reachable (%1$s) but generation failed: %2$s"
+msgstr ""
+
+#: src/AI/Providers/LocalEndpointProvider.php:232
+msgid "no models listed"
+msgstr ""
+
+#. translators: 1: model, 2: tokens/s, 3: models list.
+#: src/AI/Providers/LocalEndpointProvider.php:244
+#, php-format
+msgid "Connected — %1$s answered at ~%2$s tok/s. Models: %3$s"
+msgstr ""
+
+#: src/Chat/Pipeline/Pipeline.php:95
+msgid "I couldn't find an answer to that in this site's content. Could you rephrase, or ask me something about this site?"
+msgstr ""
+
+#: src/Chat/Stages/AiComposeStage.php:320
+#: src/Chat/Stages/ComposeStage.php:481
+msgid "Just so you know: I reply in this site's language. I hope the answer below still helps!"
+msgstr ""
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ComposeStage.php:152
+#, php-format
+msgid "Here is what I found on %s:"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:222
+msgid "contact"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:416
+msgid "Price"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:417
+msgid "Availability"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:418
+msgid "Phone"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:419
+msgid "Email"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:420
+msgid "Address"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:421
+msgid "Currency"
+msgstr ""
+
+#. translators: %d: number of units in stock.
+#: src/Chat/Stages/RouteStage.php:219
+#, php-format
+msgid "In stock (%d available)"
+msgstr ""
+
+#: src/Chat/Stages/RouteStage.php:222
+#: src/Rest/ConfigController.php:146
+msgid "In stock"
+msgstr ""
+
+#: src/Chat/Stages/RouteStage.php:225
+#: src/Rest/ConfigController.php:148
+msgid "Out of stock"
+msgstr ""
+
+#: src/Chat/Stages/RouteStage.php:228
+msgid "Available on backorder"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:191
+msgid "ignore previous instructions"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:192
+msgid "ignore all instructions"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:193
+msgid "disregard your rules"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:194
+msgid "system prompt"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:195
+msgid "developer mode"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:196
+msgid "jailbreak"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:197
+msgid "pretend you are"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:198
+msgid "act as an ai without"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:204
+msgid "porn"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:205
+msgid "nsfw"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:206
+msgid "xxx"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:207
+msgid "explicit sexual"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:208
+msgid "nude photos"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:209
+msgid "escort service"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:215
+msgid "write code"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:216
+msgid "write a function"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:217
+msgid "write a script"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:218
+msgid "debug my code"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:219
+msgid "fix my code"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:220
+msgid "python script"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:221
+msgid "javascript function"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:222
+msgid "sql query"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:223
+msgid "stack trace"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:224
+msgid "compile error"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:230
+msgid "medical advice"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:231
+msgid "diagnose"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:232
+msgid "diagnosis"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:233
+msgid "what medication"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:234
+msgid "dosage"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:235
+msgid "symptoms of"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:236
+msgid "prescription for"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:242
+msgid "legal advice"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:243
+msgid "lawsuit"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:244
+msgid "sue them"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:245
+msgid "is it legal"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:246
+msgid "contract clause"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:247
+msgid "hire a lawyer"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:253
+msgid "financial advice"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:254
+msgid "investment advice"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:255
+msgid "should i invest"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:256
+msgid "stock tips"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:257
+msgid "buy bitcoin"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:258
+msgid "crypto price"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:264
+msgid "who should i vote"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:265
+msgid "political party"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:266
+msgid "election fraud"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:267
+msgid "immigration policy"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:273
+msgid "my homework"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:274
+msgid "homework help"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:275
+msgid "solve this equation"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:276
+msgid "essay for school"
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:277
+msgid "math problem"
+msgstr ""
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ScopeGuardStage.php:310
+#, php-format
+msgid "I can only help with questions about %s."
+msgstr ""
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ScopeGuardStage.php:313
+#, php-format
+msgid "That is outside what I can help with — I am the assistant for %s, so I only answer questions about this site and its content."
+msgstr ""
+
+#: src/Chat/Stages/ScopeGuardStage.php:326
+msgid "Here are a few things you can ask me:"
+msgstr ""
+
+#. translators: %s: knowledge-base document title.
+#: src/Chat/Stages/ScopeGuardStage.php:329
+#, php-format
+msgid "Tell me about \"%s\""
+msgstr ""
+
+#. translators: %s: product title.
+#: src/Chat/StarterSuggestions.php:132
+#, php-format
+msgid "Do you have %s?"
+msgstr ""
+
+#: src/Chat/StarterSuggestions.php:136
+msgid "What is this site about?"
+msgstr ""
+
+#: src/Chat/StarterSuggestions.php:141
+msgid "What are your shipping options?"
+msgstr ""
+
+#: src/Chat/StarterSuggestions.php:144
+msgid "How can I contact you?"
+msgstr ""
+
+#: src/Chat/StarterSuggestions.php:147
+msgid "What is your return policy?"
+msgstr ""
+
+#. translators: %s: page or article title.
+#. translators: %s: title of a page/product from the knowledge base.
+#: src/Chat/StarterSuggestions.php:151
+#: src/Rest/ConfigController.php:266
+#, php-format
+msgid "Tell me about %s"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:64
+#, php-format
+msgid "Hello, and welcome to %1$s. How may I assist you today?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:66
+#, php-format
+msgid "Good day — you have reached the %1$s assistant. What can I help you with?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:68
+#, php-format
+msgid "Welcome to %1$s. Please let me know what you are looking for."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:70
+#, php-format
+msgid "Hello. I am the assistant for %1$s — how can I be of service?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:74
+#, php-format
+msgid "Hi there! Welcome to %1$s — what can I help you with?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:76
+#, php-format
+msgid "Hello! Great to see you on %1$s. What are you looking for today?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:78
+#, php-format
+msgid "Hi! I'm the %1$s assistant. Ask me anything about this site."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:80
+#, php-format
+msgid "Hey! Happy to help you find your way around %1$s."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:84
+#, php-format
+msgid "Well hello! You've reached %1$s — fire away!"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:86
+#, php-format
+msgid "Hey hey! Welcome to %1$s. What shall we explore today?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:88
+#, php-format
+msgid "Hi! I know %1$s inside out. What do you need?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:90
+#, php-format
+msgid "Greetings, traveler! What brings you to %1$s today?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:96
+#, php-format
+msgid "I appreciate the conversation. I am best at questions about %1$s — what would you like to know?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:98
+#, php-format
+msgid "Thank you. My expertise is %1$s and its content — feel free to ask about it."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:100
+#, php-format
+msgid "Noted. Is there anything about %1$s I can help you with?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:102
+#, php-format
+msgid "I am doing well, thank you. How can I assist you with %1$s?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:106
+#, php-format
+msgid "Ha, I like the chat! I'm most useful with questions about %1$s though — what can I find for you?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:108
+#, php-format
+msgid "All good here! Anything about %1$s you'd like to know?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:110
+#, php-format
+msgid "Thanks! I spend my days reading %1$s, so ask me anything about it."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:112
+#, php-format
+msgid "Doing great, thanks for asking! Now, what can I help you with on %1$s?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:116
+#, php-format
+msgid "You flatter me! But my one true love is %1$s — ask me about it!"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:118
+#, php-format
+msgid "Living the dream — one question about %1$s at a time. Got one for me?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:120
+#, php-format
+msgid "Chit-chat accepted! Now let's talk %1$s — what do you need?"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:122
+#, php-format
+msgid "I could talk all day, but I'm even better at finding things on %1$s. Try me!"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:128
+#, php-format
+msgid "Certainly. Here is how you can reach the team behind %1$s directly."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:130
+#, php-format
+msgid "Of course. You can contact the %1$s team through the details below."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:132
+#, php-format
+msgid "Understood. The best way to reach a person at %1$s is below."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:134
+#, php-format
+msgid "I will step aside — here is how to contact the %1$s team directly."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:138
+#, php-format
+msgid "No problem! Here's how to reach a real person at %1$s."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:140
+#, php-format
+msgid "Sure thing — the %1$s team is happy to help. Here are their contact details."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:142
+#, php-format
+msgid "Absolutely! You can get in touch with the %1$s team using the details below."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:144
+#, php-format
+msgid "Happy to connect you! Here's how to contact the people behind %1$s."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:148
+#, php-format
+msgid "Summoning the humans of %1$s! Here's how to reach them."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:150
+#, php-format
+msgid "Fair enough — sometimes only a human will do. The %1$s team awaits below!"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:152
+#, php-format
+msgid "Passing the mic to the %1$s crew — here's where to find them."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:154
+#, php-format
+msgid "Human backup, coming right up! Contact the %1$s team below."
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:162
+#, php-format
+msgid "Here is what I found on %1$s that may help:"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:164
+#, php-format
+msgid "These pages on %1$s are the closest match to your question:"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:168
+#, php-format
+msgid "Here's what I found on %1$s:"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:170
+#, php-format
+msgid "I couldn't pin down an exact answer, but these pages on %1$s should help:"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:174
+#, php-format
+msgid "Not a bullseye, but close! Here's what %1$s has on that:"
+msgstr ""
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:176
+#, php-format
+msgid "I dug through %1$s and surfaced these — one of them should do the trick:"
+msgstr ""
+
+#: src/Compliance/AiAct.php:67
+msgid "AI Assistant Transparency"
+msgstr ""
+
+#: src/Compliance/AiAct.php:90
+msgid "Classic (non-generative) agents: answers are extracted verbatim from this site's own content."
+msgstr ""
+
+#: src/Compliance/AiAct.php:92
+msgid "Local AI models running on this website's own server (no data leaves the server)."
+msgstr ""
+
+#: src/Compliance/AiAct.php:95
+msgid "Third-party AI providers configured by the site owner (see data flows below)."
+msgstr ""
+
+#: src/Compliance/AiAct.php:103
+msgid "About the AI assistant on this site"
+msgstr ""
+
+#. translators: %s: site name
+#: src/Compliance/AiAct.php:104
+#, php-format
+msgid "The chat assistant on %s is an automated system. You are not talking to a human. This page explains how it works, what data it processes, and how to reach a person."
+msgstr ""
+
+#: src/Compliance/AiAct.php:106
+msgid "Who operates it"
+msgstr ""
+
+#. translators: %s: site name
+#: src/Compliance/AiAct.php:107
+#, php-format
+msgid "Deployer: the owner of %s. Software: Agentyllo (open source, GPL). Where third-party AI providers are enabled, they act as model providers."
+msgstr ""
+
+#: src/Compliance/AiAct.php:109
+msgid "How answers are produced"
+msgstr ""
+
+#: src/Compliance/AiAct.php:116
+msgid "What data is processed"
+msgstr ""
+
+#: src/Compliance/AiAct.php:118
+msgid "The messages you type into the chat and the assistant's replies."
+msgstr ""
+
+#: src/Compliance/AiAct.php:120
+msgid "The name and email address you provide before starting a chat."
+msgstr ""
+
+#: src/Compliance/AiAct.php:122
+msgid "Your IP address is not stored."
+msgstr ""
+
+#: src/Compliance/AiAct.php:122
+msgid "A one-way hash of your IP address (rotated monthly) for abuse prevention — never the raw address."
+msgstr ""
+
+#: src/Compliance/AiAct.php:124
+msgid "When third-party AI providers are enabled, your message and relevant excerpts of this site's public content are sent to that provider to generate the answer."
+msgstr ""
+
+#: src/Compliance/AiAct.php:127
+msgid "Conversations are kept until deleted by the site owner."
+msgstr ""
+
+#. translators: %d: number of days
+#: src/Compliance/AiAct.php:127
+#, php-format
+msgid "Conversations are deleted automatically after %d day."
+msgid_plural "Conversations are deleted automatically after %d days."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Compliance/AiAct.php:129
+msgid "Limitations"
+msgstr ""
+
+#: src/Compliance/AiAct.php:130
+msgid "The assistant can make mistakes. It only answers questions about this site and its content. Always verify important information (prices, availability, legal or medical matters) through the official channels."
+msgstr ""
+
+#: src/Compliance/AiAct.php:132
+msgid "Talk to a person / your rights"
+msgstr ""
+
+#: src/Compliance/AiAct.php:133
+msgid "You can ask the assistant to connect you with a human at any time. To access, export or delete the data the assistant holds about you, contact the site owner via the contact details published on this site."
+msgstr ""
+
+#: src/Compliance/AiAct.php:136
+msgid "Additional information"
+msgstr ""
+
+#. translators: %s: date
+#: src/Compliance/AiAct.php:140
+#, php-format
+msgid "Last updated: %s"
+msgstr ""
+
+#: src/Compliance/Dsar.php:157
+#: src/Compliance/Dsar.php:171
+msgid "Agentyllo chat"
+msgstr ""
+
+#: src/Compliance/Dsar.php:194
+msgid "Agentyllo conversations"
+msgstr ""
+
+#: src/Compliance/Dsar.php:197
+msgid "Started"
+msgstr ""
+
+#: src/Compliance/Dsar.php:198
+msgid "Language"
+msgstr ""
+
+#: src/Compliance/Dsar.php:199
+msgid "Transcript"
+msgstr ""
+
+#: src/Copilot/ActionRegistry.php:128
+#: src/Copilot/ActionRegistry.php:217
+#: src/Copilot/ActionRegistry.php:249
+msgid "Unknown action."
+msgstr ""
+
+#. translators: %s: argument name
+#: src/Copilot/ActionRegistry.php:138
+#, php-format
+msgid "Missing argument: %s"
+msgstr ""
+
+#. translators: %s: argument name
+#: src/Copilot/ActionRegistry.php:152
+#, php-format
+msgid "Argument %s must be a number."
+msgstr ""
+
+#. translators: 1: argument name, 2: allowed values
+#: src/Copilot/ActionRegistry.php:173
+#, php-format
+msgid "Argument %1$s must be one of: %2$s"
+msgstr ""
+
+#. translators: %s: action id
+#: src/Copilot/Copilot.php:74
+#, php-format
+msgid "I do not know the action \"%s\". Type /help to see what I can do."
+msgstr ""
+
+#: src/Copilot/Copilot.php:77
+#: src/Copilot/Copilot.php:128
+msgid "You do not have permission for that action."
+msgstr ""
+
+#. translators: %s: usage
+#: src/Copilot/Copilot.php:94
+#, php-format
+msgid "Usage: `%s`"
+msgstr ""
+
+#: src/Copilot/Copilot.php:135
+msgid "This confirmation expired or was already used — please repeat the command."
+msgstr ""
+
+#. translators: %s: page title
+#: src/Copilot/Copilot.php:239
+#, php-format
+msgid "From your site content (\"%s\"):"
+msgstr ""
+
+#: src/Copilot/Copilot.php:259
+msgid "I could not find that in your site content. I can run commands for you — try `/help`, or ask e.g. `/kb add title:\"Opening hours\" content:\"We are open Mon–Fri 9–18\"`."
+msgstr ""
+
+#: src/Copilot/Copilot.php:270
+msgid "Here is what I can do (every change is proposed first and applied only when you confirm):"
+msgstr ""
+
+#: src/Copilot/Copilot.php:275
+msgid "(asks for confirmation)"
+msgstr ""
+
+#: src/Copilot/Copilot.php:278
+msgid "Anything else you type is answered from your site content."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:67
+msgid "Add a manual knowledge-base entry (note or FAQ) that the assistant can quote immediately."
+msgstr ""
+
+#. translators: %s: title
+#: src/Copilot/CoreActions.php:76
+#, php-format
+msgid "Create KB entry \"%s\""
+msgstr ""
+
+#. translators: %d: document id
+#: src/Copilot/CoreActions.php:84
+#, php-format
+msgid "Entry #%d added to the knowledge base."
+msgstr ""
+
+#. translators: %d: document id
+#: src/Copilot/CoreActions.php:84
+msgid "Could not save the entry."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:95
+msgid "Update the title or content of a manual KB entry."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:106
+#: src/Copilot/CoreActions.php:136
+#: src/Copilot/CoreActions.php:145
+msgid "Entry not found."
+msgstr ""
+
+#. translators: 1: id, 2: title
+#: src/Copilot/CoreActions.php:106
+#, php-format
+msgid "Update entry #%1$d \"%2$s\""
+msgstr ""
+
+#: src/Copilot/CoreActions.php:115
+msgid "Entry updated."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:115
+msgid "Entry not found or nothing to update."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:126
+msgid "Move a manual KB entry to the trash (restorable for 30 days)."
+msgstr ""
+
+#. translators: 1: id, 2: title
+#: src/Copilot/CoreActions.php:136
+#, php-format
+msgid "Trash entry #%1$d \"%2$s\" (undo available for 30 days)"
+msgstr ""
+
+#: src/Copilot/CoreActions.php:145
+msgid "Entry moved to the trash."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:156
+msgid "Restore a trashed manual KB entry."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:164
+msgid "Entry restored."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:164
+msgid "Nothing to restore."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:175
+msgid "List recent manual KB entries."
+msgstr ""
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:183
+#, php-format
+msgid "%d manual entry."
+msgid_plural "%d manual entries."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:183
+msgid "No manual entries yet."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:194
+msgid "Start a full re-crawl of the knowledge base (background)."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:204
+msgid "Re-crawl scheduled — it runs in the background."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:204
+msgid "Nothing to crawl for that source."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:215
+msgid "Read a non-secret setting."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:225
+msgid "That setting is not readable through the copilot."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:242
+msgid "Change a non-secret setting (schema-validated)."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:254
+#: src/Copilot/CoreActions.php:268
+msgid "That setting cannot be changed through the copilot."
+msgstr ""
+
+#. translators: 1: tab, 2: key
+#: src/Copilot/CoreActions.php:260
+#, php-format
+msgid "Change %1$s.%2$s"
+msgstr ""
+
+#: src/Copilot/CoreActions.php:285
+msgid "Teach the assistant a fact about your business (used by the composer, e.g. \"we close in August\")."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:297
+msgid "Got it — I will remember that."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:306
+msgid "Show what the assistant has been taught."
+msgstr ""
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:314
+#, php-format
+msgid "%d remembered fact."
+msgid_plural "%d remembered facts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:314
+msgid "Nothing taught yet."
+msgstr ""
+
+#: src/Copilot/CoreActions.php:334
+msgid "Summarize conversations, resolution and top unanswered questions for a period."
+msgstr ""
+
+#. translators: 1: days, 2: conversations, 3: messages, 4: unanswered
+#: src/Copilot/CoreActions.php:346
+#, php-format
+msgid "Last %1$d days: %2$d conversations, %3$d messages, %4$d unanswered."
+msgstr ""
+
+#: src/Copilot/FileIngest.php:52
+msgid "File too large (max 3 MB)."
+msgstr ""
+
+#. translators: %s: comma-separated extensions.
+#: src/Copilot/FileIngest.php:74
+#, php-format
+msgid "Unsupported file type. Supported: %s. PDF and spreadsheets are supported by the extended build; you can also paste text directly."
+msgstr ""
+
+#: src/Copilot/FileIngest.php:87
+msgid "No usable text found in the file."
+msgstr ""
+
+#: src/Copilot/FileIngest.php:199
+msgid "Could not read the file."
+msgstr ""
+
+#: src/KB/Source/ManualAdapter.php:55
+msgid "Notes"
+msgstr ""
+
+#: src/KB/Source/ManualAdapter.php:56
+msgid "FAQs"
+msgstr ""
+
+#: src/KB/Source/ManualAdapter.php:57
+msgid "Uploads"
+msgstr ""
+
+#: src/KB/Source/MenuAdapter.php:47
+msgid "Menus"
+msgstr ""
+
+#: src/KB/Source/SiteIdentityAdapter.php:51
+#: src/KB/Source/SiteIdentityAdapter.php:136
+msgid "Site identity"
+msgstr ""
+
+#. translators: %d: number of published items assigned to the term.
+#: src/KB/Source/TaxonomyAdapter.php:170
+#, php-format
+msgid "Contains %d item"
+msgid_plural "Contains %d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/KB/Source/WooProductAdapter.php:76
+msgid "Products"
+msgstr ""
+
+#: src/KB/Source/WooProductAdapter.php:595
+msgid "Customer reviews"
+msgstr ""
+
+#: src/KB/Source/WooProductAdapter.php:635
+msgid "Related products"
+msgstr ""
+
+#: src/Registry/RemoteSync.php:61
+msgid "Registry unreachable."
+msgstr ""
+
+#: src/Registry/RemoteSync.php:66
+msgid "Registry signature unavailable."
+msgstr ""
+
+#: src/Registry/RemoteSync.php:70
+msgid "Registry signature verification failed — manifest rejected."
+msgstr ""
+
+#: src/Registry/RemoteSync.php:75
+msgid "Registry manifest malformed."
+msgstr ""
+
+#: src/Registry/RemoteSync.php:81
+msgid "Registry rollback rejected (older sequence)."
+msgstr ""
+
+#: src/Registry/RemoteSync.php:95
+msgid "Registry synced."
+msgstr ""
+
+#: src/Rest/AgentsController.php:160
+#: src/Rest/AgentsController.php:178
+#: src/Rest/AgentsController.php:196
+msgid "Unknown agent."
+msgstr ""
+
+#: src/Rest/ChatController.php:137
+msgid "Too many requests — please slow down."
+msgstr ""
+
+#: src/Rest/ChatController.php:146
+msgid "Could not start a chat session."
+msgstr ""
+
+#: src/Rest/ChatController.php:173
+#: src/Rest/ChatController.php:414
+msgid "Your chat session is invalid or expired."
+msgstr ""
+
+#. translators: %d: maximum message length in characters.
+#: src/Rest/ChatController.php:183
+#, php-format
+msgid "Messages must be between 1 and %d characters."
+msgstr ""
+
+#: src/Rest/ChatController.php:204
+msgid "Please complete the short form before starting the chat."
+msgstr ""
+
+#: src/Rest/ChatController.php:421
+msgid "Message not found."
+msgstr ""
+
+#: src/Rest/ChatController.php:442
+msgid "Message limit reached — please try again later."
+msgstr ""
+
+#: src/Rest/ConfigController.php:73
+msgid "Hi! Ask me anything about this site."
+msgstr ""
+
+#: src/Rest/ConfigController.php:125
+msgid "Assistant"
+msgstr ""
+
+#: src/Rest/ConfigController.php:126
+msgid "Open chat"
+msgstr ""
+
+#: src/Rest/ConfigController.php:127
+msgid "Close chat"
+msgstr ""
+
+#: src/Rest/ConfigController.php:128
+msgid "Send"
+msgstr ""
+
+#: src/Rest/ConfigController.php:129
+msgid "Type your message"
+msgstr ""
+
+#: src/Rest/ConfigController.php:130
+msgid "Ask a question…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:131
+msgid "Suggested questions"
+msgstr ""
+
+#: src/Rest/ConfigController.php:132
+msgid "Assistant is replying"
+msgstr ""
+
+#: src/Rest/ConfigController.php:133
+msgid "Working…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:134
+msgid "Queued…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:135
+msgid "Understanding your question…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:136
+msgid "Searching this site…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:137
+msgid "Checking products…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:138
+msgid "Finding related pages…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:139
+msgid "Verifying details…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:140
+msgid "Preparing an answer…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:141
+msgid "Formatting the answer…"
+msgstr ""
+
+#: src/Rest/ConfigController.php:142
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#. translators: %d: seconds to wait before the next message.
+#: src/Rest/ConfigController.php:144
+#, php-format
+msgid "A short pause — you can send another message in %ds."
+msgstr ""
+
+#: src/Rest/ConfigController.php:145
+msgid "You can send messages again."
+msgstr ""
+
+#: src/Rest/ConfigController.php:147
+msgid "Low stock"
+msgstr ""
+
+#: src/Rest/ConfigController.php:149
+msgid "Add to cart"
+msgstr ""
+
+#: src/Rest/ConfigController.php:168
+#: src/Rest/PrivacyController.php:145
+msgid "I have read and accept the privacy policy."
+msgstr ""
+
+#: src/Rest/ConfigController.php:173
+msgid "Before we start, please tell us who you are."
+msgstr ""
+
+#: src/Rest/ConfigController.php:197
+msgid "Powered by Agentyllo"
+msgstr ""
+
+#: src/Rest/ConfigController.php:215
+msgid "AI responses may contain mistakes — verify important information."
+msgstr ""
+
+#: src/Rest/ConfigController.php:222
+msgid "AI Assistant"
+msgstr ""
+
+#: src/Rest/ConfigController.php:222
+msgid "Automated assistant"
+msgstr ""
+
+#: src/Rest/Controller.php:44
+msgid "You are not allowed to do that."
+msgstr ""
+
+#: src/Rest/CopilotController.php:168
+msgid "No file uploaded."
+msgstr ""
+
+#: src/Rest/KbController.php:205
+msgid "No enabled source matches that id."
+msgstr ""
+
+#: src/Rest/KbController.php:227
+msgid "Unknown item source."
+msgstr ""
+
+#: src/Rest/KbController.php:281
+msgid "A source and item id are required."
+msgstr ""
+
+#: src/Rest/KbController.php:291
+msgid "This source cannot be toggled per item."
+msgstr ""
+
+#: src/Rest/KbController.php:415
+msgid "Knowledge base entry not found."
+msgstr ""
+
+#: src/Rest/KbController.php:518
+msgid "WooCommerce is not active."
+msgstr ""
+
+#: src/Rest/ModelsController.php:228
+msgid "Unknown provider."
+msgstr ""
+
+#: src/Rest/ModelsController.php:264
+msgid "No embedding provider is configured."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:124
+msgid "Invalid or expired chat session."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:135
+msgid "Please enter your name and a valid email address."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:140
+msgid "Please accept the privacy policy to continue."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:182
+#: src/Rest/PrivacyController.php:198
+#: src/Rest/PrivacyController.php:215
+msgid "Enter a valid email address."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:218
+msgid "Erasure must be explicitly confirmed."
+msgstr ""
+
+#: src/Rest/PrivacyController.php:230
+msgid "Could not create the transparency page."
+msgstr ""
+
+#: src/Rest/SettingsController.php:92
+#: src/Rest/SettingsController.php:108
+msgid "Unknown settings tab."
+msgstr ""
+
+#: src/Rest/SettingsController.php:113
+msgid "Settings payload must be an object."
+msgstr ""
+
+#: src/Rest/StatsController.php:135
+msgid "Could not update the item."
+msgstr ""
+
+#: src/Rest/StatsController.php:168
+msgid "Conversation not found."
+msgstr ""

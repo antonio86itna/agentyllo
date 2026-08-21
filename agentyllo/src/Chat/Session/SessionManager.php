@@ -11,6 +11,8 @@ namespace Agentyllo\Chat\Session;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Agentyllo's own custom tables: names are $wpdb->prefix plus literal constants; every value goes through $wpdb->prepare().
+
 /**
  * No WP nonces, no cookies for visitors — fully cache-proof and cookie-
  * banner-neutral. The client holds an HMAC token "id.expires.signature"

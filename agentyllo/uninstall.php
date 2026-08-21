@@ -61,7 +61,7 @@ function agy_uninstall_site() {
 	$group_tbl  = $wpdb->prefix . 'actionscheduler_groups';
 	$action_tbl = $wpdb->prefix . 'actionscheduler_actions';
 	$logs_tbl   = $wpdb->prefix . 'actionscheduler_logs';
-	// phpcs:disable WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $group_tbl ) ) === $group_tbl ) {
 		$group_ids = $wpdb->get_col( "SELECT group_id FROM {$group_tbl} WHERE slug IN ({$as_groups})" );
 		if ( $group_ids ) {
@@ -105,8 +105,7 @@ function agy_uninstall_site() {
 			// Remove the base dir only when nothing (companion data) remains.
 			$leftovers = array_diff( (array) scandir( $base ), array( '.', '..', 'index.php' ) );
 			if ( empty( $leftovers ) ) {
-				@unlink( $base . '/index.php' ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-				@rmdir( $base ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				agy_uninstall_rmdir( $base );
 			}
 		}
 	}
@@ -121,27 +120,24 @@ function agy_uninstall_site() {
 }
 
 /**
- * Recursive directory removal (no symlink traversal).
+ * Recursive directory removal via WP_Filesystem (no symlink traversal: the
+ * direct method never follows links). When WP_Filesystem cannot initialize
+ * without credentials (FTP-mode hosts) the files are simply left in place.
  *
  * @param string $dir Absolute directory path.
  */
 function agy_uninstall_rmdir( $dir ) {
-	$items = scandir( $dir );
-	if ( false === $items ) {
+	global $wp_filesystem;
+
+	if ( ! function_exists( 'WP_Filesystem' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+	}
+	if ( ! $wp_filesystem instanceof WP_Filesystem_Base && ! WP_Filesystem() ) {
 		return;
 	}
-	foreach ( $items as $item ) {
-		if ( '.' === $item || '..' === $item ) {
-			continue;
-		}
-		$path = $dir . '/' . $item;
-		if ( is_dir( $path ) && ! is_link( $path ) ) {
-			agy_uninstall_rmdir( $path );
-		} else {
-			@unlink( $path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		}
+	if ( $wp_filesystem instanceof WP_Filesystem_Base && ! is_link( $dir ) ) {
+		$wp_filesystem->delete( $dir, true );
 	}
-	@rmdir( $dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 }
 
 if ( is_multisite() ) {

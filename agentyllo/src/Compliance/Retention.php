@@ -98,7 +98,8 @@ final class Retention {
 		$removed = 0;
 		$cutoff  = time() - self::EXPORT_TTL;
 		foreach ( (array) glob( $dir . '/dsar-*.json' ) as $file ) {
-			if ( is_file( $file ) && (int) filemtime( $file ) < $cutoff && @unlink( $file ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			if ( is_file( $file ) && (int) filemtime( $file ) < $cutoff ) {
+				wp_delete_file( $file );
 				++$removed;
 			}
 		}

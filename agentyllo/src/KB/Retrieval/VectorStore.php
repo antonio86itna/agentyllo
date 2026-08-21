@@ -11,6 +11,8 @@ namespace Agentyllo\KB\Retrieval;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * agy_kb_vectors keeps one L2-normalized float32 vector per chunk per
  * embedding model (LONGBLOB, packed with pack('g*')). Search runs entirely in

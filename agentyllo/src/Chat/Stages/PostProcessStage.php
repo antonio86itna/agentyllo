@@ -15,6 +15,8 @@ use Agentyllo\KB\Store;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Agentyllo's own custom tables: names are $wpdb->prefix plus literal constants; every value goes through $wpdb->prepare().
+
 /**
  * Turns the distinct documents behind ctx->chunks into a links block (max 3,
  * score order, thumbnails per widget settings) — or a products block instead

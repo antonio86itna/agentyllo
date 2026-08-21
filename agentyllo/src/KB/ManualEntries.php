@@ -15,6 +15,8 @@ use Agentyllo\KB\Source\NormalizedBlock;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
+
 /**
  * The write side of the 'manual' source (ManualAdapter is read-only by
  * contract). Text is normalized into paragraph/heading blocks, chunked with

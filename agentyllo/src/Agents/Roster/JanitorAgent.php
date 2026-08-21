@@ -100,7 +100,8 @@ final class JanitorAgent implements Agent {
 			if ( '.' === $item || '..' === $item || 'index.php' === $item || ! is_file( $path ) ) {
 				continue;
 			}
-			if ( (int) filemtime( $path ) < $cutoff && @unlink( $path ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			if ( (int) filemtime( $path ) < $cutoff ) {
+				wp_delete_file( $path );
 				++$removed;
 			}
 		}

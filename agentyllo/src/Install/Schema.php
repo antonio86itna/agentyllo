@@ -15,6 +15,8 @@ namespace Agentyllo\Install;
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Agentyllo's own custom tables: names are $wpdb->prefix plus literal constants; every value goes through $wpdb->prepare().
+
 /**
  * Table definitions + dbDelta runner.
  */

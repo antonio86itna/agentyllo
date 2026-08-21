@@ -10,6 +10,8 @@ Intelligent AI assistant chatbot for WordPress: classic PHP agents + free local 
 | `agentyllo-local-ai/` | Companion plugin: consented local AI engine/model installer + `llama-server` supervisor (distributed from agentyllo.com, not WP.org) |
 | `tools/` | `build-zip.py` packaging, registry Ed25519 signing (`tools/registry/sign.php`), WordPress Playground blueprint |
 
+**Try it now** — [live demo on WordPress Playground](https://www.agentyllo.com/downloads/playground-link.html) (pristine WordPress + Agentyllo 0.1.0, no API key) · [Download 0.1.0](https://www.agentyllo.com/downloads/agentyllo-0.1.0.zip) · [agentyllo.com](https://www.agentyllo.com)
+
 ## Development
 
 Requirements: PHP 8.2+, Composer, Node 20+, Docker (for `wp-env`).

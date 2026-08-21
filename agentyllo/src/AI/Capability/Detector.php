@@ -233,9 +233,9 @@ final class Detector {
 		try {
 			$probe_target = max( 120, $declared + 30 );
 			if ( function_exists( 'set_time_limit' ) && ! in_array( 'set_time_limit', array_map( 'trim', explode( ',', (string) ini_get( 'disable_functions' ) ) ), true ) ) {
-				@set_time_limit( $probe_target ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				@set_time_limit( $probe_target ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, Squiz.PHP.DiscouragedFunctions.Discouraged -- capability probe by design; value restored below.
 				$extendable = (int) ini_get( 'max_execution_time' ) >= $probe_target;
-				@set_time_limit( $declared ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				@set_time_limit( $declared ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, Squiz.PHP.DiscouragedFunctions.Discouraged -- restore the declared limit.
 			}
 		} catch ( Throwable $e ) {
 			$extendable = false;
@@ -255,32 +255,14 @@ final class Detector {
 	}
 
 	/**
-	 * Live proc_open probe: ini flags lie (Suhosin/SELinux can still block).
+	 * proc_open availability (declared, not disabled). Nothing is executed
+	 * here — the marketplace build must never spawn processes; the Local AI
+	 * companion re-verifies real spawn capability when it starts its daemon.
 	 */
 	private function probe_proc_open(): bool {
-		try {
-			$spec = array(
-				0 => array( 'pipe', 'r' ),
-				1 => array( 'pipe', 'w' ),
-				2 => array( 'pipe', 'w' ),
-			);
-			$cmd  = 'Windows' === PHP_OS_FAMILY ? 'cmd /c echo agy_ok' : 'echo agy_ok';
-			$proc = @proc_open( $cmd, $spec, $pipes ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		$disabled = array_map( 'trim', explode( ',', (string) ini_get( 'disable_functions' ) ) );
 
-			if ( ! is_resource( $proc ) ) {
-				return false;
-			}
-
-			fclose( $pipes[0] );
-			$out = (string) stream_get_contents( $pipes[1] );
-			fclose( $pipes[1] );
-			fclose( $pipes[2] );
-			proc_close( $proc );
-
-			return str_contains( $out, 'agy_ok' );
-		} catch ( Throwable $e ) {
-			return false;
-		}
+		return self::function_usable( 'proc_open', $disabled ) && self::function_usable( 'proc_close', $disabled );
 	}
 
 	/**

@@ -8,7 +8,7 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Intelligent assistant chatbot for any WordPress site: classic agents that need no AI, an automatic always-fresh knowledge base, optional free local AI and optional OpenAI/Anthropic with your own keys.
+Smart assistant chatbot for WordPress: classic no-AI agents, an automatic knowledge base, optional local AI or your own OpenAI/Anthropic keys.
 
 == Description ==
 

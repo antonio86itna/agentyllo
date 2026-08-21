@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Agentyllo;
 
+defined( 'ABSPATH' ) || exit;
+
 use Agentyllo\AI\Budget\Manager as BudgetManager;
 use Agentyllo\AI\Budget\ResponseCache;
 use Agentyllo\AI\Capability\Detector;
@@ -113,8 +115,6 @@ use Agentyllo\Rest\SearchController;
 use Agentyllo\Rest\SettingsController;
 use Agentyllo\Registry\Manifest;
 use Agentyllo\Registry\RemoteSync;
-
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Singleton entry point, hooked on `plugins_loaded` priority 5.
