@@ -1,0 +1,26 @@
+parameters:
+	level: 6
+	paths:
+		- src
+		- agentyllo.php
+		- uninstall.php
+	bootstrapFiles:
+		- tests/phpstan-bootstrap.php
+	scanFiles:
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+	scanDirectories:
+		- lib/action-scheduler
+	treatPhpDocTypesAsCertain: false
+	reportUnmatchedIgnoredErrors: false
+	ignoreErrors:
+		# Docblock array generics: the codebase documents shapes in prose;
+		# adding value types everywhere is tracked as follow-up polish.
+		- identifier: missingType.iterableValue
+		# WP nav menu items are WP_Post objects decorated with dynamic
+		# properties by wp_setup_nav_menu_item() — a core pattern.
+		-
+			message: '#Access to an undefined property WP_Post::\$#'
+			path: src/KB/Source/MenuAdapter.php
+		# WP stubs declare rest_sanitize_boolean() with an unresolvable
+		# template param; the call sites pass mixed on purpose.
+		- '#Unable to resolve the template type T in call to function rest_sanitize_boolean#'

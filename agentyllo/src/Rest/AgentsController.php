@@ -10,7 +10,6 @@ declare( strict_types=1 );
 
 namespace Agentyllo\Rest;
 
-use Agentyllo\Agents\Kernel\Journal;
 use Agentyllo\Agents\Kernel\MemoryStore;
 use Agentyllo\Agents\Kernel\Quarantine;
 use Agentyllo\Agents\Kernel\Registry;
@@ -32,13 +31,11 @@ final class AgentsController extends Controller {
 	 * @param Registry    $registry   Agent registry.
 	 * @param Quarantine  $quarantine Quarantine protocol.
 	 * @param MemoryStore $memory     Memory store.
-	 * @param Journal     $journal    Journal.
 	 */
 	public function __construct(
 		private readonly Registry $registry,
 		private readonly Quarantine $quarantine,
 		private readonly MemoryStore $memory,
-		private readonly Journal $journal,
 	) {
 	}
 

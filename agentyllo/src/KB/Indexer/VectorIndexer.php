@@ -45,7 +45,12 @@ final class VectorIndexer {
 	 * Attach the AS handler and the KB-change trigger.
 	 */
 	public function register(): void {
-		add_action( self::HOOK, array( $this, 'run' ) );
+		add_action(
+			self::HOOK,
+			function (): void {
+				$this->run();
+			}
+		);
 		add_action( 'agy_kb_changed', array( $this, 'schedule' ) );
 	}
 

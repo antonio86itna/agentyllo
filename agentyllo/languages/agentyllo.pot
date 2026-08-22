@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Agentyllo 0.1.0\n"
+"Project-Id-Version: Agentyllo 0.1.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/agentyllo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-21T08:25:38+00:00\n"
+"POT-Creation-Date: 2026-08-22T22:04:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: agentyllo\n"
@@ -17,8 +17,9 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: agentyllo.php
-#: src/Admin/Menu.php:65
 #: src/Admin/Menu.php:66
+#: src/Admin/Menu.php:67
+#: assets/build/admin.js:25
 msgid "Agentyllo"
 msgstr ""
 
@@ -58,30 +59,40 @@ msgid "Knowledge Base"
 msgstr ""
 
 #: src/Admin/Menu.php:39
+#: assets/build/admin.js:18
+#: assets/build/admin.js:19
+#: assets/build/admin.js:25
 msgid "Conversations"
 msgstr ""
 
 #: src/Admin/Menu.php:40
+#: assets/build/admin.js:8
 msgid "Agents"
 msgstr ""
 
 #: src/Admin/Menu.php:41
+#: assets/build/admin.js:20
 msgid "AI Models"
 msgstr ""
 
 #: src/Admin/Menu.php:42
+#: assets/build/admin.js:9
+#: assets/build/admin.js:10
 msgid "Statistics"
 msgstr ""
 
 #: src/Admin/Menu.php:43
+#: assets/build/admin.js:19
 msgid "Privacy & Legal"
 msgstr ""
 
 #: src/Admin/Menu.php:44
+#: assets/build/admin.js:10
 msgid "Settings"
 msgstr ""
 
 #: src/Admin/Menu.php:45
+#: assets/build/admin.js:25
 msgid "Help"
 msgstr ""
 
@@ -177,41 +188,49 @@ msgid "I couldn't find an answer to that in this site's content. Could you rephr
 msgstr ""
 
 #: src/Chat/Stages/AiComposeStage.php:320
-#: src/Chat/Stages/ComposeStage.php:481
+#: src/Chat/Stages/ComposeStage.php:541
 msgid "Just so you know: I reply in this site's language. I hope the answer below still helps!"
 msgstr ""
 
 #. translators: %s: site name.
-#: src/Chat/Stages/ComposeStage.php:152
+#: src/Chat/Stages/ComposeStage.php:159
 #, php-format
 msgid "Here is what I found on %s:"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:222
+#: src/Chat/Stages/ComposeStage.php:259
+msgid "Here is the page you are looking for:"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:260
+msgid "These pages should be what you are looking for:"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php:282
 msgid "contact"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:416
+#: src/Chat/Stages/ComposeStage.php:476
 msgid "Price"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:417
+#: src/Chat/Stages/ComposeStage.php:477
 msgid "Availability"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:418
+#: src/Chat/Stages/ComposeStage.php:478
 msgid "Phone"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:419
+#: src/Chat/Stages/ComposeStage.php:479
 msgid "Email"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:420
+#: src/Chat/Stages/ComposeStage.php:480
 msgid "Address"
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php:421
+#: src/Chat/Stages/ComposeStage.php:481
 msgid "Currency"
 msgstr ""
 
@@ -235,232 +254,232 @@ msgstr ""
 msgid "Available on backorder"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:191
+#: src/Chat/Stages/ScopeGuardStage.php:208
 msgid "ignore previous instructions"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:192
+#: src/Chat/Stages/ScopeGuardStage.php:209
 msgid "ignore all instructions"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:193
+#: src/Chat/Stages/ScopeGuardStage.php:210
 msgid "disregard your rules"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:194
+#: src/Chat/Stages/ScopeGuardStage.php:211
 msgid "system prompt"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:195
+#: src/Chat/Stages/ScopeGuardStage.php:212
 msgid "developer mode"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:196
+#: src/Chat/Stages/ScopeGuardStage.php:213
 msgid "jailbreak"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:197
+#: src/Chat/Stages/ScopeGuardStage.php:214
 msgid "pretend you are"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:198
+#: src/Chat/Stages/ScopeGuardStage.php:215
 msgid "act as an ai without"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:204
+#: src/Chat/Stages/ScopeGuardStage.php:221
 msgid "porn"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:205
+#: src/Chat/Stages/ScopeGuardStage.php:222
 msgid "nsfw"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:206
+#: src/Chat/Stages/ScopeGuardStage.php:223
 msgid "xxx"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:207
+#: src/Chat/Stages/ScopeGuardStage.php:224
 msgid "explicit sexual"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:208
+#: src/Chat/Stages/ScopeGuardStage.php:225
 msgid "nude photos"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:209
+#: src/Chat/Stages/ScopeGuardStage.php:226
 msgid "escort service"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:215
+#: src/Chat/Stages/ScopeGuardStage.php:232
 msgid "write code"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:216
+#: src/Chat/Stages/ScopeGuardStage.php:233
 msgid "write a function"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:217
+#: src/Chat/Stages/ScopeGuardStage.php:234
 msgid "write a script"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:218
+#: src/Chat/Stages/ScopeGuardStage.php:235
 msgid "debug my code"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:219
+#: src/Chat/Stages/ScopeGuardStage.php:236
 msgid "fix my code"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:220
+#: src/Chat/Stages/ScopeGuardStage.php:237
 msgid "python script"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:221
+#: src/Chat/Stages/ScopeGuardStage.php:238
 msgid "javascript function"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:222
+#: src/Chat/Stages/ScopeGuardStage.php:239
 msgid "sql query"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:223
+#: src/Chat/Stages/ScopeGuardStage.php:240
 msgid "stack trace"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:224
+#: src/Chat/Stages/ScopeGuardStage.php:241
 msgid "compile error"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:230
+#: src/Chat/Stages/ScopeGuardStage.php:247
 msgid "medical advice"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:231
+#: src/Chat/Stages/ScopeGuardStage.php:248
 msgid "diagnose"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:232
+#: src/Chat/Stages/ScopeGuardStage.php:249
 msgid "diagnosis"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:233
+#: src/Chat/Stages/ScopeGuardStage.php:250
 msgid "what medication"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:234
+#: src/Chat/Stages/ScopeGuardStage.php:251
 msgid "dosage"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:235
+#: src/Chat/Stages/ScopeGuardStage.php:252
 msgid "symptoms of"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:236
+#: src/Chat/Stages/ScopeGuardStage.php:253
 msgid "prescription for"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:242
+#: src/Chat/Stages/ScopeGuardStage.php:259
 msgid "legal advice"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:243
+#: src/Chat/Stages/ScopeGuardStage.php:260
 msgid "lawsuit"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:244
+#: src/Chat/Stages/ScopeGuardStage.php:261
 msgid "sue them"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:245
+#: src/Chat/Stages/ScopeGuardStage.php:262
 msgid "is it legal"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:246
+#: src/Chat/Stages/ScopeGuardStage.php:263
 msgid "contract clause"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:247
+#: src/Chat/Stages/ScopeGuardStage.php:264
 msgid "hire a lawyer"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:253
+#: src/Chat/Stages/ScopeGuardStage.php:270
 msgid "financial advice"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:254
+#: src/Chat/Stages/ScopeGuardStage.php:271
 msgid "investment advice"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:255
+#: src/Chat/Stages/ScopeGuardStage.php:272
 msgid "should i invest"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:256
+#: src/Chat/Stages/ScopeGuardStage.php:273
 msgid "stock tips"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:257
+#: src/Chat/Stages/ScopeGuardStage.php:274
 msgid "buy bitcoin"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:258
+#: src/Chat/Stages/ScopeGuardStage.php:275
 msgid "crypto price"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:264
+#: src/Chat/Stages/ScopeGuardStage.php:281
 msgid "who should i vote"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:265
+#: src/Chat/Stages/ScopeGuardStage.php:282
 msgid "political party"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:266
+#: src/Chat/Stages/ScopeGuardStage.php:283
 msgid "election fraud"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:267
+#: src/Chat/Stages/ScopeGuardStage.php:284
 msgid "immigration policy"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:273
+#: src/Chat/Stages/ScopeGuardStage.php:290
 msgid "my homework"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:274
+#: src/Chat/Stages/ScopeGuardStage.php:291
 msgid "homework help"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:275
+#: src/Chat/Stages/ScopeGuardStage.php:292
 msgid "solve this equation"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:276
+#: src/Chat/Stages/ScopeGuardStage.php:293
 msgid "essay for school"
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:277
+#: src/Chat/Stages/ScopeGuardStage.php:294
 msgid "math problem"
 msgstr ""
 
 #. translators: %s: site name.
-#: src/Chat/Stages/ScopeGuardStage.php:310
+#: src/Chat/Stages/ScopeGuardStage.php:327
 #, php-format
 msgid "I can only help with questions about %s."
 msgstr ""
 
 #. translators: %s: site name.
-#: src/Chat/Stages/ScopeGuardStage.php:313
+#: src/Chat/Stages/ScopeGuardStage.php:330
 #, php-format
 msgid "That is outside what I can help with — I am the assistant for %s, so I only answer questions about this site and its content."
 msgstr ""
 
-#: src/Chat/Stages/ScopeGuardStage.php:326
+#: src/Chat/Stages/ScopeGuardStage.php:343
 msgid "Here are a few things you can ask me:"
 msgstr ""
 
 #. translators: %s: knowledge-base document title.
-#: src/Chat/Stages/ScopeGuardStage.php:329
+#: src/Chat/Stages/ScopeGuardStage.php:346
 #, php-format
 msgid "Tell me about \"%s\""
 msgstr ""
@@ -859,10 +878,13 @@ msgid "Agentyllo conversations"
 msgstr ""
 
 #: src/Compliance/Dsar.php:197
+#: assets/build/admin.js:19
 msgid "Started"
 msgstr ""
 
 #: src/Compliance/Dsar.php:198
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
 msgid "Language"
 msgstr ""
 
@@ -1126,11 +1148,13 @@ msgid "Uploads"
 msgstr ""
 
 #: src/KB/Source/MenuAdapter.php:47
+#: assets/build/admin.js:12
 msgid "Menus"
 msgstr ""
 
 #: src/KB/Source/SiteIdentityAdapter.php:51
 #: src/KB/Source/SiteIdentityAdapter.php:136
+#: assets/build/admin.js:12
 msgid "Site identity"
 msgstr ""
 
@@ -1143,6 +1167,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/KB/Source/WooProductAdapter.php:76
+#: assets/build/admin.js:12
 msgid "Products"
 msgstr ""
 
@@ -1178,9 +1203,9 @@ msgstr ""
 msgid "Registry synced."
 msgstr ""
 
-#: src/Rest/AgentsController.php:160
-#: src/Rest/AgentsController.php:178
-#: src/Rest/AgentsController.php:196
+#: src/Rest/AgentsController.php:157
+#: src/Rest/AgentsController.php:175
+#: src/Rest/AgentsController.php:193
 msgid "Unknown agent."
 msgstr ""
 
@@ -1232,6 +1257,7 @@ msgid "Close chat"
 msgstr ""
 
 #: src/Rest/ConfigController.php:128
+#: assets/build/admin.js:1
 msgid "Send"
 msgstr ""
 
@@ -1410,6 +1436,8 @@ msgid "Settings payload must be an object."
 msgstr ""
 
 #: src/Rest/StatsController.php:135
+#: assets/build/admin.js:11
+#: assets/build/admin.js:25
 msgid "Could not update the item."
 msgstr ""
 
@@ -1417,10 +1445,1753 @@ msgstr ""
 msgid "Conversation not found."
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php
-msgid "Here is the page you are looking for:"
+#: assets/build/admin.js:1
+msgid "Request failed."
 msgstr ""
 
-#: src/Chat/Stages/ComposeStage.php
-msgid "These pages should be what you are looking for:"
+#: assets/build/admin.js:1
+msgid "Close copilot"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Copilot"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Agentyllo copilot"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Type /help for commands"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid ""
+"Hi! I can add or edit knowledge-base entries, change settings, remember facts about your business, summarize statistics and import files. Every change is proposed first — nothing runs until you confirm.\n"
+"\n"
+"Try: `/kb add title:\"Opening hours\" content:\"Mon–Fri 9–18\"` or `/help`."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Done."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Confirm"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Apply"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Cancelled."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Cancel"
+msgstr ""
+
+#. translators: 1: rows, 2: file
+#: assets/build/admin.js:1
+#, js-format
+msgid "Preview: %1$d entries from %2$s — untick or edit before importing"
+msgstr ""
+
+#. translators: %d: hidden rows
+#: assets/build/admin.js:1
+#, js-format
+msgid "…and %d more rows (imported as parsed)."
+msgstr ""
+
+#. translators: 1: created, 2: skipped, 3: file
+#: assets/build/admin.js:1
+#, js-format
+msgid "Imported %1$d entries from %3$s (%2$d skipped). They are searchable right away."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Import failed."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Import selected"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Discard"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Ask or type a /command…"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Upload failed."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Import file (txt/md/csv)"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Loading…"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "No memories yet."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Classic mode: no AI model is used. Switch the operating mode in Settings → General to enable an AI tier."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "No chat provider selected below."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "The selected provider has no valid API key."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "The provider is temporarily paused after repeated failures (circuit breaker)."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "The monthly cost cap is reached — the classic agents answer until next month or a higher cap."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "No local engine is available yet (free AI tiers arrive with the Local AI companion)."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "The provider is not usable right now."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Registry default"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Stored key cannot be decrypted — please enter it again."
+msgstr ""
+
+#. translators: %s: masked key
+#: assets/build/admin.js:1
+#, js-format
+msgid "Key saved: %s"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Using the key defined in wp-config / environment (WordPress AI Client convention)."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "No key saved."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Ready"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+msgid "Not configured"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Get an API key"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "API key"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+msgid "Leave empty to keep the saved key"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Stored encrypted with a dedicated key on this site; sent only to this provider."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Chat model"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Model ids and prices come from the signed Agentyllo registry."
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+msgid "Saved."
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+#: assets/build/admin.js:22
+msgid "Could not save."
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+#: assets/build/admin.js:22
+msgid "Save"
+msgstr ""
+
+#. translators: 1: message, 2: latency ms
+#: assets/build/admin.js:1
+#, js-format
+msgid "%1$s (%2$d ms)"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:4
+msgid "Test failed."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Test connection"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Remove the stored API key for this provider?"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Key removed."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Could not remove the key."
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Remove key"
+msgstr ""
+
+#. translators: %s: last error
+#: assets/build/admin.js:2
+#: assets/build/admin.js:4
+#, js-format
+msgid "Paused after repeated failures (%s)."
+msgstr ""
+
+#: assets/build/admin.js:2
+msgid "Retry now"
+msgstr ""
+
+#. translators: 1: calls, 2: errors, 3: latency, 4: tok/s, 5: cost
+#: assets/build/admin.js:3
+#, js-format
+msgid "Last 7 days: %1$d calls, %2$d errors, avg %3$d ms, %4$s tok/s, %5$s"
+msgstr ""
+
+#. translators: 1: measured tok/s, 2: minimum
+#: assets/build/admin.js:4
+#, js-format
+msgid "Measured speed: %1$s tok/s (chat needs ≥ %2$d; slower engines only run bounded tasks such as query rewriting)."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Speed not measured yet — run a test or send a chat message."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Local engine (free AI)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Configured"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Point Agentyllo at an OpenAI-compatible server you already run: llama.cpp llama-server, Ollama, LM Studio, vLLM — or the daemon installed by the free \"Agentyllo Local AI\" companion. Used by the free AI operating modes."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Endpoint URL"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Base URL without /v1 (e.g. http://127.0.0.1:8080 for llama-server, http://127.0.0.1:11434 for Ollama)."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Model id (optional)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Leave empty to use the model the server has loaded."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Bearer key (optional)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Minimum speed for chat (tokens/s)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Test & measure speed"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Failed to load the transcript."
+msgstr ""
+
+#. translators: %s: conversation uuid
+#: assets/build/admin.js:4
+#, js-format
+msgid "Conversation %s"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Back to list"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "unanswered"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Classic — instant, reliable, non-generative"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Classic + semantic matching (ONNX embeddings)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "AI-assisted classic (bounded local generation)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Full local AI chat possible (llama.cpp class)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "unknown"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "yes"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "no"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Failed to load dashboard data."
+msgstr ""
+
+#: assets/build/admin.js:4
+#: assets/build/admin.js:11
+#: assets/build/admin.js:12
+#: assets/build/admin.js:13
+#: assets/build/admin.js:19
+#: assets/build/admin.js:20
+#: assets/build/admin.js:25
+msgid "Retry"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "A full hosting scan (including the network self-test) is running in the background — this report will refine itself shortly."
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "PHP"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Server"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Database"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Memory limit"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Max execution time"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "(extendable)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "Process execution (proc_open)"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "FFI extension"
+msgstr ""
+
+#: assets/build/admin.js:4
+msgid "CPU"
+msgstr ""
+
+#. translators: 1: core count, 2: benchmark score
+#: assets/build/admin.js:5
+#, js-format
+msgid "%1$s cores — score %2$s/100"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "Free disk space"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "cURL"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "Loopback HTTP"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "Page cache detected"
+msgstr ""
+
+#: assets/build/admin.js:5
+#: assets/build/admin.js:10
+msgid "none"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "Uploads dir writable"
+msgstr ""
+
+#: assets/build/admin.js:5
+msgid "Active tier"
+msgstr ""
+
+#. translators: %s: operating mode id
+#: assets/build/admin.js:6
+#, js-format
+msgid "Operating mode: %s"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Cloud AI ready (needs an API key):"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Hosting capabilities"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Re-scan failed."
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Scanning…"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Re-scan"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Background processing"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Scheduler:"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Action Scheduler (active)"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "unavailable"
+msgstr ""
+
+#: assets/build/admin.js:6
+msgid "Pending jobs:"
+msgstr ""
+
+#. translators: %s: date/time of the last scan
+#: assets/build/admin.js:7
+#, js-format
+msgid "Last hosting scan: %s"
+msgstr ""
+
+#: assets/build/admin.js:7
+#: assets/build/admin.js:10
+msgid "Knowledge base"
+msgstr ""
+
+#: assets/build/admin.js:7
+#: assets/build/admin.js:8
+#: assets/build/admin.js:10
+msgid "Open"
+msgstr ""
+
+#. translators: 1: chunk count, 2: purging count, 3: error count
+#: assets/build/admin.js:8
+#, js-format
+msgid "%1$d chunks · %2$d purging · %3$d errors"
+msgstr ""
+
+#: assets/build/admin.js:8
+msgid "Last indexed:"
+msgstr ""
+
+#: assets/build/admin.js:8
+#: assets/build/admin.js:18
+msgid "never"
+msgstr ""
+
+#. translators: 1: quarantined count, 2: unhealthy count
+#: assets/build/admin.js:9
+#, js-format
+msgid "%1$d quarantined · %2$d unhealthy"
+msgstr ""
+
+#: assets/build/admin.js:9
+msgid "All healthy"
+msgstr ""
+
+#: assets/build/admin.js:9
+#: assets/build/admin.js:25
+msgid "Last 7 days"
+msgstr ""
+
+#. translators: 1: messages, 2: deflection percentage
+#: assets/build/admin.js:10
+#, js-format
+msgid "%1$d messages · deflection %2$s"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Conversations per day"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Suggestions"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "No open gaps — the assistant answered everything it was asked."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Visitors asked these and the knowledge base had no answer. Add the missing content and mark them resolved in Statistics."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Compliance"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Registration gate"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "off"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "on"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Retention"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "forever"
+msgstr ""
+
+#. translators: %d: days
+#: assets/build/admin.js:10
+#, js-format
+msgid "%d days"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "AI disclosure"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Transparency page"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "published"
+msgstr ""
+
+#: assets/build/admin.js:10
+#: assets/build/admin.js:19
+msgid "Memory"
+msgstr ""
+
+#: assets/build/admin.js:10
+#: assets/build/admin.js:19
+msgid "General"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Operating mode"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Assistant name"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Site type"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Tone"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Custom instructions"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Out-of-scope guard"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Custom refusal message"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "On uninstall"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Debug log"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Show the chat widget"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Position"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Theme"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Primary color (hex)"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Welcome message"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Launcher teaser"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Show thumbnails in answers"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Show related links"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Animations"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Z-index"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Reply language"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Fixed locale"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Registration before chat"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Require privacy checkbox"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Privacy policy URL"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Gate intro text"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Privacy checkbox label"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Footer disclaimer text"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Additional transparency text"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Policy version"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Retention (days, 0 = forever)"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "IP address handling"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Log consents"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "PII redaction"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "AI disclosure in widget"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Answer transport"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Messages per minute (per session)"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Messages per hour (per IP)"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Messages per day (per IP)"
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "AI modes become selectable once a local engine or an API key is configured."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Shown in the chat header. Empty = your site name."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Site-owner guidance for the assistant. It can never disable safety or transparency."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Keeps the assistant focused on your site. Disabling this is discouraged."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "\"Remove everything\" drops all Agentyllo tables, options, and uploaded files."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "\"Visitor language\" needs an AI model; classic agents always answer in the site language."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Ask for name and email before the first message."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Empty = the WordPress privacy page."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Bump this when your privacy text changes; consents record the version shown."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Conversations older than this are deleted daily. 0 keeps them forever (not recommended)."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "\"hash\" stores a salted one-way hash (rotated monthly); \"none\" stores nothing."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "\"logs\" masks emails/phones/IBAN/cards in stored transcripts; \"before_ai\" also masks before any external AI call."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Locked ON whenever an AI mode is active (EU AI Act Art. 50)."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Empty = default \"AI responses may contain mistakes\" line."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "\"auto\" streams status and AI text live (SSE); \"buffered\" sends complete answers only — use it if a proxy or firewall breaks streaming."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Stored encrypted. Leave empty to keep the saved value; type __clear__ to remove it."
+msgstr ""
+
+#: assets/build/admin.js:10
+msgid "Failed to load items."
+msgstr ""
+
+#. translators: %s: source name (e.g. Posts, Products)
+#: assets/build/admin.js:11
+#, js-format
+msgid "Choose items — %s"
+msgstr ""
+
+#: assets/build/admin.js:11
+msgid "Search items"
+msgstr ""
+
+#: assets/build/admin.js:11
+msgid "No items found."
+msgstr ""
+
+#: assets/build/admin.js:11
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
+msgid "Previous"
+msgstr ""
+
+#. translators: 1: current page, 2: total pages
+#: assets/build/admin.js:12
+#, js-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:13
+#: assets/build/admin.js:19
+msgid "Next"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Posts"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Choose individual posts…"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Pages"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Choose individual pages…"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Choose individual products…"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Taxonomy terms"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Choose individual terms…"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Failed to load sources."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Disabling a source immediately removes its content from the knowledge base."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Per-item exclusions"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Saved. The knowledge base is updating in the background."
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:18
+#: assets/build/admin.js:19
+msgid "Saving failed."
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:18
+#: assets/build/admin.js:19
+msgid "Saving…"
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:18
+#: assets/build/admin.js:19
+msgid "Save changes"
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
+msgid "Unsaved changes"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "All sources"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Posts & pages"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Taxonomies"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Manual entries"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "All statuses"
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
+msgid "Active"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Excluded"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Purging"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Error"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Failed to load entries."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Indexed entries"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Search entries"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Source"
+msgstr ""
+
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
+#: assets/build/admin.js:20
+msgid "Status"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "No entries found."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Title"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Chunks"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Indexed"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Delete this manual entry permanently?"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Could not delete the entry."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Delete"
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Could not exclude the entry."
+msgstr ""
+
+#: assets/build/admin.js:12
+msgid "Exclude"
+msgstr ""
+
+#. translators: 1: current page, 2: total pages, 3: total entries
+#: assets/build/admin.js:13
+#, js-format
+msgid "Page %1$d of %2$d (%3$d entries)"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Stale documents"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Errors"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Broken links"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Orphan pages"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Duplicate clusters"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Failed to load KB health."
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Coverage"
+msgstr ""
+
+#: assets/build/admin.js:13
+msgid "Nothing indexed yet. Run a rebuild to get started."
+msgstr ""
+
+#. translators: 1: active documents, 2: chunk count
+#: assets/build/admin.js:14
+#, js-format
+msgid "%1$d active · %2$d chunks"
+msgstr ""
+
+#. translators: %d: excluded count
+#: assets/build/admin.js:15
+#, js-format
+msgid "%d excluded"
+msgstr ""
+
+#. translators: %d: purging count
+#: assets/build/admin.js:16
+#, js-format
+msgid "%d purging"
+msgstr ""
+
+#. translators: %d: error count
+#: assets/build/admin.js:17
+#, js-format
+msgid "%d errors"
+msgstr ""
+
+#: assets/build/admin.js:17
+msgid "Index health"
+msgstr ""
+
+#. translators: 1: index version number, 2: last crawl date
+#: assets/build/admin.js:18
+#, js-format
+msgid "Index version %1$d · last crawl: %2$s"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Rebuild the entire knowledge base index? This runs in the background."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Reindex started. It runs in the background."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Could not start the reindex."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Rebuild index"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Failed to load privacy settings."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Privacy & legal settings"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Retention is set to 0: conversations are kept forever. Under GDPR you should define a retention period."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Privacy settings saved."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Search failed."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Data subject requests (GDPR)"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Look up everything the assistant holds for an email address, export it as JSON, or erase it. These tools are also available through WordPress → Tools → Export/Erase Personal Data."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Visitor email"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Search"
+msgstr ""
+
+#: assets/build/admin.js:18
+#: assets/build/admin.js:19
+#: assets/build/admin.js:25
+msgid "Messages"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Consent records"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "First seen"
+msgstr ""
+
+#: assets/build/admin.js:18
+#: assets/build/admin.js:25
+msgid "Last seen"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Export downloaded (a copy is kept in the protected uploads folder for 72 hours)."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Export failed."
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Export JSON"
+msgstr ""
+
+#: assets/build/admin.js:18
+msgid "Type ERASE to confirm"
+msgstr ""
+
+#. translators: 1: conversations count, 2: messages count
+#: assets/build/admin.js:19
+#, js-format
+msgid "Erased: %1$d conversations, %2$d messages redacted. Consent records were anonymized."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Erasure failed."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Erase data"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "AI Act transparency page"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "EU AI Act Art. 50 requires telling people they are interacting with an AI system. The widget already shows a badge and footer disclosure; this creates a draft page (shortcode [agentyllo_transparency]) explaining who operates the assistant, how it works, what data it processes and how to reach a human. Publish it and its link appears in the widget footer."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Could not create the page."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Generate transparency page"
+msgstr ""
+
+#. translators: %s: page status
+#: assets/build/admin.js:19
+#, js-format
+msgid "Page ready (status: %s)."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Edit & publish"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Preview"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Content Sources"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Widget"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Performance"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Advanced"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Failed to load settings."
+msgstr ""
+
+#: assets/build/admin.js:19
+#: assets/build/admin.js:22
+msgid "Settings saved."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Sources"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Entries"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Health"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Failed to load conversations."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "No conversations yet."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Visitor"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Lang"
+msgstr ""
+
+#: assets/build/admin.js:19
+#: assets/build/admin.js:25
+msgid "Tier"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "anonymous"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "View"
+msgstr ""
+
+#. translators: 1: page, 2: total pages, 3: total rows
+#: assets/build/admin.js:19
+#, js-format
+msgid "Page %1$d of %2$d (%3$d conversations)"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Failed to load agents."
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Agent roster"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Agent"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Lessons"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Enabled"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Quarantined"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Disabled"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Hide memory"
+msgstr ""
+
+#: assets/build/admin.js:19
+msgid "Release"
+msgstr ""
+
+#. translators: %s: agent id
+#: assets/build/admin.js:20
+#, js-format
+msgid "Memory — %s"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Recent journal"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "No journal entries yet."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Could not load AI models."
+msgstr ""
+
+#. translators: %s: provider id
+#: assets/build/admin.js:20
+#, js-format
+msgid "AI active: %s"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Local engine"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Classic agents answering"
+msgstr ""
+
+#. translators: %s: operating mode
+#: assets/build/admin.js:20
+#, js-format
+msgid "Operating mode: %s."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Streaming: available (token-by-token answers in the widget)."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Streaming: this server cannot stream from providers (no cURL) — answers are delivered when complete."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Routing & budget"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Chat provider (paid AI modes)"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "None"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Used when the operating mode is \"paid AI\" or \"classic + paid AI\". Only one provider bills at a time. Free AI modes use the local engine below."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Embeddings provider"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "None (keyword search only)"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Local engine (/v1/embeddings)"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Dense vectors improve retrieval for paraphrased questions. Local ONNX embeddings arrive with the Local AI companion."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Local embedding model (optional)"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Model id served by the local engine for /v1/embeddings (Ollama: nomic-embed-text, bge-m3; llama-server: run with --embeddings)."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Embedding model"
+msgstr ""
+
+#. translators: 1: vectors stored, 2: remaining, 3: model key
+#: assets/build/admin.js:21
+#, js-format
+msgid "Vectors: %1$d stored, %2$s remaining (%3$s)."
+msgstr ""
+
+#: assets/build/admin.js:21
+msgid "The embedding provider is not usable yet (missing key?)."
+msgstr ""
+
+#. translators: 1: embedded now, 2: total, 3: remaining
+#: assets/build/admin.js:22
+#, js-format
+msgid "Embedded %1$d chunks (total %2$d, %3$d remaining)."
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Embedding failed."
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Embed now"
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Browser AI (experimental)"
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Lets the widget probe WebGPU and offer an in-browser model when the Local AI companion provides one. Visitors must opt in explicitly; nothing downloads without consent."
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Monthly cost cap (USD, 0 = no cap)"
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Estimated from registry prices. When reached, the classic agents answer until next month."
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Max answer tokens"
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "Time budget per answer (seconds)"
+msgstr ""
+
+#: assets/build/admin.js:22
+msgid "A slow provider is cut off here and the classic agents answer instead."
+msgstr ""
+
+#. translators: %s: month
+#: assets/build/admin.js:22
+#, js-format
+msgid "Usage this month (%s)"
+msgstr ""
+
+#. translators: 1: cost, 2: cap, 3: calls, 4: tokens in, 5: tokens out
+#: assets/build/admin.js:23
+#, js-format
+msgid "%1$s spent%2$s · %3$d calls · %4$s tokens in · %5$s tokens out"
+msgstr ""
+
+#: assets/build/admin.js:23
+msgid "Model registry"
+msgstr ""
+
+#. translators: 1: origin, 2: sequence, 3: generated date
+#: assets/build/admin.js:24
+#, js-format
+msgid "Source: %1$s · sequence %2$d · generated %3$s"
+msgstr ""
+
+#: assets/build/admin.js:24
+msgid "signed remote manifest"
+msgstr ""
+
+#: assets/build/admin.js:24
+msgid "bundled snapshot"
+msgstr ""
+
+#. translators: 1: date, 2: message
+#: assets/build/admin.js:25
+#, js-format
+msgid "Last sync %1$s — %2$s"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Not synced yet (weekly automatic sync)."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Sync automatically every week"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Downloads model ids, prices and prompt versions (data only, Ed25519-signed) from registry.agentyllo.com."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Sync failed."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Sync now"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Recent inference calls"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "When"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Provider / model"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Result"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Tokens"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Latency"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Cost"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "ok (streamed)"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "ok"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "error"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Could not load the command list."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "How Agentyllo works"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Agentyllo builds a knowledge base from your pages, posts, products, menus and site settings, keeps it fresh automatically, and answers visitors from it. Classic agents answer without any AI model; optional AI tiers (a local engine you run, or OpenAI/Anthropic with your own key) add natural prose — hard facts such as prices and contact details are always taken verbatim from your content, never generated."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Knowledge Base → choose which content sources are indexed. Disabling a source removes it from answers immediately."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Settings → General → operating mode, assistant name, tone, custom instructions."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "AI Models → optional: cloud keys, a local engine (llama-server/Ollama), embeddings, budget."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Privacy & Legal → pre-chat gate, retention, PII redaction, AI transparency page (EU AI Act Art. 50)."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Copilot (Ctrl+Shift+K on any Agentyllo page) → manage everything by command; every change is proposed first and applied only when you confirm."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Copilot commands"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Command"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "What it does"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Confirmation"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Required"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Proposal → Apply"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Anything that is not a /command is answered from your site content. Files: TXT, Markdown and CSV can be imported from the copilot with a reviewable preview."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Shortcode & filters"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "AI transparency page content (generated from your configuration)."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "extension points for addons and the Local AI companion."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Failed to load statistics."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Deflection rate"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "KB coverage"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Fallback replies"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Open knowledge gaps"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Out-of-scope refusals"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Handoffs"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Avg latency"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Range"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Last 30 days"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Last 90 days (Pro)"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Rollup failed."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Refresh rollups"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Latency per tier"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "No data yet."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Avg"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "p95"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Top intents"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Intent"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Hits"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Answered"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Unanswered questions"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Questions the assistant could not answer from the knowledge base. Add the missing information (Knowledge Base → Entries, or ask the copilot) and mark them resolved."
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Question"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Add to KB via copilot"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Resolved"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Dismiss"
+msgstr ""
+
+#: assets/build/admin.js:25
+msgid "Nothing open — great!"
+msgstr ""
+
+#. translators: %d: days
+#: assets/build/admin.js:25
+#, js-format
+msgid "Rollups are PII-free daily counters kept for 24 months; raw transcripts follow the retention setting. Showing %d days."
 msgstr ""

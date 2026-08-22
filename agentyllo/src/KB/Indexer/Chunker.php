@@ -97,10 +97,12 @@ final class Chunker {
 	 * @return array<int, array{path: string, kind: string, texts: string[]}>
 	 */
 	private function sections( DocumentDraft $draft ): array {
+		/** @var array<int, array{path: string, kind: string, texts: string[]}> $sections */
 		$sections = array();
 		$h2       = '';
 		$h3       = '';
-		$current  = array(
+		/** @var array{path: string, kind: string, texts: string[]} $current */
+		$current = array(
 			'path'  => $draft->title,
 			'kind'  => 'prose',
 			'texts' => array(),

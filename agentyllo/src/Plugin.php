@@ -753,8 +753,7 @@ final class Plugin {
 			static fn ( Container $c ): AgentsController => new AgentsController(
 				$c->get( Registry::class ),
 				$c->get( Quarantine::class ),
-				$c->get( MemoryStore::class ),
-				$c->get( Journal::class )
+				$c->get( MemoryStore::class )
 			)
 		);
 

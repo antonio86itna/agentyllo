@@ -1,0 +1,3376 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Agentyllo\n"
+"Report-Msgid-Bugs-To: https://github.com/antonio86itna/agentyllo/issues\n"
+"Last-Translator: Agentyllo <webmaster.totaliweb@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Agentyllo build\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: assets/build/admin.js:1 agentyllo.php src/Admin/Menu.php:66
+#: src/Admin/Menu.php:67
+msgid "Agentyllo"
+msgstr "Agentyllo"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: agentyllo.php
+msgid "https://www.agentyllo.com"
+msgstr "https://www.agentyllo.com"
+
+#. Description of the plugin
+#: agentyllo.php
+msgid ""
+"Intelligent AI assistant for your site: classic agents, an automatic "
+"knowledge base, free local AI, and optional OpenAI/Anthropic models."
+msgstr ""
+"Assistente AI intelligente per il tuo sito: agenti classici, base di "
+"conoscenza automatica, AI locale gratuita e modelli OpenAI/Anthropic "
+"opzionali."
+
+#. translators: %s: current PHP version.
+#: agentyllo.php:41
+msgid ""
+"Agentyllo requires PHP 8.2 or newer. This server runs PHP %s, so the plugin "
+"stays inactive."
+msgstr ""
+"Agentyllo richiede PHP 8.2 o successivo. Questo server usa PHP %s, quindi il"
+" plugin resta inattivo."
+
+#. translators: %s: current WordPress version.
+#: agentyllo.php:61
+msgid ""
+"Agentyllo requires WordPress 6.8 or newer. This site runs WordPress %s, so "
+"the plugin stays inactive."
+msgstr ""
+"Agentyllo richiede WordPress 6.8 o successivo. Questo sito usa WordPress %s,"
+" quindi il plugin resta inattivo."
+
+#: src/Admin/Assets.php:37
+msgid ""
+"Agentyllo admin assets are not built. Run \"npm install && npm run build\" "
+"in the plugin repository."
+msgstr ""
+"Gli asset admin di Agentyllo non sono compilati. Esegui \"npm install && npm"
+" run build\" nel repository del plugin."
+
+#: src/Admin/Menu.php:37
+msgid "Dashboard"
+msgstr "Bacheca"
+
+#: src/Admin/Menu.php:38
+msgid "Knowledge Base"
+msgstr "Base di conoscenza"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:39
+msgid "Conversations"
+msgstr "Conversazioni"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:40
+msgid "Agents"
+msgstr "Agenti"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:41
+msgid "AI Models"
+msgstr "Modelli AI"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:42
+msgid "Statistics"
+msgstr "Statistiche"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:43
+msgid "Privacy & Legal"
+msgstr "Privacy e legale"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:44
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: assets/build/admin.js:1 src/Admin/Menu.php:45
+msgid "Help"
+msgstr "Aiuto"
+
+#: src/AI/Providers/CloudProvider.php:117
+#: src/AI/Providers/CloudProvider.php:297
+msgid "No API key saved."
+msgstr "Nessuna chiave API salvata."
+
+#: src/AI/Providers/CloudProvider.php:124
+msgid "No model available in the registry for this provider."
+msgstr "Nessun modello disponibile nel registry per questo provider."
+
+#. translators: %s: model id.
+#: src/AI/Providers/CloudProvider.php:152
+msgid "Connected — %s answered."
+msgstr "Connesso — %s ha risposto."
+
+#: src/AI/Providers/CloudProvider.php:289
+msgid "Authentication failed — check the API key."
+msgstr "Autenticazione non riuscita — controlla la chiave API."
+
+#: src/AI/Providers/CloudProvider.php:290
+msgid "Rate limited by the provider — try again in a minute."
+msgstr "Limite di richieste del provider raggiunto — riprova tra un minuto."
+
+#: src/AI/Providers/CloudProvider.php:291
+msgid "Provider overloaded — try again shortly."
+msgstr "Provider sovraccarico — riprova a breve."
+
+#: src/AI/Providers/CloudProvider.php:292
+msgid "Provider server error."
+msgstr "Errore del server del provider."
+
+#: src/AI/Providers/CloudProvider.php:293
+msgid "The provider rejected the request."
+msgstr "Il provider ha rifiutato la richiesta."
+
+#: src/AI/Providers/CloudProvider.php:294
+msgid "The provider did not answer in time."
+msgstr "Il provider non ha risposto in tempo."
+
+#: src/AI/Providers/CloudProvider.php:295
+msgid "Could not reach the provider (network/SSL)."
+msgstr "Impossibile raggiungere il provider (rete/SSL)."
+
+#: src/AI/Providers/CloudProvider.php:296
+msgid "The model declined to answer the probe."
+msgstr "Il modello ha rifiutato di rispondere al test."
+
+#: src/AI/Providers/CloudProvider.php:298
+msgid "No model configured."
+msgstr "Nessun modello configurato."
+
+#: src/AI/Providers/CloudProvider.php:299
+msgid "Unexpected provider response."
+msgstr "Risposta inattesa dal provider."
+
+#: src/AI/Providers/LocalEndpointProvider.php:157
+msgid "No endpoint URL configured."
+msgstr "Nessun URL endpoint configurato."
+
+#. translators: %s: error message.
+#: src/AI/Providers/LocalEndpointProvider.php:181
+msgid "Endpoint unreachable: %s"
+msgstr "Endpoint non raggiungibile: %s"
+
+#. translators: %d: HTTP status.
+#: src/AI/Providers/LocalEndpointProvider.php:193
+msgid "Endpoint answered HTTP %d on /v1/models."
+msgstr "L'endpoint ha risposto HTTP %d su /v1/models."
+
+#. translators: 1: models found, 2: error.
+#: src/AI/Providers/LocalEndpointProvider.php:231
+msgid "Server reachable (%1$s) but generation failed: %2$s"
+msgstr "Server raggiungibile (%1$s) ma la generazione è fallita: %2$s"
+
+#: src/AI/Providers/LocalEndpointProvider.php:232
+msgid "no models listed"
+msgstr "nessun modello elencato"
+
+#. translators: 1: model, 2: tokens/s, 3: models list.
+#: src/AI/Providers/LocalEndpointProvider.php:244
+msgid "Connected — %1$s answered at ~%2$s tok/s. Models: %3$s"
+msgstr "Connesso — %1$s ha risposto a ~%2$s token/s. Modelli: %3$s"
+
+#: src/Chat/Pipeline/Pipeline.php:95
+msgid ""
+"I couldn't find an answer to that in this site's content. Could you "
+"rephrase, or ask me something about this site?"
+msgstr ""
+"Non ho trovato una risposta nei contenuti di questo sito. Puoi riformulare, "
+"oppure chiedermi qualcosa su questo sito?"
+
+#: src/Chat/Stages/AiComposeStage.php:320 src/Chat/Stages/ComposeStage.php:541
+msgid ""
+"Just so you know: I reply in this site's language. I hope the answer below "
+"still helps!"
+msgstr ""
+"Solo per informarti: rispondo nella lingua di questo sito. Spero che la "
+"risposta qui sotto ti sia comunque utile!"
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ComposeStage.php:159
+msgid "Here is what I found on %s:"
+msgstr "Ecco cosa ho trovato su %s:"
+
+#: src/Chat/Stages/ComposeStage.php:259
+msgid "Here is the page you are looking for:"
+msgstr "Ecco la pagina che stai cercando:"
+
+#: src/Chat/Stages/ComposeStage.php:260
+msgid "These pages should be what you are looking for:"
+msgstr "Queste pagine dovrebbero essere ciò che stai cercando:"
+
+#: src/Chat/Stages/ComposeStage.php:282
+msgid "contact"
+msgstr "contatti"
+
+#: src/Chat/Stages/ComposeStage.php:476
+msgid "Price"
+msgstr "Prezzo"
+
+#: src/Chat/Stages/ComposeStage.php:477
+msgid "Availability"
+msgstr "Disponibilità"
+
+#: src/Chat/Stages/ComposeStage.php:478
+msgid "Phone"
+msgstr "Telefono"
+
+#: src/Chat/Stages/ComposeStage.php:479
+msgid "Email"
+msgstr "Email"
+
+#: src/Chat/Stages/ComposeStage.php:480
+msgid "Address"
+msgstr "Indirizzo"
+
+#: src/Chat/Stages/ComposeStage.php:481
+msgid "Currency"
+msgstr "Valuta"
+
+#. translators: %d: number of units in stock.
+#: src/Chat/Stages/RouteStage.php:219
+msgid "In stock (%d available)"
+msgstr "Disponibile (%d pezzi)"
+
+#: src/Chat/Stages/RouteStage.php:222 src/Rest/ConfigController.php:146
+msgid "In stock"
+msgstr "Disponibile"
+
+#: src/Chat/Stages/RouteStage.php:225 src/Rest/ConfigController.php:148
+msgid "Out of stock"
+msgstr "Esaurito"
+
+#: src/Chat/Stages/RouteStage.php:228
+msgid "Available on backorder"
+msgstr "Disponibile su ordinazione"
+
+#: src/Chat/Stages/ScopeGuardStage.php:208
+msgid "ignore previous instructions"
+msgstr "ignora le istruzioni precedenti"
+
+#: src/Chat/Stages/ScopeGuardStage.php:209
+msgid "ignore all instructions"
+msgstr "ignora tutte le istruzioni"
+
+#: src/Chat/Stages/ScopeGuardStage.php:210
+msgid "disregard your rules"
+msgstr "ignora le tue regole"
+
+#: src/Chat/Stages/ScopeGuardStage.php:211
+msgid "system prompt"
+msgstr "system prompt"
+
+#: src/Chat/Stages/ScopeGuardStage.php:212
+msgid "developer mode"
+msgstr "developer mode"
+
+#: src/Chat/Stages/ScopeGuardStage.php:213
+msgid "jailbreak"
+msgstr "jailbreak"
+
+#: src/Chat/Stages/ScopeGuardStage.php:214
+msgid "pretend you are"
+msgstr "fingi di essere"
+
+#: src/Chat/Stages/ScopeGuardStage.php:215
+msgid "act as an ai without"
+msgstr "comportati come un'ai senza"
+
+#: src/Chat/Stages/ScopeGuardStage.php:221
+msgid "porn"
+msgstr "porno"
+
+#: src/Chat/Stages/ScopeGuardStage.php:222
+msgid "nsfw"
+msgstr "nsfw"
+
+#: src/Chat/Stages/ScopeGuardStage.php:223
+msgid "xxx"
+msgstr "xxx"
+
+#: src/Chat/Stages/ScopeGuardStage.php:224
+msgid "explicit sexual"
+msgstr "sesso esplicito"
+
+#: src/Chat/Stages/ScopeGuardStage.php:225
+msgid "nude photos"
+msgstr "foto di nudo"
+
+#: src/Chat/Stages/ScopeGuardStage.php:226
+msgid "escort service"
+msgstr "servizio escort"
+
+#: src/Chat/Stages/ScopeGuardStage.php:232
+msgid "write code"
+msgstr "scrivi codice"
+
+#: src/Chat/Stages/ScopeGuardStage.php:233
+msgid "write a function"
+msgstr "scrivi una funzione"
+
+#: src/Chat/Stages/ScopeGuardStage.php:234
+msgid "write a script"
+msgstr "scrivi uno script"
+
+#: src/Chat/Stages/ScopeGuardStage.php:235
+msgid "debug my code"
+msgstr "correggi il mio codice"
+
+#: src/Chat/Stages/ScopeGuardStage.php:236
+msgid "fix my code"
+msgstr "sistema il mio codice"
+
+#: src/Chat/Stages/ScopeGuardStage.php:237
+msgid "python script"
+msgstr "script python"
+
+#: src/Chat/Stages/ScopeGuardStage.php:238
+msgid "javascript function"
+msgstr "funzione javascript"
+
+#: src/Chat/Stages/ScopeGuardStage.php:239
+msgid "sql query"
+msgstr "query sql"
+
+#: src/Chat/Stages/ScopeGuardStage.php:240
+msgid "stack trace"
+msgstr "stack trace"
+
+#: src/Chat/Stages/ScopeGuardStage.php:241
+msgid "compile error"
+msgstr "errore di compilazione"
+
+#: src/Chat/Stages/ScopeGuardStage.php:247
+msgid "medical advice"
+msgstr "consiglio medico"
+
+#: src/Chat/Stages/ScopeGuardStage.php:248
+msgid "diagnose"
+msgstr "diagnosticare"
+
+#: src/Chat/Stages/ScopeGuardStage.php:249
+msgid "diagnosis"
+msgstr "diagnosi"
+
+#: src/Chat/Stages/ScopeGuardStage.php:250
+msgid "what medication"
+msgstr "quale farmaco"
+
+#: src/Chat/Stages/ScopeGuardStage.php:251
+msgid "dosage"
+msgstr "dosaggio"
+
+#: src/Chat/Stages/ScopeGuardStage.php:252
+msgid "symptoms of"
+msgstr "sintomi di"
+
+#: src/Chat/Stages/ScopeGuardStage.php:253
+msgid "prescription for"
+msgstr "ricetta per"
+
+#: src/Chat/Stages/ScopeGuardStage.php:259
+msgid "legal advice"
+msgstr "consulenza legale"
+
+#: src/Chat/Stages/ScopeGuardStage.php:260
+msgid "lawsuit"
+msgstr "causa legale"
+
+#: src/Chat/Stages/ScopeGuardStage.php:261
+msgid "sue them"
+msgstr "fargli causa"
+
+#: src/Chat/Stages/ScopeGuardStage.php:262
+msgid "is it legal"
+msgstr "è legale"
+
+#: src/Chat/Stages/ScopeGuardStage.php:263
+msgid "contract clause"
+msgstr "clausola contrattuale"
+
+#: src/Chat/Stages/ScopeGuardStage.php:264
+msgid "hire a lawyer"
+msgstr "assumere un avvocato"
+
+#: src/Chat/Stages/ScopeGuardStage.php:270
+msgid "financial advice"
+msgstr "consulenza finanziaria"
+
+#: src/Chat/Stages/ScopeGuardStage.php:271
+msgid "investment advice"
+msgstr "consiglio di investimento"
+
+#: src/Chat/Stages/ScopeGuardStage.php:272
+msgid "should i invest"
+msgstr "dovrei investire"
+
+#: src/Chat/Stages/ScopeGuardStage.php:273
+msgid "stock tips"
+msgstr "consigli di borsa"
+
+#: src/Chat/Stages/ScopeGuardStage.php:274
+msgid "buy bitcoin"
+msgstr "comprare bitcoin"
+
+#: src/Chat/Stages/ScopeGuardStage.php:275
+msgid "crypto price"
+msgstr "prezzo crypto"
+
+#: src/Chat/Stages/ScopeGuardStage.php:281
+msgid "who should i vote"
+msgstr "chi dovrei votare"
+
+#: src/Chat/Stages/ScopeGuardStage.php:282
+msgid "political party"
+msgstr "partito politico"
+
+#: src/Chat/Stages/ScopeGuardStage.php:283
+msgid "election fraud"
+msgstr "brogli elettorali"
+
+#: src/Chat/Stages/ScopeGuardStage.php:284
+msgid "immigration policy"
+msgstr "politica migratoria"
+
+#: src/Chat/Stages/ScopeGuardStage.php:290
+msgid "my homework"
+msgstr "i miei compiti"
+
+#: src/Chat/Stages/ScopeGuardStage.php:291
+msgid "homework help"
+msgstr "aiuto con i compiti"
+
+#: src/Chat/Stages/ScopeGuardStage.php:292
+msgid "solve this equation"
+msgstr "risolvi questa equazione"
+
+#: src/Chat/Stages/ScopeGuardStage.php:293
+msgid "essay for school"
+msgstr "tema per la scuola"
+
+#: src/Chat/Stages/ScopeGuardStage.php:294
+msgid "math problem"
+msgstr "problema di matematica"
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ScopeGuardStage.php:327
+msgid "I can only help with questions about %s."
+msgstr "Posso aiutarti solo con domande su %s."
+
+#. translators: %s: site name.
+#: src/Chat/Stages/ScopeGuardStage.php:330
+msgid ""
+"That is outside what I can help with — I am the assistant for %s, so I only "
+"answer questions about this site and its content."
+msgstr ""
+"Questo esula da ciò su cui posso aiutarti: sono l'assistente di %s, quindi "
+"rispondo solo a domande su questo sito e i suoi contenuti."
+
+#: src/Chat/Stages/ScopeGuardStage.php:343
+msgid "Here are a few things you can ask me:"
+msgstr "Ecco alcune cose che puoi chiedermi:"
+
+#. translators: %s: knowledge-base document title.
+#: src/Chat/Stages/ScopeGuardStage.php:346
+msgid "Tell me about \"%s\""
+msgstr "Parlami di \"%s\""
+
+#. translators: %s: product title.
+#: src/Chat/StarterSuggestions.php:132
+msgid "Do you have %s?"
+msgstr "Avete %s?"
+
+#: src/Chat/StarterSuggestions.php:136
+msgid "What is this site about?"
+msgstr "Di cosa parla questo sito?"
+
+#: src/Chat/StarterSuggestions.php:141
+msgid "What are your shipping options?"
+msgstr "Quali sono le opzioni di spedizione?"
+
+#: src/Chat/StarterSuggestions.php:144
+msgid "How can I contact you?"
+msgstr "Come posso contattarvi?"
+
+#: src/Chat/StarterSuggestions.php:147
+msgid "What is your return policy?"
+msgstr "Qual è la vostra politica sui resi?"
+
+#. translators: %s: page or article title.
+#. translators: %s: title of a page/product from the knowledge base.
+#: src/Chat/StarterSuggestions.php:151 src/Rest/ConfigController.php:266
+msgid "Tell me about %s"
+msgstr "Parlami di %s"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:64
+msgid "Hello, and welcome to %1$s. How may I assist you today?"
+msgstr "Salve, e benvenuto su %1$s. Come posso esserti utile oggi?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:66
+msgid ""
+"Good day — you have reached the %1$s assistant. What can I help you with?"
+msgstr ""
+"Buongiorno — hai raggiunto l'assistente di %1$s. In cosa posso aiutarti?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:68
+msgid "Welcome to %1$s. Please let me know what you are looking for."
+msgstr "Benvenuto su %1$s. Dimmi pure cosa stai cercando."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:70
+msgid "Hello. I am the assistant for %1$s — how can I be of service?"
+msgstr "Salve. Sono l'assistente di %1$s — come posso esserti d'aiuto?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:74
+msgid "Hi there! Welcome to %1$s — what can I help you with?"
+msgstr "Ciao! Benvenuto su %1$s — in cosa posso aiutarti?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:76
+msgid "Hello! Great to see you on %1$s. What are you looking for today?"
+msgstr "Ciao! Che bello vederti su %1$s. Cosa cerchi oggi?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:78
+msgid "Hi! I'm the %1$s assistant. Ask me anything about this site."
+msgstr ""
+"Ciao! Sono l'assistente di %1$s. Chiedimi qualsiasi cosa su questo sito."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:80
+msgid "Hey! Happy to help you find your way around %1$s."
+msgstr "Ehi! Felice di aiutarti a orientarti su %1$s."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:84
+msgid "Well hello! You've reached %1$s — fire away!"
+msgstr "Ma ciao! Sei su %1$s — spara pure!"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:86
+msgid "Hey hey! Welcome to %1$s. What shall we explore today?"
+msgstr "Ehi ehi! Benvenuto su %1$s. Cosa esploriamo oggi?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:88
+msgid "Hi! I know %1$s inside out. What do you need?"
+msgstr "Ciao! Conosco %1$s come le mie tasche. Di cosa hai bisogno?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:90
+msgid "Greetings, traveler! What brings you to %1$s today?"
+msgstr "Salve, viaggiatore! Cosa ti porta su %1$s oggi?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:96
+msgid ""
+"I appreciate the conversation. I am best at questions about %1$s — what "
+"would you like to know?"
+msgstr ""
+"Apprezzo la conversazione. Do il meglio con le domande su %1$s — cosa "
+"vorresti sapere?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:98
+msgid ""
+"Thank you. My expertise is %1$s and its content — feel free to ask about it."
+msgstr "Grazie. La mia specialità è %1$s e i suoi contenuti — chiedimi pure."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:100
+msgid "Noted. Is there anything about %1$s I can help you with?"
+msgstr "Preso nota. C'è qualcosa su %1$s in cui posso aiutarti?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:102
+msgid "I am doing well, thank you. How can I assist you with %1$s?"
+msgstr "Sto bene, grazie. Come posso aiutarti con %1$s?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:106
+msgid ""
+"Ha, I like the chat! I'm most useful with questions about %1$s though — what"
+" can I find for you?"
+msgstr ""
+"Ah, mi piace chiacchierare! Ma sono più utile con le domande su %1$s — cosa "
+"posso trovarti?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:108
+msgid "All good here! Anything about %1$s you'd like to know?"
+msgstr "Tutto bene qui! C'è qualcosa su %1$s che vorresti sapere?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:110
+msgid "Thanks! I spend my days reading %1$s, so ask me anything about it."
+msgstr ""
+"Grazie! Passo le giornate a leggere %1$s, quindi chiedimi qualsiasi cosa."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:112
+msgid "Doing great, thanks for asking! Now, what can I help you with on %1$s?"
+msgstr ""
+"Alla grande, grazie per averlo chiesto! Allora, in cosa posso aiutarti su "
+"%1$s?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:116
+msgid "You flatter me! But my one true love is %1$s — ask me about it!"
+msgstr "Mi lusinghi! Ma il mio unico vero amore è %1$s — chiedimi di lui!"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:118
+msgid "Living the dream — one question about %1$s at a time. Got one for me?"
+msgstr "Vivo il sogno — una domanda su %1$s alla volta. Ne hai una per me?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:120
+msgid "Chit-chat accepted! Now let's talk %1$s — what do you need?"
+msgstr "Chiacchiere accettate! Ora parliamo di %1$s — di cosa hai bisogno?"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:122
+msgid ""
+"I could talk all day, but I'm even better at finding things on %1$s. Try me!"
+msgstr ""
+"Potrei parlare tutto il giorno, ma sono ancora più bravo a trovare cose su "
+"%1$s. Mettimi alla prova!"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:128
+msgid "Certainly. Here is how you can reach the team behind %1$s directly."
+msgstr "Certamente. Ecco come raggiungere direttamente il team di %1$s."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:130
+msgid "Of course. You can contact the %1$s team through the details below."
+msgstr ""
+"Naturalmente. Puoi contattare il team di %1$s con i recapiti qui sotto."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:132
+msgid "Understood. The best way to reach a person at %1$s is below."
+msgstr ""
+"Capito. Il modo migliore per raggiungere una persona di %1$s è qui sotto."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:134
+msgid "I will step aside — here is how to contact the %1$s team directly."
+msgstr ""
+"Mi faccio da parte — ecco come contattare direttamente il team di %1$s."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:138
+msgid "No problem! Here's how to reach a real person at %1$s."
+msgstr "Nessun problema! Ecco come raggiungere una persona vera di %1$s."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:140
+msgid ""
+"Sure thing — the %1$s team is happy to help. Here are their contact details."
+msgstr ""
+"Certo — il team di %1$s sarà felice di aiutarti. Ecco i loro recapiti."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:142
+msgid ""
+"Absolutely! You can get in touch with the %1$s team using the details below."
+msgstr ""
+"Assolutamente! Puoi metterti in contatto con il team di %1$s con i recapiti "
+"qui sotto."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:144
+msgid "Happy to connect you! Here's how to contact the people behind %1$s."
+msgstr ""
+"Felice di metterti in contatto! Ecco come contattare le persone dietro %1$s."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:148
+msgid "Summoning the humans of %1$s! Here's how to reach them."
+msgstr "Evoco gli umani di %1$s! Ecco come raggiungerli."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:150
+msgid ""
+"Fair enough — sometimes only a human will do. The %1$s team awaits below!"
+msgstr ""
+"Giusto — a volte serve proprio un umano. Il team di %1$s ti aspetta qui "
+"sotto!"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:152
+msgid "Passing the mic to the %1$s crew — here's where to find them."
+msgstr "Passo il microfono alla squadra di %1$s — ecco dove trovarli."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:154
+msgid "Human backup, coming right up! Contact the %1$s team below."
+msgstr "Rinforzi umani in arrivo! Contatta il team di %1$s qui sotto."
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:162
+msgid "Here is what I found on %1$s that may help:"
+msgstr "Ecco cosa ho trovato su %1$s che potrebbe aiutarti:"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:164
+msgid "These pages on %1$s are the closest match to your question:"
+msgstr "Queste pagine di %1$s sono le più vicine alla tua domanda:"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:168
+msgid "Here's what I found on %1$s:"
+msgstr "Ecco cosa ho trovato su %1$s:"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:170
+msgid ""
+"I couldn't pin down an exact answer, but these pages on %1$s should help:"
+msgstr ""
+"Non ho trovato una risposta esatta, ma queste pagine di %1$s dovrebbero "
+"aiutarti:"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:174
+msgid "Not a bullseye, but close! Here's what %1$s has on that:"
+msgstr ""
+"Non un centro perfetto, ma ci siamo vicini! Ecco cosa dice %1$s a riguardo:"
+
+#. translators: %1$s: site name.
+#: src/Chat/Templates.php:176
+msgid ""
+"I dug through %1$s and surfaced these — one of them should do the trick:"
+msgstr ""
+"Ho scavato in %1$s e ho trovato queste — una dovrebbe fare al caso tuo:"
+
+#: src/Compliance/AiAct.php:67
+msgid "AI Assistant Transparency"
+msgstr "Trasparenza dell'assistente AI"
+
+#: src/Compliance/AiAct.php:90
+msgid ""
+"Classic (non-generative) agents: answers are extracted verbatim from this "
+"site's own content."
+msgstr ""
+"Agenti classici (non generativi): le risposte sono estratte alla lettera dai"
+" contenuti di questo sito."
+
+#: src/Compliance/AiAct.php:92
+msgid ""
+"Local AI models running on this website's own server (no data leaves the "
+"server)."
+msgstr ""
+"Modelli AI locali in esecuzione sul server di questo sito (nessun dato "
+"lascia il server)."
+
+#: src/Compliance/AiAct.php:95
+msgid ""
+"Third-party AI providers configured by the site owner (see data flows "
+"below)."
+msgstr ""
+"Provider AI di terze parti configurati dal proprietario del sito (vedi i "
+"flussi di dati qui sotto)."
+
+#: src/Compliance/AiAct.php:103
+msgid "About the AI assistant on this site"
+msgstr "Informazioni sull'assistente AI di questo sito"
+
+#. translators: %s: site name
+#: src/Compliance/AiAct.php:104
+msgid ""
+"The chat assistant on %s is an automated system. You are not talking to a "
+"human. This page explains how it works, what data it processes, and how to "
+"reach a person."
+msgstr ""
+"L'assistente in chat su %s è un sistema automatizzato. Non stai parlando con"
+" un umano. Questa pagina spiega come funziona, quali dati tratta e come "
+"raggiungere una persona."
+
+#: src/Compliance/AiAct.php:106
+msgid "Who operates it"
+msgstr "Chi lo gestisce"
+
+#. translators: %s: site name
+#: src/Compliance/AiAct.php:107
+msgid ""
+"Deployer: the owner of %s. Software: Agentyllo (open source, GPL). Where "
+"third-party AI providers are enabled, they act as model providers."
+msgstr ""
+"Deployer: il proprietario di %s. Software: Agentyllo (open source, GPL). "
+"Dove sono attivi provider AI di terze parti, questi agiscono come fornitori "
+"dei modelli."
+
+#: src/Compliance/AiAct.php:109
+msgid "How answers are produced"
+msgstr "Come vengono prodotte le risposte"
+
+#: src/Compliance/AiAct.php:116
+msgid "What data is processed"
+msgstr "Quali dati vengono trattati"
+
+#: src/Compliance/AiAct.php:118
+msgid "The messages you type into the chat and the assistant's replies."
+msgstr "I messaggi che digiti in chat e le risposte dell'assistente."
+
+#: src/Compliance/AiAct.php:120
+msgid "The name and email address you provide before starting a chat."
+msgstr "Il nome e l'indirizzo email che fornisci prima di iniziare una chat."
+
+#: src/Compliance/AiAct.php:122
+msgid "Your IP address is not stored."
+msgstr "Il tuo indirizzo IP non viene memorizzato."
+
+#: src/Compliance/AiAct.php:122
+msgid ""
+"A one-way hash of your IP address (rotated monthly) for abuse prevention — "
+"never the raw address."
+msgstr ""
+"Un hash irreversibile del tuo indirizzo IP (ruotato mensilmente) per "
+"prevenire abusi — mai l'indirizzo in chiaro."
+
+#: src/Compliance/AiAct.php:124
+msgid ""
+"When third-party AI providers are enabled, your message and relevant "
+"excerpts of this site's public content are sent to that provider to generate"
+" the answer."
+msgstr ""
+"Quando sono attivi provider AI di terze parti, il tuo messaggio ed estratti "
+"pertinenti dei contenuti pubblici di questo sito vengono inviati a quel "
+"provider per generare la risposta."
+
+#: src/Compliance/AiAct.php:127
+msgid "Conversations are kept until deleted by the site owner."
+msgstr ""
+"Le conversazioni sono conservate finché il proprietario del sito non le "
+"elimina."
+
+#. translators: %d: number of days
+#: src/Compliance/AiAct.php:127
+msgid "Conversations are deleted automatically after %d day."
+msgid_plural "Conversations are deleted automatically after %d days."
+msgstr[0] "Le conversazioni vengono eliminate automaticamente dopo %d giorno."
+msgstr[1] "Le conversazioni vengono eliminate automaticamente dopo %d giorni."
+
+#: src/Compliance/AiAct.php:129
+msgid "Limitations"
+msgstr "Limiti"
+
+#: src/Compliance/AiAct.php:130
+msgid ""
+"The assistant can make mistakes. It only answers questions about this site "
+"and its content. Always verify important information (prices, availability, "
+"legal or medical matters) through the official channels."
+msgstr ""
+"L'assistente può commettere errori. Risponde solo a domande su questo sito e"
+" i suoi contenuti. Verifica sempre le informazioni importanti (prezzi, "
+"disponibilità, questioni legali o mediche) attraverso i canali ufficiali."
+
+#: src/Compliance/AiAct.php:132
+msgid "Talk to a person / your rights"
+msgstr "Parlare con una persona / i tuoi diritti"
+
+#: src/Compliance/AiAct.php:133
+msgid ""
+"You can ask the assistant to connect you with a human at any time. To "
+"access, export or delete the data the assistant holds about you, contact the"
+" site owner via the contact details published on this site."
+msgstr ""
+"Puoi chiedere all'assistente di metterti in contatto con un umano in "
+"qualsiasi momento. Per accedere, esportare o eliminare i dati che "
+"l'assistente conserva su di te, contatta il proprietario del sito tramite i "
+"recapiti pubblicati su questo sito."
+
+#: src/Compliance/AiAct.php:136
+msgid "Additional information"
+msgstr "Informazioni aggiuntive"
+
+#. translators: %s: date
+#: src/Compliance/AiAct.php:140
+msgid "Last updated: %s"
+msgstr "Ultimo aggiornamento: %s"
+
+#: src/Compliance/Dsar.php:157 src/Compliance/Dsar.php:171
+msgid "Agentyllo chat"
+msgstr "Chat di Agentyllo"
+
+#: src/Compliance/Dsar.php:194
+msgid "Agentyllo conversations"
+msgstr "Conversazioni di Agentyllo"
+
+#: assets/build/admin.js:1 src/Compliance/Dsar.php:197
+msgid "Started"
+msgstr "Iniziata"
+
+#: assets/build/admin.js:1 src/Compliance/Dsar.php:198
+msgid "Language"
+msgstr "Lingua"
+
+#: src/Compliance/Dsar.php:199
+msgid "Transcript"
+msgstr "Trascrizione"
+
+#: src/Copilot/ActionRegistry.php:128 src/Copilot/ActionRegistry.php:217
+#: src/Copilot/ActionRegistry.php:249
+msgid "Unknown action."
+msgstr "Azione sconosciuta."
+
+#. translators: %s: argument name
+#: src/Copilot/ActionRegistry.php:138
+msgid "Missing argument: %s"
+msgstr "Argomento mancante: %s"
+
+#. translators: %s: argument name
+#: src/Copilot/ActionRegistry.php:152
+msgid "Argument %s must be a number."
+msgstr "L'argomento %s deve essere un numero."
+
+#. translators: 1: argument name, 2: allowed values
+#: src/Copilot/ActionRegistry.php:173
+msgid "Argument %1$s must be one of: %2$s"
+msgstr "L'argomento %1$s deve essere uno tra: %2$s"
+
+#. translators: %s: action id
+#: src/Copilot/Copilot.php:74
+msgid "I do not know the action \"%s\". Type /help to see what I can do."
+msgstr "Non conosco l'azione \"%s\". Digita /help per vedere cosa so fare."
+
+#: src/Copilot/Copilot.php:77 src/Copilot/Copilot.php:128
+msgid "You do not have permission for that action."
+msgstr "Non hai i permessi per questa azione."
+
+#. translators: %s: usage
+#: src/Copilot/Copilot.php:94
+msgid "Usage: `%s`"
+msgstr "Uso: `%s`"
+
+#: src/Copilot/Copilot.php:135
+msgid ""
+"This confirmation expired or was already used — please repeat the command."
+msgstr "Questa conferma è scaduta o è già stata usata — ripeti il comando."
+
+#. translators: %s: page title
+#: src/Copilot/Copilot.php:239
+msgid "From your site content (\"%s\"):"
+msgstr "Dai contenuti del tuo sito (\"%s\"):"
+
+#: src/Copilot/Copilot.php:259
+msgid ""
+"I could not find that in your site content. I can run commands for you — try"
+" `/help`, or ask e.g. `/kb add title:\"Opening hours\" content:\"We are open"
+" Mon–Fri 9–18\"`."
+msgstr ""
+"Non l'ho trovato nei contenuti del tuo sito. Posso eseguire comandi per te —"
+" prova `/help`, oppure ad esempio `/kb add title:\"Orari di apertura\" "
+"content:\"Siamo aperti lun–ven 9–18\"`."
+
+#: src/Copilot/Copilot.php:270
+msgid ""
+"Here is what I can do (every change is proposed first and applied only when "
+"you confirm):"
+msgstr ""
+"Ecco cosa so fare (ogni modifica viene prima proposta e applicata solo "
+"quando confermi):"
+
+#: src/Copilot/Copilot.php:275
+msgid "(asks for confirmation)"
+msgstr "(chiede conferma)"
+
+#: src/Copilot/Copilot.php:278
+msgid "Anything else you type is answered from your site content."
+msgstr ""
+"Qualsiasi altra cosa digiti riceve risposta dai contenuti del tuo sito."
+
+#: src/Copilot/CoreActions.php:67
+msgid ""
+"Add a manual knowledge-base entry (note or FAQ) that the assistant can quote"
+" immediately."
+msgstr ""
+"Aggiunge una voce manuale alla base di conoscenza (nota o FAQ) che "
+"l'assistente può citare subito."
+
+#. translators: %s: title
+#: src/Copilot/CoreActions.php:76
+msgid "Create KB entry \"%s\""
+msgstr "Crea voce KB \"%s\""
+
+#. translators: %d: document id
+#: src/Copilot/CoreActions.php:84
+msgid "Entry #%d added to the knowledge base."
+msgstr "Voce #%d aggiunta alla base di conoscenza."
+
+#. translators: %d: document id
+#: src/Copilot/CoreActions.php:84
+msgid "Could not save the entry."
+msgstr "Impossibile salvare la voce."
+
+#: src/Copilot/CoreActions.php:95
+msgid "Update the title or content of a manual KB entry."
+msgstr "Aggiorna il titolo o il contenuto di una voce KB manuale."
+
+#: src/Copilot/CoreActions.php:106 src/Copilot/CoreActions.php:136
+#: src/Copilot/CoreActions.php:145
+msgid "Entry not found."
+msgstr "Voce non trovata."
+
+#. translators: 1: id, 2: title
+#: src/Copilot/CoreActions.php:106
+msgid "Update entry #%1$d \"%2$s\""
+msgstr "Aggiorna voce #%1$d \"%2$s\""
+
+#: src/Copilot/CoreActions.php:115
+msgid "Entry updated."
+msgstr "Voce aggiornata."
+
+#: src/Copilot/CoreActions.php:115
+msgid "Entry not found or nothing to update."
+msgstr "Voce non trovata o niente da aggiornare."
+
+#: src/Copilot/CoreActions.php:126
+msgid "Move a manual KB entry to the trash (restorable for 30 days)."
+msgstr ""
+"Sposta una voce KB manuale nel cestino (ripristinabile per 30 giorni)."
+
+#. translators: 1: id, 2: title
+#: src/Copilot/CoreActions.php:136
+msgid "Trash entry #%1$d \"%2$s\" (undo available for 30 days)"
+msgstr "Cestina voce #%1$d \"%2$s\" (annullabile per 30 giorni)"
+
+#: src/Copilot/CoreActions.php:145
+msgid "Entry moved to the trash."
+msgstr "Voce spostata nel cestino."
+
+#: src/Copilot/CoreActions.php:156
+msgid "Restore a trashed manual KB entry."
+msgstr "Ripristina una voce KB manuale dal cestino."
+
+#: src/Copilot/CoreActions.php:164
+msgid "Entry restored."
+msgstr "Voce ripristinata."
+
+#: src/Copilot/CoreActions.php:164
+msgid "Nothing to restore."
+msgstr "Niente da ripristinare."
+
+#: src/Copilot/CoreActions.php:175
+msgid "List recent manual KB entries."
+msgstr "Elenca le voci KB manuali recenti."
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:183
+msgid "%d manual entry."
+msgid_plural "%d manual entries."
+msgstr[0] "%d voce manuale."
+msgstr[1] "%d voci manuali."
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:183
+msgid "No manual entries yet."
+msgstr "Ancora nessuna voce manuale."
+
+#: src/Copilot/CoreActions.php:194
+msgid "Start a full re-crawl of the knowledge base (background)."
+msgstr ""
+"Avvia una nuova scansione completa della base di conoscenza (in background)."
+
+#: src/Copilot/CoreActions.php:204
+msgid "Re-crawl scheduled — it runs in the background."
+msgstr "Scansione pianificata — viene eseguita in background."
+
+#: src/Copilot/CoreActions.php:204
+msgid "Nothing to crawl for that source."
+msgstr "Niente da scansionare per questa fonte."
+
+#: src/Copilot/CoreActions.php:215
+msgid "Read a non-secret setting."
+msgstr "Legge un'impostazione non segreta."
+
+#: src/Copilot/CoreActions.php:225
+msgid "That setting is not readable through the copilot."
+msgstr "Questa impostazione non è leggibile dal copilot."
+
+#: src/Copilot/CoreActions.php:242
+msgid "Change a non-secret setting (schema-validated)."
+msgstr "Modifica un'impostazione non segreta (validata da schema)."
+
+#: src/Copilot/CoreActions.php:254 src/Copilot/CoreActions.php:268
+msgid "That setting cannot be changed through the copilot."
+msgstr "Questa impostazione non può essere modificata dal copilot."
+
+#. translators: 1: tab, 2: key
+#: src/Copilot/CoreActions.php:260
+msgid "Change %1$s.%2$s"
+msgstr "Modifica %1$s.%2$s"
+
+#: src/Copilot/CoreActions.php:285
+msgid ""
+"Teach the assistant a fact about your business (used by the composer, e.g. "
+"\"we close in August\")."
+msgstr ""
+"Insegna all'assistente un fatto sulla tua attività (usato dal compositore, "
+"es. \"chiudiamo ad agosto\")."
+
+#: src/Copilot/CoreActions.php:297
+msgid "Got it — I will remember that."
+msgstr "Capito — me lo ricorderò."
+
+#: src/Copilot/CoreActions.php:306
+msgid "Show what the assistant has been taught."
+msgstr "Mostra cosa è stato insegnato all'assistente."
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:314
+msgid "%d remembered fact."
+msgid_plural "%d remembered facts."
+msgstr[0] "%d fatto memorizzato."
+msgstr[1] "%d fatti memorizzati."
+
+#. translators: %d: count
+#: src/Copilot/CoreActions.php:314
+msgid "Nothing taught yet."
+msgstr "Ancora niente di insegnato."
+
+#: src/Copilot/CoreActions.php:334
+msgid ""
+"Summarize conversations, resolution and top unanswered questions for a "
+"period."
+msgstr ""
+"Riassume conversazioni, risoluzione e principali domande senza risposta per "
+"un periodo."
+
+#. translators: 1: days, 2: conversations, 3: messages, 4: unanswered
+#: src/Copilot/CoreActions.php:346
+msgid "Last %1$d days: %2$d conversations, %3$d messages, %4$d unanswered."
+msgstr ""
+"Ultimi %1$d giorni: %2$d conversazioni, %3$d messaggi, %4$d senza risposta."
+
+#: src/Copilot/FileIngest.php:52
+msgid "File too large (max 3 MB)."
+msgstr "File troppo grande (max 3 MB)."
+
+#. translators: %s: comma-separated extensions.
+#: src/Copilot/FileIngest.php:74
+msgid ""
+"Unsupported file type. Supported: %s. PDF and spreadsheets are supported by "
+"the extended build; you can also paste text directly."
+msgstr ""
+"Tipo di file non supportato. Supportati: %s. PDF e fogli di calcolo sono "
+"supportati dalla build estesa; puoi anche incollare il testo direttamente."
+
+#: src/Copilot/FileIngest.php:87
+msgid "No usable text found in the file."
+msgstr "Nessun testo utilizzabile trovato nel file."
+
+#: src/Copilot/FileIngest.php:199
+msgid "Could not read the file."
+msgstr "Impossibile leggere il file."
+
+#: src/KB/Source/ManualAdapter.php:55
+msgid "Notes"
+msgstr "Note"
+
+#: src/KB/Source/ManualAdapter.php:56
+msgid "FAQs"
+msgstr "FAQ"
+
+#: src/KB/Source/ManualAdapter.php:57
+msgid "Uploads"
+msgstr "Caricamenti"
+
+#: assets/build/admin.js:1 src/KB/Source/MenuAdapter.php:47
+msgid "Menus"
+msgstr "Menu"
+
+#: assets/build/admin.js:1 src/KB/Source/SiteIdentityAdapter.php:51
+#: src/KB/Source/SiteIdentityAdapter.php:136
+msgid "Site identity"
+msgstr "Identità del sito"
+
+#. translators: %d: number of published items assigned to the term.
+#: src/KB/Source/TaxonomyAdapter.php:170
+msgid "Contains %d item"
+msgid_plural "Contains %d items"
+msgstr[0] "Contiene %d elemento"
+msgstr[1] "Contiene %d elementi"
+
+#: assets/build/admin.js:1 src/KB/Source/WooProductAdapter.php:76
+msgid "Products"
+msgstr "Prodotti"
+
+#: src/KB/Source/WooProductAdapter.php:595
+msgid "Customer reviews"
+msgstr "Recensioni dei clienti"
+
+#: src/KB/Source/WooProductAdapter.php:635
+msgid "Related products"
+msgstr "Prodotti correlati"
+
+#: src/Registry/RemoteSync.php:61
+msgid "Registry unreachable."
+msgstr "Registry non raggiungibile."
+
+#: src/Registry/RemoteSync.php:66
+msgid "Registry signature unavailable."
+msgstr "Firma del registry non disponibile."
+
+#: src/Registry/RemoteSync.php:70
+msgid "Registry signature verification failed — manifest rejected."
+msgstr "Verifica della firma del registry fallita — manifest rifiutato."
+
+#: src/Registry/RemoteSync.php:75
+msgid "Registry manifest malformed."
+msgstr "Manifest del registry malformato."
+
+#: src/Registry/RemoteSync.php:81
+msgid "Registry rollback rejected (older sequence)."
+msgstr "Rollback del registry rifiutato (sequenza più vecchia)."
+
+#: src/Registry/RemoteSync.php:95
+msgid "Registry synced."
+msgstr "Registry sincronizzato."
+
+#: src/Rest/AgentsController.php:157 src/Rest/AgentsController.php:175
+#: src/Rest/AgentsController.php:193
+msgid "Unknown agent."
+msgstr "Agente sconosciuto."
+
+#: src/Rest/ChatController.php:137
+msgid "Too many requests — please slow down."
+msgstr "Troppe richieste — rallenta, per favore."
+
+#: src/Rest/ChatController.php:146
+msgid "Could not start a chat session."
+msgstr "Impossibile avviare una sessione di chat."
+
+#: src/Rest/ChatController.php:173 src/Rest/ChatController.php:414
+msgid "Your chat session is invalid or expired."
+msgstr "La tua sessione di chat non è valida o è scaduta."
+
+#. translators: %d: maximum message length in characters.
+#: src/Rest/ChatController.php:183
+msgid "Messages must be between 1 and %d characters."
+msgstr "I messaggi devono essere tra 1 e %d caratteri."
+
+#: src/Rest/ChatController.php:204
+msgid "Please complete the short form before starting the chat."
+msgstr "Completa il breve modulo prima di iniziare la chat."
+
+#: src/Rest/ChatController.php:421
+msgid "Message not found."
+msgstr "Messaggio non trovato."
+
+#: src/Rest/ChatController.php:442
+msgid "Message limit reached — please try again later."
+msgstr "Limite di messaggi raggiunto — riprova più tardi."
+
+#: src/Rest/ConfigController.php:73
+msgid "Hi! Ask me anything about this site."
+msgstr "Ciao! Chiedimi qualsiasi cosa su questo sito."
+
+#: src/Rest/ConfigController.php:125
+msgid "Assistant"
+msgstr "Assistente"
+
+#: src/Rest/ConfigController.php:126
+msgid "Open chat"
+msgstr "Apri la chat"
+
+#: src/Rest/ConfigController.php:127
+msgid "Close chat"
+msgstr "Chiudi la chat"
+
+#: assets/build/admin.js:1 src/Rest/ConfigController.php:128
+msgid "Send"
+msgstr "Invia"
+
+#: src/Rest/ConfigController.php:129
+msgid "Type your message"
+msgstr "Scrivi il tuo messaggio"
+
+#: src/Rest/ConfigController.php:130
+msgid "Ask a question…"
+msgstr "Fai una domanda…"
+
+#: src/Rest/ConfigController.php:131
+msgid "Suggested questions"
+msgstr "Domande suggerite"
+
+#: src/Rest/ConfigController.php:132
+msgid "Assistant is replying"
+msgstr "L'assistente sta rispondendo"
+
+#: src/Rest/ConfigController.php:133
+msgid "Working…"
+msgstr "Al lavoro…"
+
+#: src/Rest/ConfigController.php:134
+msgid "Queued…"
+msgstr "In coda…"
+
+#: src/Rest/ConfigController.php:135
+msgid "Understanding your question…"
+msgstr "Sto capendo la tua domanda…"
+
+#: src/Rest/ConfigController.php:136
+msgid "Searching this site…"
+msgstr "Sto cercando nel sito…"
+
+#: src/Rest/ConfigController.php:137
+msgid "Checking products…"
+msgstr "Sto controllando i prodotti…"
+
+#: src/Rest/ConfigController.php:138
+msgid "Finding related pages…"
+msgstr "Sto trovando le pagine correlate…"
+
+#: src/Rest/ConfigController.php:139
+msgid "Verifying details…"
+msgstr "Sto verificando i dettagli…"
+
+#: src/Rest/ConfigController.php:140
+msgid "Preparing an answer…"
+msgstr "Sto preparando una risposta…"
+
+#: src/Rest/ConfigController.php:141
+msgid "Formatting the answer…"
+msgstr "Sto formattando la risposta…"
+
+#: src/Rest/ConfigController.php:142
+msgid "Something went wrong. Please try again."
+msgstr "Qualcosa è andato storto. Riprova."
+
+#. translators: %d: seconds to wait before the next message.
+#: src/Rest/ConfigController.php:144
+msgid "A short pause — you can send another message in %ds."
+msgstr "Una breve pausa — potrai inviare un altro messaggio tra %ds."
+
+#: src/Rest/ConfigController.php:145
+msgid "You can send messages again."
+msgstr "Puoi inviare di nuovo messaggi."
+
+#: src/Rest/ConfigController.php:147
+msgid "Low stock"
+msgstr "Scorte limitate"
+
+#: src/Rest/ConfigController.php:149
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+#: src/Rest/ConfigController.php:168 src/Rest/PrivacyController.php:145
+msgid "I have read and accept the privacy policy."
+msgstr "Ho letto e accetto l'informativa sulla privacy."
+
+#: src/Rest/ConfigController.php:173
+msgid "Before we start, please tell us who you are."
+msgstr "Prima di iniziare, dicci chi sei."
+
+#: src/Rest/ConfigController.php:197
+msgid "Powered by Agentyllo"
+msgstr "Powered by Agentyllo"
+
+#: src/Rest/ConfigController.php:215
+msgid "AI responses may contain mistakes — verify important information."
+msgstr ""
+"Le risposte dell'AI possono contenere errori — verifica le informazioni "
+"importanti."
+
+#: src/Rest/ConfigController.php:222
+msgid "AI Assistant"
+msgstr "Assistente AI"
+
+#: src/Rest/ConfigController.php:222
+msgid "Automated assistant"
+msgstr "Assistente automatico"
+
+#: src/Rest/Controller.php:44
+msgid "You are not allowed to do that."
+msgstr "Non sei autorizzato a farlo."
+
+#: src/Rest/CopilotController.php:168
+msgid "No file uploaded."
+msgstr "Nessun file caricato."
+
+#: src/Rest/KbController.php:205
+msgid "No enabled source matches that id."
+msgstr "Nessuna fonte attiva corrisponde a questo id."
+
+#: src/Rest/KbController.php:227
+msgid "Unknown item source."
+msgstr "Fonte dell'elemento sconosciuta."
+
+#: src/Rest/KbController.php:281
+msgid "A source and item id are required."
+msgstr "Servono una fonte e l'id dell'elemento."
+
+#: src/Rest/KbController.php:291
+msgid "This source cannot be toggled per item."
+msgstr ""
+"Questa fonte non può essere attivata/disattivata per singolo elemento."
+
+#: src/Rest/KbController.php:415
+msgid "Knowledge base entry not found."
+msgstr "Voce della base di conoscenza non trovata."
+
+#: src/Rest/KbController.php:518
+msgid "WooCommerce is not active."
+msgstr "WooCommerce non è attivo."
+
+#: src/Rest/ModelsController.php:228
+msgid "Unknown provider."
+msgstr "Provider sconosciuto."
+
+#: src/Rest/ModelsController.php:264
+msgid "No embedding provider is configured."
+msgstr "Nessun provider di embedding configurato."
+
+#: src/Rest/PrivacyController.php:124
+msgid "Invalid or expired chat session."
+msgstr "Sessione di chat non valida o scaduta."
+
+#: src/Rest/PrivacyController.php:135
+msgid "Please enter your name and a valid email address."
+msgstr "Inserisci il tuo nome e un indirizzo email valido."
+
+#: src/Rest/PrivacyController.php:140
+msgid "Please accept the privacy policy to continue."
+msgstr "Accetta l'informativa sulla privacy per continuare."
+
+#: src/Rest/PrivacyController.php:182 src/Rest/PrivacyController.php:198
+#: src/Rest/PrivacyController.php:215
+msgid "Enter a valid email address."
+msgstr "Inserisci un indirizzo email valido."
+
+#: src/Rest/PrivacyController.php:218
+msgid "Erasure must be explicitly confirmed."
+msgstr "La cancellazione deve essere confermata esplicitamente."
+
+#: src/Rest/PrivacyController.php:230
+msgid "Could not create the transparency page."
+msgstr "Impossibile creare la pagina di trasparenza."
+
+#: src/Rest/SettingsController.php:92 src/Rest/SettingsController.php:108
+msgid "Unknown settings tab."
+msgstr "Scheda impostazioni sconosciuta."
+
+#: src/Rest/SettingsController.php:113
+msgid "Settings payload must be an object."
+msgstr "Il payload delle impostazioni deve essere un oggetto."
+
+#: assets/build/admin.js:1 src/Rest/StatsController.php:135
+msgid "Could not update the item."
+msgstr "Impossibile aggiornare l'elemento."
+
+#: src/Rest/StatsController.php:168
+msgid "Conversation not found."
+msgstr "Conversazione non trovata."
+
+#: assets/build/admin.js:1
+msgid "Request failed."
+msgstr "Richiesta non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Close copilot"
+msgstr "Chiudi il copilot"
+
+#: assets/build/admin.js:1
+msgid "Copilot"
+msgstr "Copilot"
+
+#: assets/build/admin.js:1
+msgid "Agentyllo copilot"
+msgstr "Copilot di Agentyllo"
+
+#: assets/build/admin.js:1
+msgid "Type /help for commands"
+msgstr "Digita /help per i comandi"
+
+#: assets/build/admin.js:1
+msgid ""
+"Hi! I can add or edit knowledge-base entries, change settings, remember facts about your business, summarize statistics and import files. Every change is proposed first — nothing runs until you confirm.\n"
+"\n"
+"Try: `/kb add title:\"Opening hours\" content:\"Mon–Fri 9–18\"` or `/help`."
+msgstr ""
+"Ciao! Posso aggiungere o modificare voci della base di conoscenza, cambiare impostazioni, ricordare fatti sulla tua attività, riassumere le statistiche e importare file. Ogni modifica viene prima proposta — niente viene eseguito finché non confermi.\n"
+"\n"
+"Prova: `/kb add title:\"Orari di apertura\" content:\"Lun–ven 9–18\"` oppure `/help`."
+
+#: assets/build/admin.js:1
+msgid "Done."
+msgstr "Fatto."
+
+#: assets/build/admin.js:1
+msgid "Confirm"
+msgstr "Conferma"
+
+#: assets/build/admin.js:1
+msgid "Apply"
+msgstr "Applica"
+
+#: assets/build/admin.js:1
+msgid "Cancelled."
+msgstr "Annullato."
+
+#: assets/build/admin.js:1
+msgid "Cancel"
+msgstr "Annulla"
+
+#. translators: 1: rows, 2: file
+#: assets/build/admin.js:1
+msgid "Preview: %1$d entries from %2$s — untick or edit before importing"
+msgstr ""
+"Anteprima: %1$d voci da %2$s — deseleziona o modifica prima di importare"
+
+#. translators: %d: hidden rows
+#: assets/build/admin.js:1
+msgid "…and %d more rows (imported as parsed)."
+msgstr "…e altre %d righe (importate come interpretate)."
+
+#. translators: 1: created, 2: skipped, 3: file
+#: assets/build/admin.js:1
+msgid ""
+"Imported %1$d entries from %3$s (%2$d skipped). They are searchable right "
+"away."
+msgstr "Importate %1$d voci da %3$s (%2$d saltate). Sono subito ricercabili."
+
+#: assets/build/admin.js:1
+msgid "Import failed."
+msgstr "Importazione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Import selected"
+msgstr "Importa selezionate"
+
+#: assets/build/admin.js:1
+msgid "Discard"
+msgstr "Scarta"
+
+#: assets/build/admin.js:1
+msgid "Ask or type a /command…"
+msgstr "Chiedi o digita un /comando…"
+
+#: assets/build/admin.js:1
+msgid "Upload failed."
+msgstr "Caricamento non riuscito."
+
+#: assets/build/admin.js:1
+msgid "Import file (txt/md/csv)"
+msgstr "Importa file (txt/md/csv)"
+
+#: assets/build/admin.js:1
+msgid "Loading…"
+msgstr "Caricamento…"
+
+#: assets/build/admin.js:1
+msgid "No memories yet."
+msgstr "Ancora nessun ricordo."
+
+#: assets/build/admin.js:1
+msgid ""
+"Classic mode: no AI model is used. Switch the operating mode in Settings → "
+"General to enable an AI tier."
+msgstr ""
+"Modalità classica: nessun modello AI in uso. Cambia la modalità operativa in"
+" Impostazioni → Generale per attivare un livello AI."
+
+#: assets/build/admin.js:1
+msgid "No chat provider selected below."
+msgstr "Nessun provider di chat selezionato qui sotto."
+
+#: assets/build/admin.js:1
+msgid "The selected provider has no valid API key."
+msgstr "Il provider selezionato non ha una chiave API valida."
+
+#: assets/build/admin.js:1
+msgid ""
+"The provider is temporarily paused after repeated failures (circuit "
+"breaker)."
+msgstr ""
+"Il provider è temporaneamente in pausa dopo errori ripetuti (circuit "
+"breaker)."
+
+#: assets/build/admin.js:1
+msgid ""
+"The monthly cost cap is reached — the classic agents answer until next month"
+" or a higher cap."
+msgstr ""
+"Il tetto di spesa mensile è stato raggiunto — gli agenti classici rispondono"
+" fino al mese prossimo o a un tetto più alto."
+
+#: assets/build/admin.js:1
+msgid ""
+"No local engine is available yet (free AI tiers arrive with the Local AI "
+"companion)."
+msgstr ""
+"Nessun motore locale disponibile per ora (i livelli AI gratuiti arrivano con"
+" il companion Local AI)."
+
+#: assets/build/admin.js:1
+msgid "The provider is not usable right now."
+msgstr "Il provider non è utilizzabile al momento."
+
+#: assets/build/admin.js:1
+msgid "Registry default"
+msgstr "Predefinito del registry"
+
+#: assets/build/admin.js:1
+msgid "Stored key cannot be decrypted — please enter it again."
+msgstr "La chiave salvata non può essere decifrata — inseriscila di nuovo."
+
+#. translators: %s: masked key
+#: assets/build/admin.js:1
+msgid "Key saved: %s"
+msgstr "Chiave salvata: %s"
+
+#: assets/build/admin.js:1
+msgid ""
+"Using the key defined in wp-config / environment (WordPress AI Client "
+"convention)."
+msgstr ""
+"Uso la chiave definita in wp-config / ambiente (convenzione WordPress AI "
+"Client)."
+
+#: assets/build/admin.js:1
+msgid "No key saved."
+msgstr "Nessuna chiave salvata."
+
+#: assets/build/admin.js:1
+msgid "Ready"
+msgstr "Pronto"
+
+#: assets/build/admin.js:1
+msgid "Not configured"
+msgstr "Non configurato"
+
+#: assets/build/admin.js:1
+msgid "Get an API key"
+msgstr "Ottieni una chiave API"
+
+#: assets/build/admin.js:1
+msgid "API key"
+msgstr "Chiave API"
+
+#: assets/build/admin.js:1
+msgid "Leave empty to keep the saved key"
+msgstr "Lascia vuoto per mantenere la chiave salvata"
+
+#: assets/build/admin.js:1
+msgid ""
+"Stored encrypted with a dedicated key on this site; sent only to this "
+"provider."
+msgstr ""
+"Conservata cifrata con una chiave dedicata su questo sito; inviata solo a "
+"questo provider."
+
+#: assets/build/admin.js:1
+msgid "Chat model"
+msgstr "Modello di chat"
+
+#: assets/build/admin.js:1
+msgid "Model ids and prices come from the signed Agentyllo registry."
+msgstr ""
+"Gli id dei modelli e i prezzi arrivano dal registry firmato di Agentyllo."
+
+#: assets/build/admin.js:1
+msgid "Saved."
+msgstr "Salvato."
+
+#: assets/build/admin.js:1
+msgid "Could not save."
+msgstr "Impossibile salvare."
+
+#: assets/build/admin.js:1
+msgid "Save"
+msgstr "Salva"
+
+#. translators: 1: message, 2: latency ms
+#: assets/build/admin.js:1
+msgid "%1$s (%2$d ms)"
+msgstr "%1$s (%2$d ms)"
+
+#: assets/build/admin.js:1
+msgid "Test failed."
+msgstr "Test non riuscito."
+
+#: assets/build/admin.js:1
+msgid "Test connection"
+msgstr "Prova la connessione"
+
+#: assets/build/admin.js:1
+msgid "Remove the stored API key for this provider?"
+msgstr "Rimuovere la chiave API salvata per questo provider?"
+
+#: assets/build/admin.js:1
+msgid "Key removed."
+msgstr "Chiave rimossa."
+
+#: assets/build/admin.js:1
+msgid "Could not remove the key."
+msgstr "Impossibile rimuovere la chiave."
+
+#: assets/build/admin.js:1
+msgid "Remove key"
+msgstr "Rimuovi chiave"
+
+#. translators: %s: last error
+#: assets/build/admin.js:1
+msgid "Paused after repeated failures (%s)."
+msgstr "In pausa dopo errori ripetuti (%s)."
+
+#: assets/build/admin.js:1
+msgid "Retry now"
+msgstr "Riprova ora"
+
+#. translators: 1: calls, 2: errors, 3: latency, 4: tok/s, 5: cost
+#: assets/build/admin.js:1
+msgid "Last 7 days: %1$d calls, %2$d errors, avg %3$d ms, %4$s tok/s, %5$s"
+msgstr ""
+"Ultimi 7 giorni: %1$d chiamate, %2$d errori, media %3$d ms, %4$s token/s, "
+"%5$s"
+
+#. translators: 1: measured tok/s, 2: minimum
+#: assets/build/admin.js:1
+msgid ""
+"Measured speed: %1$s tok/s (chat needs ≥ %2$d; slower engines only run "
+"bounded tasks such as query rewriting)."
+msgstr ""
+"Velocità misurata: %1$s token/s (la chat richiede ≥ %2$d; i motori più lenti"
+" eseguono solo compiti limitati come la riscrittura delle query)."
+
+#: assets/build/admin.js:1
+msgid "Speed not measured yet — run a test or send a chat message."
+msgstr ""
+"Velocità non ancora misurata — esegui un test o invia un messaggio in chat."
+
+#: assets/build/admin.js:1
+msgid "Local engine (free AI)"
+msgstr "Motore locale (AI gratuita)"
+
+#: assets/build/admin.js:1
+msgid "Configured"
+msgstr "Configurato"
+
+#: assets/build/admin.js:1
+msgid ""
+"Point Agentyllo at an OpenAI-compatible server you already run: llama.cpp "
+"llama-server, Ollama, LM Studio, vLLM — or the daemon installed by the free "
+"\"Agentyllo Local AI\" companion. Used by the free AI operating modes."
+msgstr ""
+"Collega Agentyllo a un server compatibile OpenAI che già gestisci: llama.cpp"
+" llama-server, Ollama, LM Studio, vLLM — oppure il daemon installato dal "
+"companion gratuito \"Agentyllo Local AI\". Usato dalle modalità operative AI"
+" gratuite."
+
+#: assets/build/admin.js:1
+msgid "Endpoint URL"
+msgstr "URL dell'endpoint"
+
+#: assets/build/admin.js:1
+msgid ""
+"Base URL without /v1 (e.g. http://127.0.0.1:8080 for llama-server, "
+"http://127.0.0.1:11434 for Ollama)."
+msgstr ""
+"URL base senza /v1 (es. http://127.0.0.1:8080 per llama-server, "
+"http://127.0.0.1:11434 per Ollama)."
+
+#: assets/build/admin.js:1
+msgid "Model id (optional)"
+msgstr "Id del modello (facoltativo)"
+
+#: assets/build/admin.js:1
+msgid "Leave empty to use the model the server has loaded."
+msgstr "Lascia vuoto per usare il modello caricato dal server."
+
+#: assets/build/admin.js:1
+msgid "Bearer key (optional)"
+msgstr "Chiave bearer (facoltativa)"
+
+#: assets/build/admin.js:1
+msgid "Minimum speed for chat (tokens/s)"
+msgstr "Velocità minima per la chat (token/s)"
+
+#: assets/build/admin.js:1
+msgid "Test & measure speed"
+msgstr "Prova e misura la velocità"
+
+#: assets/build/admin.js:1
+msgid "Failed to load the transcript."
+msgstr "Impossibile caricare la trascrizione."
+
+#. translators: %s: conversation uuid
+#: assets/build/admin.js:1
+msgid "Conversation %s"
+msgstr "Conversazione %s"
+
+#: assets/build/admin.js:1
+msgid "Back to list"
+msgstr "Torna all'elenco"
+
+#: assets/build/admin.js:1
+msgid "unanswered"
+msgstr "senza risposta"
+
+#: assets/build/admin.js:1
+msgid "Classic — instant, reliable, non-generative"
+msgstr "Classico — istantaneo, affidabile, non generativo"
+
+#: assets/build/admin.js:1
+msgid "Classic + semantic matching (ONNX embeddings)"
+msgstr "Classico + corrispondenza semantica (embedding ONNX)"
+
+#: assets/build/admin.js:1
+msgid "AI-assisted classic (bounded local generation)"
+msgstr "Classico assistito dall'AI (generazione locale limitata)"
+
+#: assets/build/admin.js:1
+msgid "Full local AI chat possible (llama.cpp class)"
+msgstr "Chat AI locale completa possibile (classe llama.cpp)"
+
+#: assets/build/admin.js:1
+msgid "unknown"
+msgstr "sconosciuto"
+
+#: assets/build/admin.js:1
+msgid "yes"
+msgstr "sì"
+
+#: assets/build/admin.js:1
+msgid "no"
+msgstr "no"
+
+#: assets/build/admin.js:1
+msgid "Failed to load dashboard data."
+msgstr "Impossibile caricare i dati della bacheca."
+
+#: assets/build/admin.js:1
+msgid "Retry"
+msgstr "Riprova"
+
+#: assets/build/admin.js:1
+msgid ""
+"A full hosting scan (including the network self-test) is running in the "
+"background — this report will refine itself shortly."
+msgstr ""
+"Una scansione completa dell'hosting (incluso il self-test di rete) è in "
+"corso in background — questo report si affinerà a breve."
+
+#: assets/build/admin.js:1
+msgid "PHP"
+msgstr "PHP"
+
+#: assets/build/admin.js:1
+msgid "Server"
+msgstr "Server"
+
+#: assets/build/admin.js:1
+msgid "Database"
+msgstr "Database"
+
+#: assets/build/admin.js:1
+msgid "Memory limit"
+msgstr "Limite di memoria"
+
+#: assets/build/admin.js:1
+msgid "Max execution time"
+msgstr "Tempo massimo di esecuzione"
+
+#: assets/build/admin.js:1
+msgid "(extendable)"
+msgstr "(estendibile)"
+
+#: assets/build/admin.js:1
+msgid "Process execution (proc_open)"
+msgstr "Esecuzione di processi (proc_open)"
+
+#: assets/build/admin.js:1
+msgid "FFI extension"
+msgstr "Estensione FFI"
+
+#: assets/build/admin.js:1
+msgid "CPU"
+msgstr "CPU"
+
+#. translators: 1: core count, 2: benchmark score
+#: assets/build/admin.js:1
+msgid "%1$s cores — score %2$s/100"
+msgstr "%1$s core — punteggio %2$s/100"
+
+#: assets/build/admin.js:1
+msgid "Free disk space"
+msgstr "Spazio libero su disco"
+
+#: assets/build/admin.js:1
+msgid "cURL"
+msgstr "cURL"
+
+#: assets/build/admin.js:1
+msgid "Loopback HTTP"
+msgstr "HTTP loopback"
+
+#: assets/build/admin.js:1
+msgid "Page cache detected"
+msgstr "Cache di pagina rilevata"
+
+#: assets/build/admin.js:1
+msgid "none"
+msgstr "nessuna"
+
+#: assets/build/admin.js:1
+msgid "Uploads dir writable"
+msgstr "Cartella uploads scrivibile"
+
+#: assets/build/admin.js:1
+msgid "Active tier"
+msgstr "Livello attivo"
+
+#. translators: %s: operating mode id
+#: assets/build/admin.js:1
+msgid "Operating mode: %s"
+msgstr "Modalità operativa: %s"
+
+#: assets/build/admin.js:1
+msgid "Cloud AI ready (needs an API key):"
+msgstr "AI cloud pronta (richiede una chiave API):"
+
+#: assets/build/admin.js:1
+msgid "Hosting capabilities"
+msgstr "Capacità dell'hosting"
+
+#: assets/build/admin.js:1
+msgid "Re-scan failed."
+msgstr "Nuova scansione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Scanning…"
+msgstr "Scansione…"
+
+#: assets/build/admin.js:1
+msgid "Re-scan"
+msgstr "Nuova scansione"
+
+#: assets/build/admin.js:1
+msgid "Background processing"
+msgstr "Elaborazione in background"
+
+#: assets/build/admin.js:1
+msgid "Scheduler:"
+msgstr "Scheduler:"
+
+#: assets/build/admin.js:1
+msgid "Action Scheduler (active)"
+msgstr "Action Scheduler (attivo)"
+
+#: assets/build/admin.js:1
+msgid "unavailable"
+msgstr "non disponibile"
+
+#: assets/build/admin.js:1
+msgid "Pending jobs:"
+msgstr "Job in attesa:"
+
+#. translators: %s: date/time of the last scan
+#: assets/build/admin.js:1
+msgid "Last hosting scan: %s"
+msgstr "Ultima scansione hosting: %s"
+
+#: assets/build/admin.js:1
+msgid "Knowledge base"
+msgstr "Base di conoscenza"
+
+#: assets/build/admin.js:1
+msgid "Open"
+msgstr "Apri"
+
+#. translators: 1: chunk count, 2: purging count, 3: error count
+#: assets/build/admin.js:1
+msgid "%1$d chunks · %2$d purging · %3$d errors"
+msgstr "%1$d chunk · %2$d in eliminazione · %3$d errori"
+
+#: assets/build/admin.js:1
+msgid "Last indexed:"
+msgstr "Ultima indicizzazione:"
+
+#: assets/build/admin.js:1
+msgid "never"
+msgstr "mai"
+
+#. translators: 1: quarantined count, 2: unhealthy count
+#: assets/build/admin.js:1
+msgid "%1$d quarantined · %2$d unhealthy"
+msgstr "%1$d in quarantena · %2$d con problemi"
+
+#: assets/build/admin.js:1
+msgid "All healthy"
+msgstr "Tutti in salute"
+
+#: assets/build/admin.js:1
+msgid "Last 7 days"
+msgstr "Ultimi 7 giorni"
+
+#. translators: 1: messages, 2: deflection percentage
+#: assets/build/admin.js:1
+msgid "%1$d messages · deflection %2$s"
+msgstr "%1$d messaggi · risoluzione automatica %2$s"
+
+#: assets/build/admin.js:1
+msgid "Conversations per day"
+msgstr "Conversazioni al giorno"
+
+#: assets/build/admin.js:1
+msgid "Suggestions"
+msgstr "Suggerimenti"
+
+#: assets/build/admin.js:1
+msgid "No open gaps — the assistant answered everything it was asked."
+msgstr ""
+"Nessuna lacuna aperta — l'assistente ha risposto a tutto ciò che gli è stato"
+" chiesto."
+
+#: assets/build/admin.js:1
+msgid ""
+"Visitors asked these and the knowledge base had no answer. Add the missing "
+"content and mark them resolved in Statistics."
+msgstr ""
+"I visitatori hanno chiesto queste cose e la base di conoscenza non aveva "
+"risposta. Aggiungi i contenuti mancanti e segnale come risolte in "
+"Statistiche."
+
+#: assets/build/admin.js:1
+msgid "Compliance"
+msgstr "Conformità"
+
+#: assets/build/admin.js:1
+msgid "Registration gate"
+msgstr "Registrazione pre-chat"
+
+#: assets/build/admin.js:1
+msgid "off"
+msgstr "off"
+
+#: assets/build/admin.js:1
+msgid "on"
+msgstr "on"
+
+#: assets/build/admin.js:1
+msgid "Retention"
+msgstr "Conservazione"
+
+#: assets/build/admin.js:1
+msgid "forever"
+msgstr "per sempre"
+
+#. translators: %d: days
+#: assets/build/admin.js:1
+msgid "%d days"
+msgstr "%d giorni"
+
+#: assets/build/admin.js:1
+msgid "AI disclosure"
+msgstr "Trasparenza AI"
+
+#: assets/build/admin.js:1
+msgid "Transparency page"
+msgstr "Pagina di trasparenza"
+
+#: assets/build/admin.js:1
+msgid "published"
+msgstr "pubblicata"
+
+#: assets/build/admin.js:1
+msgid "Memory"
+msgstr "Memoria"
+
+#: assets/build/admin.js:1
+msgid "General"
+msgstr "Generale"
+
+#: assets/build/admin.js:1
+msgid "Operating mode"
+msgstr "Modalità operativa"
+
+#: assets/build/admin.js:1
+msgid "Assistant name"
+msgstr "Nome dell'assistente"
+
+#: assets/build/admin.js:1
+msgid "Site type"
+msgstr "Tipo di sito"
+
+#: assets/build/admin.js:1
+msgid "Tone"
+msgstr "Tono"
+
+#: assets/build/admin.js:1
+msgid "Custom instructions"
+msgstr "Istruzioni personalizzate"
+
+#: assets/build/admin.js:1
+msgid "Out-of-scope guard"
+msgstr "Filtro fuori tema"
+
+#: assets/build/admin.js:1
+msgid "Custom refusal message"
+msgstr "Messaggio di rifiuto personalizzato"
+
+#: assets/build/admin.js:1
+msgid "On uninstall"
+msgstr "Alla disinstallazione"
+
+#: assets/build/admin.js:1
+msgid "Debug log"
+msgstr "Log di debug"
+
+#: assets/build/admin.js:1
+msgid "Show the chat widget"
+msgstr "Mostra il widget della chat"
+
+#: assets/build/admin.js:1
+msgid "Position"
+msgstr "Posizione"
+
+#: assets/build/admin.js:1
+msgid "Theme"
+msgstr "Tema"
+
+#: assets/build/admin.js:1
+msgid "Primary color (hex)"
+msgstr "Colore primario (esadecimale)"
+
+#: assets/build/admin.js:1
+msgid "Welcome message"
+msgstr "Messaggio di benvenuto"
+
+#: assets/build/admin.js:1
+msgid "Launcher teaser"
+msgstr "Testo del launcher"
+
+#: assets/build/admin.js:1
+msgid "Show thumbnails in answers"
+msgstr "Mostra le miniature nelle risposte"
+
+#: assets/build/admin.js:1
+msgid "Show related links"
+msgstr "Mostra i link correlati"
+
+#: assets/build/admin.js:1
+msgid "Animations"
+msgstr "Animazioni"
+
+#: assets/build/admin.js:1
+msgid "Z-index"
+msgstr "Z-index"
+
+#: assets/build/admin.js:1
+msgid "Reply language"
+msgstr "Lingua delle risposte"
+
+#: assets/build/admin.js:1
+msgid "Fixed locale"
+msgstr "Locale fisso"
+
+#: assets/build/admin.js:1
+msgid "Registration before chat"
+msgstr "Registrazione prima della chat"
+
+#: assets/build/admin.js:1
+msgid "Require privacy checkbox"
+msgstr "Richiedi la casella privacy"
+
+#: assets/build/admin.js:1
+msgid "Privacy policy URL"
+msgstr "URL dell'informativa sulla privacy"
+
+#: assets/build/admin.js:1
+msgid "Gate intro text"
+msgstr "Testo introduttivo del modulo"
+
+#: assets/build/admin.js:1
+msgid "Privacy checkbox label"
+msgstr "Etichetta della casella privacy"
+
+#: assets/build/admin.js:1
+msgid "Footer disclaimer text"
+msgstr "Testo del disclaimer nel footer"
+
+#: assets/build/admin.js:1
+msgid "Additional transparency text"
+msgstr "Testo di trasparenza aggiuntivo"
+
+#: assets/build/admin.js:1
+msgid "Policy version"
+msgstr "Versione dell'informativa"
+
+#: assets/build/admin.js:1
+msgid "Retention (days, 0 = forever)"
+msgstr "Conservazione (giorni, 0 = per sempre)"
+
+#: assets/build/admin.js:1
+msgid "IP address handling"
+msgstr "Gestione degli indirizzi IP"
+
+#: assets/build/admin.js:1
+msgid "Log consents"
+msgstr "Registra i consensi"
+
+#: assets/build/admin.js:1
+msgid "PII redaction"
+msgstr "Oscuramento dei dati personali"
+
+#: assets/build/admin.js:1
+msgid "AI disclosure in widget"
+msgstr "Trasparenza AI nel widget"
+
+#: assets/build/admin.js:1
+msgid "Answer transport"
+msgstr "Trasporto delle risposte"
+
+#: assets/build/admin.js:1
+msgid "Messages per minute (per session)"
+msgstr "Messaggi al minuto (per sessione)"
+
+#: assets/build/admin.js:1
+msgid "Messages per hour (per IP)"
+msgstr "Messaggi all'ora (per IP)"
+
+#: assets/build/admin.js:1
+msgid "Messages per day (per IP)"
+msgstr "Messaggi al giorno (per IP)"
+
+#: assets/build/admin.js:1
+msgid ""
+"AI modes become selectable once a local engine or an API key is configured."
+msgstr ""
+"Le modalità AI diventano selezionabili quando configuri un motore locale o "
+"una chiave API."
+
+#: assets/build/admin.js:1
+msgid "Shown in the chat header. Empty = your site name."
+msgstr "Mostrato nell'intestazione della chat. Vuoto = il nome del tuo sito."
+
+#: assets/build/admin.js:1
+msgid ""
+"Site-owner guidance for the assistant. It can never disable safety or "
+"transparency."
+msgstr ""
+"Indicazioni del proprietario del sito per l'assistente. Non possono mai "
+"disattivare sicurezza o trasparenza."
+
+#: assets/build/admin.js:1
+msgid ""
+"Keeps the assistant focused on your site. Disabling this is discouraged."
+msgstr ""
+"Mantiene l'assistente concentrato sul tuo sito. Disattivarlo è sconsigliato."
+
+#: assets/build/admin.js:1
+msgid ""
+"\"Remove everything\" drops all Agentyllo tables, options, and uploaded "
+"files."
+msgstr ""
+"\"Rimuovi tutto\" elimina tutte le tabelle, le opzioni e i file caricati di "
+"Agentyllo."
+
+#: assets/build/admin.js:1
+msgid ""
+"\"Visitor language\" needs an AI model; classic agents always answer in the "
+"site language."
+msgstr ""
+"\"Lingua del visitatore\" richiede un modello AI; gli agenti classici "
+"rispondono sempre nella lingua del sito."
+
+#: assets/build/admin.js:1
+msgid "Ask for name and email before the first message."
+msgstr "Chiedi nome ed email prima del primo messaggio."
+
+#: assets/build/admin.js:1
+msgid "Empty = the WordPress privacy page."
+msgstr "Vuoto = la pagina privacy di WordPress."
+
+#: assets/build/admin.js:1
+msgid ""
+"Bump this when your privacy text changes; consents record the version shown."
+msgstr ""
+"Aumentala quando il testo della privacy cambia; i consensi registrano la "
+"versione mostrata."
+
+#: assets/build/admin.js:1
+msgid ""
+"Conversations older than this are deleted daily. 0 keeps them forever (not "
+"recommended)."
+msgstr ""
+"Le conversazioni più vecchie di questo valore vengono eliminate ogni giorno."
+" 0 le conserva per sempre (sconsigliato)."
+
+#: assets/build/admin.js:1
+msgid ""
+"\"hash\" stores a salted one-way hash (rotated monthly); \"none\" stores "
+"nothing."
+msgstr ""
+"\"hash\" memorizza un hash irreversibile con salt (ruotato mensilmente); "
+"\"none\" non memorizza nulla."
+
+#: assets/build/admin.js:1
+msgid ""
+"\"logs\" masks emails/phones/IBAN/cards in stored transcripts; \"before_ai\""
+" also masks before any external AI call."
+msgstr ""
+"\"logs\" maschera email/telefoni/IBAN/carte nelle trascrizioni salvate; "
+"\"before_ai\" maschera anche prima di ogni chiamata AI esterna."
+
+#: assets/build/admin.js:1
+msgid "Locked ON whenever an AI mode is active (EU AI Act Art. 50)."
+msgstr ""
+"Bloccato su ON quando una modalità AI è attiva (art. 50 dell'AI Act UE)."
+
+#: assets/build/admin.js:1
+msgid "Empty = default \"AI responses may contain mistakes\" line."
+msgstr ""
+"Vuoto = riga predefinita \"Le risposte dell'AI possono contenere errori\"."
+
+#: assets/build/admin.js:1
+msgid ""
+"\"auto\" streams status and AI text live (SSE); \"buffered\" sends complete "
+"answers only — use it if a proxy or firewall breaks streaming."
+msgstr ""
+"\"auto\" trasmette stato e testo AI in diretta (SSE); \"buffered\" invia "
+"solo risposte complete — usalo se un proxy o firewall interrompe lo "
+"streaming."
+
+#: assets/build/admin.js:1
+msgid ""
+"Stored encrypted. Leave empty to keep the saved value; type __clear__ to "
+"remove it."
+msgstr ""
+"Conservato cifrato. Lascia vuoto per mantenere il valore salvato; digita "
+"__clear__ per rimuoverlo."
+
+#: assets/build/admin.js:1
+msgid "Failed to load items."
+msgstr "Impossibile caricare gli elementi."
+
+#. translators: %s: source name (e.g. Posts, Products)
+#: assets/build/admin.js:1
+msgid "Choose items — %s"
+msgstr "Scegli gli elementi — %s"
+
+#: assets/build/admin.js:1
+msgid "Search items"
+msgstr "Cerca elementi"
+
+#: assets/build/admin.js:1
+msgid "No items found."
+msgstr "Nessun elemento trovato."
+
+#: assets/build/admin.js:1
+msgid "Previous"
+msgstr "Precedente"
+
+#. translators: 1: current page, 2: total pages
+#: assets/build/admin.js:1
+msgid "Page %1$d of %2$d"
+msgstr "Pagina %1$d di %2$d"
+
+#: assets/build/admin.js:1
+msgid "Next"
+msgstr "Successiva"
+
+#: assets/build/admin.js:1
+msgid "Posts"
+msgstr "Articoli"
+
+#: assets/build/admin.js:1
+msgid "Choose individual posts…"
+msgstr "Scegli singoli articoli…"
+
+#: assets/build/admin.js:1
+msgid "Pages"
+msgstr "Pagine"
+
+#: assets/build/admin.js:1
+msgid "Choose individual pages…"
+msgstr "Scegli singole pagine…"
+
+#: assets/build/admin.js:1
+msgid "Choose individual products…"
+msgstr "Scegli singoli prodotti…"
+
+#: assets/build/admin.js:1
+msgid "Taxonomy terms"
+msgstr "Termini di tassonomia"
+
+#: assets/build/admin.js:1
+msgid "Choose individual terms…"
+msgstr "Scegli singoli termini…"
+
+#: assets/build/admin.js:1
+msgid "Failed to load sources."
+msgstr "Impossibile caricare le fonti."
+
+#: assets/build/admin.js:1
+msgid ""
+"Disabling a source immediately removes its content from the knowledge base."
+msgstr ""
+"Disattivare una fonte rimuove immediatamente i suoi contenuti dalla base di "
+"conoscenza."
+
+#: assets/build/admin.js:1
+msgid "Per-item exclusions"
+msgstr "Esclusioni per singolo elemento"
+
+#: assets/build/admin.js:1
+msgid "Saved. The knowledge base is updating in the background."
+msgstr "Salvato. La base di conoscenza si sta aggiornando in background."
+
+#: assets/build/admin.js:1
+msgid "Saving failed."
+msgstr "Salvataggio non riuscito."
+
+#: assets/build/admin.js:1
+msgid "Saving…"
+msgstr "Salvataggio…"
+
+#: assets/build/admin.js:1
+msgid "Save changes"
+msgstr "Salva le modifiche"
+
+#: assets/build/admin.js:1
+msgid "Unsaved changes"
+msgstr "Modifiche non salvate"
+
+#: assets/build/admin.js:1
+msgid "All sources"
+msgstr "Tutte le fonti"
+
+#: assets/build/admin.js:1
+msgid "Posts & pages"
+msgstr "Articoli e pagine"
+
+#: assets/build/admin.js:1
+msgid "Taxonomies"
+msgstr "Tassonomie"
+
+#: assets/build/admin.js:1
+msgid "Manual entries"
+msgstr "Voci manuali"
+
+#: assets/build/admin.js:1
+msgid "All statuses"
+msgstr "Tutti gli stati"
+
+#: assets/build/admin.js:1
+msgid "Active"
+msgstr "Attiva"
+
+#: assets/build/admin.js:1
+msgid "Excluded"
+msgstr "Esclusa"
+
+#: assets/build/admin.js:1
+msgid "Purging"
+msgstr "In eliminazione"
+
+#: assets/build/admin.js:1
+msgid "Error"
+msgstr "Errore"
+
+#: assets/build/admin.js:1
+msgid "Failed to load entries."
+msgstr "Impossibile caricare le voci."
+
+#: assets/build/admin.js:1
+msgid "Indexed entries"
+msgstr "Voci indicizzate"
+
+#: assets/build/admin.js:1
+msgid "Search entries"
+msgstr "Cerca voci"
+
+#: assets/build/admin.js:1
+msgid "Source"
+msgstr "Fonte"
+
+#: assets/build/admin.js:1
+msgid "Status"
+msgstr "Stato"
+
+#: assets/build/admin.js:1
+msgid "No entries found."
+msgstr "Nessuna voce trovata."
+
+#: assets/build/admin.js:1
+msgid "Title"
+msgstr "Titolo"
+
+#: assets/build/admin.js:1
+msgid "Chunks"
+msgstr "Chunk"
+
+#: assets/build/admin.js:1
+msgid "Indexed"
+msgstr "Indicizzata"
+
+#: assets/build/admin.js:1
+msgid "Delete this manual entry permanently?"
+msgstr "Eliminare definitivamente questa voce manuale?"
+
+#: assets/build/admin.js:1
+msgid "Could not delete the entry."
+msgstr "Impossibile eliminare la voce."
+
+#: assets/build/admin.js:1
+msgid "Delete"
+msgstr "Elimina"
+
+#: assets/build/admin.js:1
+msgid "Could not exclude the entry."
+msgstr "Impossibile escludere la voce."
+
+#: assets/build/admin.js:1
+msgid "Exclude"
+msgstr "Escludi"
+
+#. translators: 1: current page, 2: total pages, 3: total entries
+#: assets/build/admin.js:1
+msgid "Page %1$d of %2$d (%3$d entries)"
+msgstr "Pagina %1$d di %2$d (%3$d voci)"
+
+#: assets/build/admin.js:1
+msgid "Stale documents"
+msgstr "Documenti obsoleti"
+
+#: assets/build/admin.js:1
+msgid "Errors"
+msgstr "Errori"
+
+#: assets/build/admin.js:1
+msgid "Broken links"
+msgstr "Link interrotti"
+
+#: assets/build/admin.js:1
+msgid "Orphan pages"
+msgstr "Pagine orfane"
+
+#: assets/build/admin.js:1
+msgid "Duplicate clusters"
+msgstr "Gruppi di duplicati"
+
+#: assets/build/admin.js:1
+msgid "Failed to load KB health."
+msgstr "Impossibile caricare lo stato della base di conoscenza."
+
+#: assets/build/admin.js:1
+msgid "Coverage"
+msgstr "Copertura"
+
+#: assets/build/admin.js:1
+msgid "Nothing indexed yet. Run a rebuild to get started."
+msgstr "Ancora niente di indicizzato. Avvia una ricostruzione per iniziare."
+
+#. translators: 1: active documents, 2: chunk count
+#: assets/build/admin.js:1
+msgid "%1$d active · %2$d chunks"
+msgstr "%1$d attive · %2$d chunk"
+
+#. translators: %d: excluded count
+#: assets/build/admin.js:1
+msgid "%d excluded"
+msgstr "%d escluse"
+
+#. translators: %d: purging count
+#: assets/build/admin.js:1
+msgid "%d purging"
+msgstr "%d in eliminazione"
+
+#. translators: %d: error count
+#: assets/build/admin.js:1
+msgid "%d errors"
+msgstr "%d errori"
+
+#: assets/build/admin.js:1
+msgid "Index health"
+msgstr "Salute dell'indice"
+
+#. translators: 1: index version number, 2: last crawl date
+#: assets/build/admin.js:1
+msgid "Index version %1$d · last crawl: %2$s"
+msgstr "Versione indice %1$d · ultima scansione: %2$s"
+
+#: assets/build/admin.js:1
+msgid "Rebuild the entire knowledge base index? This runs in the background."
+msgstr ""
+"Ricostruire l'intero indice della base di conoscenza? L'operazione avviene "
+"in background."
+
+#: assets/build/admin.js:1
+msgid "Reindex started. It runs in the background."
+msgstr "Reindicizzazione avviata. Viene eseguita in background."
+
+#: assets/build/admin.js:1
+msgid "Could not start the reindex."
+msgstr "Impossibile avviare la reindicizzazione."
+
+#: assets/build/admin.js:1
+msgid "Rebuild index"
+msgstr "Ricostruisci l'indice"
+
+#: assets/build/admin.js:1
+msgid "Failed to load privacy settings."
+msgstr "Impossibile caricare le impostazioni privacy."
+
+#: assets/build/admin.js:1
+msgid "Privacy & legal settings"
+msgstr "Impostazioni privacy e legali"
+
+#: assets/build/admin.js:1
+msgid ""
+"Retention is set to 0: conversations are kept forever. Under GDPR you should"
+" define a retention period."
+msgstr ""
+"La conservazione è impostata a 0: le conversazioni sono conservate per "
+"sempre. Secondo il GDPR dovresti definire un periodo di conservazione."
+
+#: assets/build/admin.js:1
+msgid "Privacy settings saved."
+msgstr "Impostazioni privacy salvate."
+
+#: assets/build/admin.js:1
+msgid "Search failed."
+msgstr "Ricerca non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Data subject requests (GDPR)"
+msgstr "Richieste degli interessati (GDPR)"
+
+#: assets/build/admin.js:1
+msgid ""
+"Look up everything the assistant holds for an email address, export it as "
+"JSON, or erase it. These tools are also available through WordPress → Tools "
+"→ Export/Erase Personal Data."
+msgstr ""
+"Cerca tutto ciò che l'assistente conserva per un indirizzo email, esportalo "
+"in JSON o cancellalo. Questi strumenti sono disponibili anche in WordPress →"
+" Strumenti → Esporta/Cancella dati personali."
+
+#: assets/build/admin.js:1
+msgid "Visitor email"
+msgstr "Email del visitatore"
+
+#: assets/build/admin.js:1
+msgid "Search"
+msgstr "Cerca"
+
+#: assets/build/admin.js:1
+msgid "Messages"
+msgstr "Messaggi"
+
+#: assets/build/admin.js:1
+msgid "Consent records"
+msgstr "Registrazioni dei consensi"
+
+#: assets/build/admin.js:1
+msgid "First seen"
+msgstr "Prima attività"
+
+#: assets/build/admin.js:1
+msgid "Last seen"
+msgstr "Ultima attività"
+
+#: assets/build/admin.js:1
+msgid ""
+"Export downloaded (a copy is kept in the protected uploads folder for 72 "
+"hours)."
+msgstr ""
+"Esportazione scaricata (una copia resta nella cartella uploads protetta per "
+"72 ore)."
+
+#: assets/build/admin.js:1
+msgid "Export failed."
+msgstr "Esportazione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Export JSON"
+msgstr "Esporta JSON"
+
+#: assets/build/admin.js:1
+msgid "Type ERASE to confirm"
+msgstr "Digita ERASE per confermare"
+
+#. translators: 1: conversations count, 2: messages count
+#: assets/build/admin.js:1
+msgid ""
+"Erased: %1$d conversations, %2$d messages redacted. Consent records were "
+"anonymized."
+msgstr ""
+"Cancellate: %1$d conversazioni, %2$d messaggi oscurati. Le registrazioni dei"
+" consensi sono state anonimizzate."
+
+#: assets/build/admin.js:1
+msgid "Erasure failed."
+msgstr "Cancellazione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Erase data"
+msgstr "Cancella i dati"
+
+#: assets/build/admin.js:1
+msgid "AI Act transparency page"
+msgstr "Pagina di trasparenza AI Act"
+
+#: assets/build/admin.js:1
+msgid ""
+"EU AI Act Art. 50 requires telling people they are interacting with an AI "
+"system. The widget already shows a badge and footer disclosure; this creates"
+" a draft page (shortcode [agentyllo_transparency]) explaining who operates "
+"the assistant, how it works, what data it processes and how to reach a "
+"human. Publish it and its link appears in the widget footer."
+msgstr ""
+"L'art. 50 dell'AI Act UE richiede di informare le persone che stanno "
+"interagendo con un sistema AI. Il widget mostra già un badge e una nota nel "
+"footer; questo crea una pagina in bozza (shortcode [agentyllo_transparency])"
+" che spiega chi gestisce l'assistente, come funziona, quali dati tratta e "
+"come raggiungere un umano. Pubblicala e il suo link apparirà nel footer del "
+"widget."
+
+#: assets/build/admin.js:1
+msgid "Could not create the page."
+msgstr "Impossibile creare la pagina."
+
+#: assets/build/admin.js:1
+msgid "Generate transparency page"
+msgstr "Genera la pagina di trasparenza"
+
+#. translators: %s: page status
+#: assets/build/admin.js:1
+msgid "Page ready (status: %s)."
+msgstr "Pagina pronta (stato: %s)."
+
+#: assets/build/admin.js:1
+msgid "Edit & publish"
+msgstr "Modifica e pubblica"
+
+#: assets/build/admin.js:1
+msgid "Preview"
+msgstr "Anteprima"
+
+#: assets/build/admin.js:1
+msgid "Content Sources"
+msgstr "Fonti dei contenuti"
+
+#: assets/build/admin.js:1
+msgid "Widget"
+msgstr "Widget"
+
+#: assets/build/admin.js:1
+msgid "Performance"
+msgstr "Prestazioni"
+
+#: assets/build/admin.js:1
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: assets/build/admin.js:1
+msgid "Failed to load settings."
+msgstr "Impossibile caricare le impostazioni."
+
+#: assets/build/admin.js:1
+msgid "Settings saved."
+msgstr "Impostazioni salvate."
+
+#: assets/build/admin.js:1
+msgid "Sources"
+msgstr "Fonti"
+
+#: assets/build/admin.js:1
+msgid "Entries"
+msgstr "Voci"
+
+#: assets/build/admin.js:1
+msgid "Health"
+msgstr "Salute"
+
+#: assets/build/admin.js:1
+msgid "Failed to load conversations."
+msgstr "Impossibile caricare le conversazioni."
+
+#: assets/build/admin.js:1
+msgid "No conversations yet."
+msgstr "Ancora nessuna conversazione."
+
+#: assets/build/admin.js:1
+msgid "Visitor"
+msgstr "Visitatore"
+
+#: assets/build/admin.js:1
+msgid "Lang"
+msgstr "Lingua"
+
+#: assets/build/admin.js:1
+msgid "Tier"
+msgstr "Livello"
+
+#: assets/build/admin.js:1
+msgid "anonymous"
+msgstr "anonimo"
+
+#: assets/build/admin.js:1
+msgid "View"
+msgstr "Vedi"
+
+#. translators: 1: page, 2: total pages, 3: total rows
+#: assets/build/admin.js:1
+msgid "Page %1$d of %2$d (%3$d conversations)"
+msgstr "Pagina %1$d di %2$d (%3$d conversazioni)"
+
+#: assets/build/admin.js:1
+msgid "Failed to load agents."
+msgstr "Impossibile caricare gli agenti."
+
+#: assets/build/admin.js:1
+msgid "Agent roster"
+msgstr "Elenco degli agenti"
+
+#: assets/build/admin.js:1
+msgid "Agent"
+msgstr "Agente"
+
+#: assets/build/admin.js:1
+msgid "Lessons"
+msgstr "Lezioni"
+
+#: assets/build/admin.js:1
+msgid "Enabled"
+msgstr "Attivo"
+
+#: assets/build/admin.js:1
+msgid "Quarantined"
+msgstr "In quarantena"
+
+#: assets/build/admin.js:1
+msgid "Disabled"
+msgstr "Disattivato"
+
+#: assets/build/admin.js:1
+msgid "Hide memory"
+msgstr "Nascondi la memoria"
+
+#: assets/build/admin.js:1
+msgid "Release"
+msgstr "Rilascia"
+
+#. translators: %s: agent id
+#: assets/build/admin.js:1
+msgid "Memory — %s"
+msgstr "Memoria — %s"
+
+#: assets/build/admin.js:1
+msgid "Recent journal"
+msgstr "Journal recente"
+
+#: assets/build/admin.js:1
+msgid "No journal entries yet."
+msgstr "Ancora nessuna voce nel journal."
+
+#: assets/build/admin.js:1
+msgid "Could not load AI models."
+msgstr "Impossibile caricare i modelli AI."
+
+#. translators: %s: provider id
+#: assets/build/admin.js:1
+msgid "AI active: %s"
+msgstr "AI attiva: %s"
+
+#: assets/build/admin.js:1
+msgid "Local engine"
+msgstr "Motore locale"
+
+#: assets/build/admin.js:1
+msgid "Classic agents answering"
+msgstr "Rispondono gli agenti classici"
+
+#. translators: %s: operating mode
+#: assets/build/admin.js:1
+msgid "Operating mode: %s."
+msgstr "Modalità operativa: %s."
+
+#: assets/build/admin.js:1
+msgid "Streaming: available (token-by-token answers in the widget)."
+msgstr "Streaming: disponibile (risposte token per token nel widget)."
+
+#: assets/build/admin.js:1
+msgid ""
+"Streaming: this server cannot stream from providers (no cURL) — answers are "
+"delivered when complete."
+msgstr ""
+"Streaming: questo server non può fare streaming dai provider (manca cURL) — "
+"le risposte arrivano quando complete."
+
+#: assets/build/admin.js:1
+msgid "Routing & budget"
+msgstr "Instradamento e budget"
+
+#: assets/build/admin.js:1
+msgid "Chat provider (paid AI modes)"
+msgstr "Provider di chat (modalità AI a pagamento)"
+
+#: assets/build/admin.js:1
+msgid "None"
+msgstr "Nessuno"
+
+#: assets/build/admin.js:1
+msgid ""
+"Used when the operating mode is \"paid AI\" or \"classic + paid AI\". Only "
+"one provider bills at a time. Free AI modes use the local engine below."
+msgstr ""
+"Usato quando la modalità operativa è \"AI a pagamento\" o \"classico + AI a "
+"pagamento\". Fattura un solo provider alla volta. Le modalità AI gratuite "
+"usano il motore locale qui sotto."
+
+#: assets/build/admin.js:1
+msgid "Embeddings provider"
+msgstr "Provider di embedding"
+
+#: assets/build/admin.js:1
+msgid "None (keyword search only)"
+msgstr "Nessuno (solo ricerca per parole chiave)"
+
+#: assets/build/admin.js:1
+msgid "Local engine (/v1/embeddings)"
+msgstr "Motore locale (/v1/embeddings)"
+
+#: assets/build/admin.js:1
+msgid ""
+"Dense vectors improve retrieval for paraphrased questions. Local ONNX "
+"embeddings arrive with the Local AI companion."
+msgstr ""
+"I vettori densi migliorano il recupero per le domande parafrasate. Gli "
+"embedding ONNX locali arrivano con il companion Local AI."
+
+#: assets/build/admin.js:1
+msgid "Local embedding model (optional)"
+msgstr "Modello di embedding locale (facoltativo)"
+
+#: assets/build/admin.js:1
+msgid ""
+"Model id served by the local engine for /v1/embeddings (Ollama: nomic-embed-"
+"text, bge-m3; llama-server: run with --embeddings)."
+msgstr ""
+"Id del modello servito dal motore locale per /v1/embeddings (Ollama: nomic-"
+"embed-text, bge-m3; llama-server: avvialo con --embeddings)."
+
+#: assets/build/admin.js:1
+msgid "Embedding model"
+msgstr "Modello di embedding"
+
+#. translators: 1: vectors stored, 2: remaining, 3: model key
+#: assets/build/admin.js:1
+msgid "Vectors: %1$d stored, %2$s remaining (%3$s)."
+msgstr "Vettori: %1$d memorizzati, %2$s rimanenti (%3$s)."
+
+#: assets/build/admin.js:1
+msgid "The embedding provider is not usable yet (missing key?)."
+msgstr ""
+"Il provider di embedding non è ancora utilizzabile (chiave mancante?)."
+
+#. translators: 1: embedded now, 2: total, 3: remaining
+#: assets/build/admin.js:1
+msgid "Embedded %1$d chunks (total %2$d, %3$d remaining)."
+msgstr "Incorporati %1$d chunk (totale %2$d, %3$d rimanenti)."
+
+#: assets/build/admin.js:1
+msgid "Embedding failed."
+msgstr "Embedding non riuscito."
+
+#: assets/build/admin.js:1
+msgid "Embed now"
+msgstr "Calcola embedding ora"
+
+#: assets/build/admin.js:1
+msgid "Browser AI (experimental)"
+msgstr "AI nel browser (sperimentale)"
+
+#: assets/build/admin.js:1
+msgid ""
+"Lets the widget probe WebGPU and offer an in-browser model when the Local AI"
+" companion provides one. Visitors must opt in explicitly; nothing downloads "
+"without consent."
+msgstr ""
+"Permette al widget di rilevare WebGPU e offrire un modello nel browser "
+"quando il companion Local AI ne fornisce uno. I visitatori devono "
+"acconsentire esplicitamente; nulla viene scaricato senza consenso."
+
+#: assets/build/admin.js:1
+msgid "Monthly cost cap (USD, 0 = no cap)"
+msgstr "Tetto di spesa mensile (USD, 0 = nessun tetto)"
+
+#: assets/build/admin.js:1
+msgid ""
+"Estimated from registry prices. When reached, the classic agents answer "
+"until next month."
+msgstr ""
+"Stimato dai prezzi del registry. Al raggiungimento, gli agenti classici "
+"rispondono fino al mese successivo."
+
+#: assets/build/admin.js:1
+msgid "Max answer tokens"
+msgstr "Token massimi per risposta"
+
+#: assets/build/admin.js:1
+msgid "Time budget per answer (seconds)"
+msgstr "Budget di tempo per risposta (secondi)"
+
+#: assets/build/admin.js:1
+msgid "A slow provider is cut off here and the classic agents answer instead."
+msgstr ""
+"Un provider lento viene interrotto qui e rispondono invece gli agenti "
+"classici."
+
+#. translators: %s: month
+#: assets/build/admin.js:1
+msgid "Usage this month (%s)"
+msgstr "Utilizzo questo mese (%s)"
+
+#. translators: 1: cost, 2: cap, 3: calls, 4: tokens in, 5: tokens out
+#: assets/build/admin.js:1
+msgid "%1$s spent%2$s · %3$d calls · %4$s tokens in · %5$s tokens out"
+msgstr ""
+"%1$s spesi%2$s · %3$d chiamate · %4$s token in ingresso · %5$s token in "
+"uscita"
+
+#: assets/build/admin.js:1
+msgid "Model registry"
+msgstr "Registry dei modelli"
+
+#. translators: 1: origin, 2: sequence, 3: generated date
+#: assets/build/admin.js:1
+msgid "Source: %1$s · sequence %2$d · generated %3$s"
+msgstr "Fonte: %1$s · sequenza %2$d · generato %3$s"
+
+#: assets/build/admin.js:1
+msgid "signed remote manifest"
+msgstr "manifest remoto firmato"
+
+#: assets/build/admin.js:1
+msgid "bundled snapshot"
+msgstr "snapshot incluso"
+
+#. translators: 1: date, 2: message
+#: assets/build/admin.js:1
+msgid "Last sync %1$s — %2$s"
+msgstr "Ultima sincronizzazione %1$s — %2$s"
+
+#: assets/build/admin.js:1
+msgid "Not synced yet (weekly automatic sync)."
+msgstr "Non ancora sincronizzato (sincronizzazione automatica settimanale)."
+
+#: assets/build/admin.js:1
+msgid "Sync automatically every week"
+msgstr "Sincronizza automaticamente ogni settimana"
+
+#: assets/build/admin.js:1
+msgid ""
+"Downloads model ids, prices and prompt versions (data only, Ed25519-signed) "
+"from registry.agentyllo.com."
+msgstr ""
+"Scarica id dei modelli, prezzi e versioni dei prompt (solo dati, firmati "
+"Ed25519) da registry.agentyllo.com."
+
+#: assets/build/admin.js:1
+msgid "Sync failed."
+msgstr "Sincronizzazione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Sync now"
+msgstr "Sincronizza ora"
+
+#: assets/build/admin.js:1
+msgid "Recent inference calls"
+msgstr "Chiamate di inferenza recenti"
+
+#: assets/build/admin.js:1
+msgid "When"
+msgstr "Quando"
+
+#: assets/build/admin.js:1
+msgid "Provider / model"
+msgstr "Provider / modello"
+
+#: assets/build/admin.js:1
+msgid "Result"
+msgstr "Risultato"
+
+#: assets/build/admin.js:1
+msgid "Tokens"
+msgstr "Token"
+
+#: assets/build/admin.js:1
+msgid "Latency"
+msgstr "Latenza"
+
+#: assets/build/admin.js:1
+msgid "Cost"
+msgstr "Costo"
+
+#: assets/build/admin.js:1
+msgid "ok (streamed)"
+msgstr "ok (in streaming)"
+
+#: assets/build/admin.js:1
+msgid "ok"
+msgstr "ok"
+
+#: assets/build/admin.js:1
+msgid "error"
+msgstr "errore"
+
+#: assets/build/admin.js:1
+msgid "Could not load the command list."
+msgstr "Impossibile caricare l'elenco dei comandi."
+
+#: assets/build/admin.js:1
+msgid "How Agentyllo works"
+msgstr "Come funziona Agentyllo"
+
+#: assets/build/admin.js:1
+msgid ""
+"Agentyllo builds a knowledge base from your pages, posts, products, menus "
+"and site settings, keeps it fresh automatically, and answers visitors from "
+"it. Classic agents answer without any AI model; optional AI tiers (a local "
+"engine you run, or OpenAI/Anthropic with your own key) add natural prose — "
+"hard facts such as prices and contact details are always taken verbatim from"
+" your content, never generated."
+msgstr ""
+"Agentyllo costruisce una base di conoscenza dalle tue pagine, articoli, "
+"prodotti, menu e impostazioni del sito, la mantiene aggiornata "
+"automaticamente e risponde ai visitatori a partire da essa. Gli agenti "
+"classici rispondono senza alcun modello AI; i livelli AI opzionali (un "
+"motore locale che gestisci tu, oppure OpenAI/Anthropic con la tua chiave) "
+"aggiungono prosa naturale — i dati concreti come prezzi e recapiti sono "
+"sempre presi alla lettera dai tuoi contenuti, mai generati."
+
+#: assets/build/admin.js:1
+msgid ""
+"Knowledge Base → choose which content sources are indexed. Disabling a "
+"source removes it from answers immediately."
+msgstr ""
+"Base di conoscenza → scegli quali fonti di contenuto indicizzare. "
+"Disattivare una fonte la rimuove subito dalle risposte."
+
+#: assets/build/admin.js:1
+msgid ""
+"Settings → General → operating mode, assistant name, tone, custom "
+"instructions."
+msgstr ""
+"Impostazioni → Generale → modalità operativa, nome dell'assistente, tono, "
+"istruzioni personalizzate."
+
+#: assets/build/admin.js:1
+msgid ""
+"AI Models → optional: cloud keys, a local engine (llama-server/Ollama), "
+"embeddings, budget."
+msgstr ""
+"Modelli AI → facoltativo: chiavi cloud, un motore locale (llama-"
+"server/Ollama), embedding, budget."
+
+#: assets/build/admin.js:1
+msgid ""
+"Privacy & Legal → pre-chat gate, retention, PII redaction, AI transparency "
+"page (EU AI Act Art. 50)."
+msgstr ""
+"Privacy e legale → modulo pre-chat, conservazione, oscuramento dei dati "
+"personali, pagina di trasparenza AI (art. 50 dell'AI Act UE)."
+
+#: assets/build/admin.js:1
+msgid ""
+"Copilot (Ctrl+Shift+K on any Agentyllo page) → manage everything by command;"
+" every change is proposed first and applied only when you confirm."
+msgstr ""
+"Copilot (Ctrl+Maiusc+K su qualsiasi pagina Agentyllo) → gestisci tutto "
+"tramite comandi; ogni modifica viene prima proposta e applicata solo quando "
+"confermi."
+
+#: assets/build/admin.js:1
+msgid "Copilot commands"
+msgstr "Comandi del copilot"
+
+#: assets/build/admin.js:1
+msgid "Command"
+msgstr "Comando"
+
+#: assets/build/admin.js:1
+msgid "What it does"
+msgstr "Cosa fa"
+
+#: assets/build/admin.js:1
+msgid "Confirmation"
+msgstr "Conferma"
+
+#: assets/build/admin.js:1
+msgid "Required"
+msgstr "Richiesta"
+
+#: assets/build/admin.js:1
+msgid "Proposal → Apply"
+msgstr "Proposta → Applica"
+
+#: assets/build/admin.js:1
+msgid ""
+"Anything that is not a /command is answered from your site content. Files: "
+"TXT, Markdown and CSV can be imported from the copilot with a reviewable "
+"preview."
+msgstr ""
+"Tutto ciò che non è un /comando riceve risposta dai contenuti del tuo sito. "
+"File: TXT, Markdown e CSV possono essere importati dal copilot con "
+"un'anteprima revisionabile."
+
+#: assets/build/admin.js:1
+msgid "Shortcode & filters"
+msgstr "Shortcode e filtri"
+
+#: assets/build/admin.js:1
+msgid "AI transparency page content (generated from your configuration)."
+msgstr ""
+"Contenuto della pagina di trasparenza AI (generato dalla tua "
+"configurazione)."
+
+#: assets/build/admin.js:1
+msgid "extension points for addons and the Local AI companion."
+msgstr "punti di estensione per gli addon e il companion Local AI."
+
+#: assets/build/admin.js:1
+msgid "Failed to load statistics."
+msgstr "Impossibile caricare le statistiche."
+
+#: assets/build/admin.js:1
+msgid "Deflection rate"
+msgstr "Tasso di risoluzione automatica"
+
+#: assets/build/admin.js:1
+msgid "KB coverage"
+msgstr "Copertura della KB"
+
+#: assets/build/admin.js:1
+msgid "Fallback replies"
+msgstr "Risposte di ripiego"
+
+#: assets/build/admin.js:1
+msgid "Open knowledge gaps"
+msgstr "Lacune di conoscenza aperte"
+
+#: assets/build/admin.js:1
+msgid "Out-of-scope refusals"
+msgstr "Rifiuti fuori tema"
+
+#: assets/build/admin.js:1
+msgid "Handoffs"
+msgstr "Passaggi a operatore"
+
+#: assets/build/admin.js:1
+msgid "Avg latency"
+msgstr "Latenza media"
+
+#: assets/build/admin.js:1
+msgid "Range"
+msgstr "Intervallo"
+
+#: assets/build/admin.js:1
+msgid "Last 30 days"
+msgstr "Ultimi 30 giorni"
+
+#: assets/build/admin.js:1
+msgid "Last 90 days (Pro)"
+msgstr "Ultimi 90 giorni (Pro)"
+
+#: assets/build/admin.js:1
+msgid "Rollup failed."
+msgstr "Aggregazione non riuscita."
+
+#: assets/build/admin.js:1
+msgid "Refresh rollups"
+msgstr "Aggiorna le aggregazioni"
+
+#: assets/build/admin.js:1
+msgid "Latency per tier"
+msgstr "Latenza per livello"
+
+#: assets/build/admin.js:1
+msgid "No data yet."
+msgstr "Ancora nessun dato."
+
+#: assets/build/admin.js:1
+msgid "Avg"
+msgstr "Media"
+
+#: assets/build/admin.js:1
+msgid "p95"
+msgstr "p95"
+
+#: assets/build/admin.js:1
+msgid "Top intents"
+msgstr "Intent principali"
+
+#: assets/build/admin.js:1
+msgid "Intent"
+msgstr "Intent"
+
+#: assets/build/admin.js:1
+msgid "Hits"
+msgstr "Occorrenze"
+
+#: assets/build/admin.js:1
+msgid "Answered"
+msgstr "Con risposta"
+
+#: assets/build/admin.js:1
+msgid "Unanswered questions"
+msgstr "Domande senza risposta"
+
+#: assets/build/admin.js:1
+msgid ""
+"Questions the assistant could not answer from the knowledge base. Add the "
+"missing information (Knowledge Base → Entries, or ask the copilot) and mark "
+"them resolved."
+msgstr ""
+"Domande a cui l'assistente non ha saputo rispondere dalla base di "
+"conoscenza. Aggiungi le informazioni mancanti (Base di conoscenza → Voci, o "
+"chiedi al copilot) e segnale come risolte."
+
+#: assets/build/admin.js:1
+msgid "Question"
+msgstr "Domanda"
+
+#: assets/build/admin.js:1
+msgid "Add to KB via copilot"
+msgstr "Aggiungi alla KB via copilot"
+
+#: assets/build/admin.js:1
+msgid "Resolved"
+msgstr "Risolta"
+
+#: assets/build/admin.js:1
+msgid "Dismiss"
+msgstr "Ignora"
+
+#: assets/build/admin.js:1
+msgid "Nothing open — great!"
+msgstr "Niente in sospeso — ottimo!"
+
+#. translators: %d: days
+#: assets/build/admin.js:1
+msgid ""
+"Rollups are PII-free daily counters kept for 24 months; raw transcripts "
+"follow the retention setting. Showing %d days."
+msgstr ""
+"Le aggregazioni sono contatori giornalieri privi di dati personali "
+"conservati per 24 mesi; le trascrizioni grezze seguono l'impostazione di "
+"conservazione. Visualizzati %d giorni."

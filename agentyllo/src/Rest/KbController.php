@@ -447,7 +447,7 @@ final class KbController extends Controller {
 
 		$placeholders = implode( ',', array_fill( 0, count( $external_ids ), '%s' ) );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- placeholder list is built from count(external_ids).
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT external_id, status FROM ' . $wpdb->prefix . "agy_kb_documents WHERE source = %s AND external_id IN ({$placeholders})",

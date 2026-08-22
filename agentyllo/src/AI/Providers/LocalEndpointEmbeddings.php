@@ -124,7 +124,7 @@ final class LocalEndpointEmbeddings implements EmbeddingProvider {
 			}
 		}
 
-		if ( $out && 0 === $this->dimensions() ) {
+		if ( 0 === $this->dimensions() ) {
 			update_option(
 				'agy_local_embed_dims',
 				array(

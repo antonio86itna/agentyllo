@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,11 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.1.4 =
+* Add: complete Italian (it_IT) translation - 712 strings covering the admin app (script translations included), the chat widget, the copilot and the transparency page.
+* Dev: PHPStan level 6 passes with zero errors (configuration ships in the repository); small robustness fixes from the findings.
+* Dev: final Plugin Check pass on the packaged build; development configs are excluded from the distributed zip.
 
 = 0.1.3 =
 * Fix: navigation questions ("take me to the contact page", "where can I find X?") now answer with a direct link card to the page whose title matches, instead of quoting an unrelated page or refusing as off-topic. Page-title matches also count as in-scope for the out-of-scope guard.

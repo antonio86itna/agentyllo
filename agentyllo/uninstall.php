@@ -20,7 +20,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
  * Table list mirrored from Agentyllo\Install\Schema::table_names().
  * Keep in sync when milestones add tables.
  */
-function agy_uninstall_table_names() {
+function agy_uninstall_table_names(): array {
 	return array(
 		'agy_agent_memory',
 		'agy_agent_journal',
@@ -47,7 +47,7 @@ function agy_uninstall_table_names() {
 /**
  * Uninstall one site (current $wpdb prefix scope).
  */
-function agy_uninstall_site() {
+function agy_uninstall_site(): void {
 	global $wpdb;
 
 	$settings = get_option( 'agy_settings_advanced', array() );
@@ -126,7 +126,7 @@ function agy_uninstall_site() {
  *
  * @param string $dir Absolute directory path.
  */
-function agy_uninstall_rmdir( $dir ) {
+function agy_uninstall_rmdir( $dir ): void {
 	global $wp_filesystem;
 
 	if ( ! function_exists( 'WP_Filesystem' ) ) {

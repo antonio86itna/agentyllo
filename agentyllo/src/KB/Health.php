@@ -223,6 +223,7 @@ final class Health {
 			);
 		}
 
+		/** @var array<int, int> $parent */
 		$parent = array();
 
 		$find = static function ( int $x ) use ( &$parent ): int {

@@ -12,8 +12,8 @@ import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, 'dist')
-EXCLUDE_DIRS = {'tests', 'vendor', 'src-js', 'node_modules', '.git'}
-EXCLUDE_FILES = {'composer.json', 'composer.lock', 'phpunit.xml.dist', '.phpcs.xml.dist', '.phpcs.xml', '.DS_Store', 'Thumbs.db'}
+EXCLUDE_DIRS = {'tests', 'vendor', 'src-js', 'node_modules', '.git', '.phpunit.cache'}
+EXCLUDE_FILES = {'composer.json', 'composer.lock', 'phpunit.xml.dist', 'phpstan.neon.dist', '.phpcs.xml.dist', '.phpcs.xml', '.DS_Store', 'Thumbs.db'}
 
 
 def version(main_file):

@@ -418,7 +418,7 @@ final class ComposeStage implements Stage {
 			$out .= $next;
 		}
 
-		return '' !== $out ? $out : null;
+		return $out;
 	}
 
 	/**

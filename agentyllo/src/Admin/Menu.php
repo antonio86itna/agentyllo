@@ -58,6 +58,7 @@ final class Menu {
 		 * Filter the real capability required for the Agentyllo admin menu.
 		 *
 		 * @param string $capability Default 'manage_options'.
+		 * @param string $permission Agentyllo permission id being mapped.
 		 */
 		$menu_cap = (string) apply_filters( 'agy_capability_map', 'manage_options', 'agy_manage' );
 

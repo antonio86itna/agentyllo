@@ -131,7 +131,7 @@ final class Redactor {
 		// Piecewise mod 97 (string may exceed int range).
 		$remainder = 0;
 		foreach ( str_split( $numeric, 7 ) as $chunk ) {
-			$remainder = (int) ( ( $remainder . $chunk ) % 97 );
+			$remainder = ( (int) ( $remainder . $chunk ) ) % 97;
 		}
 
 		return 1 === $remainder;
