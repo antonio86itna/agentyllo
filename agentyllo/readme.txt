@@ -64,14 +64,14 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 
 == Screenshots ==
 
-1. Chat widget answering from the knowledge base with links and product cards.
-2. Dashboard with tier, KB freshness and agent health.
-3. Knowledge Base sources and per-item picker.
-4. AI Models: providers, local engine, budget and registry.
-5. Copilot drawer proposing an action.
-6. Statistics and knowledge gaps.
-7. Privacy & Legal.
-8. Generated AI transparency page.
+1. The chat widget answering from your own content — exact facts, real links, no API key required.
+2. Dashboard: hosting capability scan and the AI tier your server can run.
+3. The backend copilot proposing a change — nothing runs until you confirm.
+4. Knowledge base entries, indexed and kept fresh automatically.
+5. Statistics: deflection, coverage and the questions your site could not answer yet.
+6. AI Models: free local engines or your own OpenAI / Anthropic keys, with a monthly cost cap.
+7. Conversations with full transcripts and per-message audit trail.
+8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
 
