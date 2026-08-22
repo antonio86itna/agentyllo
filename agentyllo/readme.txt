@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Generated AI transparency page.
 
 == Changelog ==
+
+= 0.1.3 =
+* Fix: navigation questions ("take me to the contact page", "where can I find X?") now answer with a direct link card to the page whose title matches, instead of quoting an unrelated page or refusing as off-topic. Page-title matches also count as in-scope for the out-of-scope guard.
 
 = 0.1.2 =
 * Fix: the admin Copilot drawer now actually closes - a CSS rule kept it permanently visible regardless of the toggle.

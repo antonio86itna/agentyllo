@@ -195,6 +195,142 @@ final class HybridRetriever {
 	}
 
 	/**
+	 * Documents whose TITLE matches the query — the deterministic resolver
+	 * behind the navigation intent ("take me to the contact page"). Chunk
+	 * retrieval cannot answer these reliably: the target's name often lives
+	 * only in its title while generic words ("page") drown the ranking in
+	 * unrelated prose.
+	 *
+	 * Generic navigation nouns are removed from the query first, candidate
+	 * rows come from a LIKE prefilter, and the final score is token overlap
+	 * measured against both the title ("Contact" beats "Sample Page" for
+	 * "contact page") and the query. Only matches within 60% of the best
+	 * score survive, so one clear winner is returned alone.
+	 *
+	 * @param string $query Natural-language query.
+	 * @param array  $opts  Options: lang (string, ''=any), limit (int, 3).
+	 * @return array<int, array{document_id: int, title: string, permalink: string, source: string}>
+	 */
+	public function title_lookup( string $query, array $opts = array() ): array {
+		global $wpdb;
+
+		$lang  = (string) ( $opts['lang'] ?? '' );
+		$limit = max( 1, (int) ( $opts['limit'] ?? 3 ) );
+
+		// Tokenizing the noise list keeps it aligned with stemming: whatever
+		// form "pages"/"pagine"/"Seiten" reduces to, the query term reduces
+		// to the same one.
+		$noise_src = 'page pages section sections link links url site website homepage pagina pagine sezione sezioni seite seiten página páginas lien liens enlace enlaces please pls thanks thank kindly grazie favore bitte danke merci gracias favor obrigado bedankt';
+		$noise     = $this->tokenizer->tokenize( $noise_src, $lang );
+		$terms     = array_values(
+			array_diff( array_unique( $this->tokenizer->tokenize( $query, $lang ) ), $noise )
+		);
+
+		/*
+		 * Raw fallback: some page names are made entirely of stopwords
+		 * ("About us") — the stemming tokenizer erases them from the query
+		 * AND from the title. When nothing survives, retry on plain
+		 * lowercased words so those pages stay reachable; both sides of the
+		 * comparison must then use the same representation.
+		 */
+		$raw_mode = false;
+		if ( ! $terms ) {
+			$noise_raw = array_flip( preg_split( '/\s+/', $noise_src ) );
+			$terms     = array_values(
+				array_filter( $this->raw_words( $query ), static fn ( string $t ): bool => ! isset( $noise_raw[ $t ] ) )
+			);
+			$raw_mode  = true;
+		}
+		if ( ! $terms ) {
+			return array();
+		}
+		$terms = array_slice( $terms, 0, self::MAX_QUERY_TERMS );
+
+		$like = array();
+		$args = array( Store::STATUS_ACTIVE );
+		foreach ( $terms as $term ) {
+			$like[] = 'title LIKE %s';
+			$args[] = '%' . $wpdb->esc_like( $term ) . '%';
+		}
+
+		$sql = 'SELECT id, title, permalink, source FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' AND permalink <> '' AND (" . implode( ' OR ', $like ) . ')';
+		if ( '' !== $lang ) {
+			$sql   .= " AND (lang = %s OR lang = '')";
+			$args[] = $lang;
+		}
+		$sql .= ' LIMIT 40';
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$rows = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ), ARRAY_A );
+		if ( ! $rows ) {
+			return array();
+		}
+
+		$query_set = array_flip( $terms );
+		$scored    = array();
+
+		foreach ( (array) $rows as $row ) {
+			$title_tokens = $raw_mode
+				? $this->raw_words( (string) $row['title'] )
+				: array_values( array_unique( $this->tokenizer->tokenize( (string) $row['title'], $lang ) ) );
+			if ( ! $title_tokens ) {
+				continue;
+			}
+
+			$overlap = 0;
+			foreach ( $title_tokens as $token ) {
+				if ( isset( $query_set[ $token ] ) ) {
+					++$overlap;
+				}
+			}
+			if ( 0 === $overlap ) {
+				// The LIKE prefilter matches substrings ("ship" in
+				// "membership"); token overlap is the real test.
+				continue;
+			}
+
+			$scored[] = array(
+				'document_id' => (int) $row['id'],
+				'title'       => (string) $row['title'],
+				'permalink'   => (string) $row['permalink'],
+				'source'      => (string) $row['source'],
+				'score'       => $overlap / count( $title_tokens ) + $overlap / count( $terms ),
+			);
+		}
+
+		if ( ! $scored ) {
+			return array();
+		}
+
+		usort( $scored, static fn ( array $a, array $b ): int => $b['score'] <=> $a['score'] );
+
+		$best = (float) $scored[0]['score'];
+		$out  = array();
+		foreach ( $scored as $hit ) {
+			if ( $hit['score'] < 0.6 * $best || count( $out ) >= $limit ) {
+				break;
+			}
+			unset( $hit['score'] );
+			$out[] = $hit;
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Plain lowercased word runs (2+ chars), no stopwords, no stemming — the
+	 * representation title_lookup() falls back to for stopword-only names.
+	 *
+	 * @param string $text Raw text.
+	 * @return string[]
+	 */
+	private function raw_words( string $text ): array {
+		preg_match_all( '/[\p{L}\p{N}]{2,}/u', mb_strtolower( $text, 'UTF-8' ), $matches );
+
+		return array_values( array_unique( $matches[0] ) );
+	}
+
+	/**
 	 * BM25-ranked chunk ids from the agy_kb_terms inverted index.
 	 *
 	 * df comes from a cheap index-only COUNT per query term (status-blind —

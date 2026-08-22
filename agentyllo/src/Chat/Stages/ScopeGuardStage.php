@@ -105,6 +105,23 @@ final class ScopeGuardStage implements Stage {
 			return;
 		}
 
+		/*
+		 * Navigation asks for a page BY NAME — the name usually lives only in
+		 * the title, so chunk coverage under-reports relevance ("take me to
+		 * the contact page" matches the Contact page's title but barely its
+		 * body). A title match settles scope by definition; the targets are
+		 * stashed for ComposeStage so the lookup runs once.
+		 */
+		if ( 'navigation_find_page' === $context->intent ) {
+			$targets = $this->retriever->title_lookup( $context->text, array( 'lang' => $context->site_lang ) );
+			if ( $targets ) {
+				$context->meta['nav_targets'] = $targets;
+				$context->note( 'nav_targets', count( $targets ) );
+
+				return;
+			}
+		}
+
 		if ( ! $guard_on ) {
 			return;
 		}

@@ -70,6 +70,13 @@ final class PostProcessStage implements Stage {
 			return;
 		}
 
+		// A navigation answer already carries its exact link card; appending
+		// the chunk-ranked documents would re-introduce the near-miss pages
+		// the title lookup just filtered out.
+		if ( ! empty( $context->meta['nav_composed'] ) ) {
+			return;
+		}
+
 		$settings        = $this->settings();
 		$show_thumbnails = (bool) ( $settings['show_thumbnails'] ?? true );
 		$existing_urls   = $this->existing_urls( $context );

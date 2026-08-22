@@ -110,6 +110,13 @@ final class ComposeStage implements Stage {
 			return;
 		}
 
+		// Navigation: a deterministic link card to the page(s) whose TITLE
+		// matches — never an extractive quote (the target's name rarely
+		// appears in body prose, so extraction picks the wrong page).
+		if ( 'navigation_find_page' === $context->intent && $this->compose_navigation( $context ) ) {
+			return;
+		}
+
 		// Hard facts first, verbatim — never re-derived from chunk text.
 		$facts_md = $this->fact_lines( $context->fact_slots );
 		if ( '' !== $facts_md ) {
@@ -211,6 +218,59 @@ final class ComposeStage implements Stage {
 		}
 
 		$context->note( 'answered', true );
+	}
+
+	/**
+	 * Navigation composition: link card(s) for the documents whose title
+	 * matches the query. ScopeGuard stashes its lookup in meta['nav_targets'];
+	 * when the guard is disabled the lookup runs here instead. Returns false
+	 * when no title matches — the generic extract/honesty path takes over.
+	 *
+	 * @param ChatContext $context Context.
+	 */
+	private function compose_navigation( ChatContext $context ): bool {
+		$targets = $context->meta['nav_targets'] ?? null;
+		if ( ! is_array( $targets ) ) {
+			$targets = $this->retriever->title_lookup( $context->text, array( 'lang' => $context->site_lang ) );
+		}
+		if ( ! $targets ) {
+			return false;
+		}
+
+		$items = array();
+		foreach ( $targets as $target ) {
+			$url = (string) ( $target['permalink'] ?? '' );
+			if ( '' === $url ) {
+				continue;
+			}
+			$items[] = array(
+				'title' => wp_specialchars_decode( (string) ( $target['title'] ?? '' ), ENT_QUOTES ),
+				'url'   => $url,
+			);
+		}
+		if ( ! $items ) {
+			return false;
+		}
+
+		$context->add_block(
+			array(
+				'type' => 'text',
+				'md'   => 1 === count( $items )
+					? __( 'Here is the page you are looking for:', 'agentyllo' )
+					: __( 'These pages should be what you are looking for:', 'agentyllo' ),
+			)
+		);
+		$context->add_block(
+			array(
+				'type'  => 'links',
+				'items' => $items,
+			)
+		);
+
+		$context->meta['nav_composed'] = true;
+		$context->note( 'answered', true );
+
+		return true;
 	}
 
 	/**

@@ -110,6 +110,7 @@ final class IntentClassifier {
 				'/\bwhere\s+(?:can\s+i|do\s+i|is|are)\b.*\b(?:find|page|section)\b/iu',
 				'/\b(?:link|url)\s+(?:to|for|of)\b/iu',
 				'/\b(?:show\s+me\s+the\s+page|take\s+me\s+to|go\s+to\s+the\s+page)\b/iu',
+				'/\b(?:show\s+me|open|go\s+to|bring\s+me\s+to|navigate\s+to)\b.*\b(?:page|section)\b/iu',
 				'/\b(?:dove\s+(?:trovo|si\s+trova|posso\s+trovare)|mostrami\s+la\s+pagina|portami\s+(?:a|alla))\b/iu',
 				'/\b(?:wo\s+finde\s+ich|zeig\s+mir\s+die\s+seite|link\s+zu[rm]?)\b/iu',
 				'/\b(?:o[ùu]\s+(?:puis-je\s+)?trouver|montrez?-moi\s+la\s+page|lien\s+vers)\b/iu',

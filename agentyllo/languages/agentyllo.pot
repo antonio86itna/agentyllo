@@ -1416,3 +1416,11 @@ msgstr ""
 #: src/Rest/StatsController.php:168
 msgid "Conversation not found."
 msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php
+msgid "Here is the page you are looking for:"
+msgstr ""
+
+#: src/Chat/Stages/ComposeStage.php
+msgid "These pages should be what you are looking for:"
+msgstr ""
