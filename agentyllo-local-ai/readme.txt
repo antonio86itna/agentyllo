@@ -16,7 +16,7 @@ This plugin is distributed by agentyllo.com and is intentionally NOT on WordPres
 What it does:
 
 * Verified catalog: llama.cpp `llama-server` builds for your platform and Apache-2.0/MIT GGUF models (Qwen, Phi…) with size, license and checksum from the signed registry. Gated weights (Llama, Gemma) are never offered.
-* Managed daemon: starts `llama-server` on 127.0.0.1, keeps it warm while visitors chat, stops it after an idle TTL, and exposes it to Agentyllo through the `agy_local_endpoint_url` filter.
+* Managed daemon: starts `llama-server` on 127.0.0.1, keeps it warm while visitors chat, stops it after an idle TTL, and exposes it to Agentyllo through the `agyl_local_endpoint_url` filter.
 * Optional `--embeddings` so the same daemon serves dense retrieval vectors.
 * Manual mode: point it at a `llama-server` binary and GGUF file you installed yourself.
 

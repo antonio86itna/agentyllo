@@ -1070,7 +1070,7 @@ final class IndexManager {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$names = $wpdb->get_col(
-			"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE 'agy\\_kb\\_reconcile\\_seen\\_%' LIMIT 200"
+			"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE 'agyl\\_kb\\_reconcile\\_seen\\_%' LIMIT 200"
 		);
 
 		$cutoff = time() - WEEK_IN_SECONDS;

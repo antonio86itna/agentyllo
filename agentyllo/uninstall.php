@@ -81,7 +81,7 @@ function agyl_uninstall_site(): void {
 	}
 
 	// remove_settings and remove_all: delete every agyl_* option and transient.
-	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'agy\\_%' OR option_name LIKE '\\_transient\\_agy\\_%' OR option_name LIKE '\\_transient\\_timeout\\_agy\\_%'" );
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'agyl\\_%' OR option_name LIKE '\\_transient\\_agyl\\_%' OR option_name LIKE '\\_transient\\_timeout\\_agyl\\_%'" );
 
 	if ( 'remove_all' === $mode ) {
 		foreach ( agyl_uninstall_table_names() as $table ) {
