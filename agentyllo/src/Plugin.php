@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin bootstrap: builds the container, wires services, fires agy_init.
+ * Plugin bootstrap: builds the container, wires services, fires agyl_init.
  *
  * @package Agentyllo
  */
@@ -74,6 +74,8 @@ use Agentyllo\Compliance\Consent;
 use Agentyllo\Compliance\Dsar;
 use Agentyllo\Compliance\Retention;
 use Agentyllo\Frontend\WidgetLoader;
+use Agentyllo\Admin\AddonCatalog;
+use Agentyllo\Rest\AddonsController;
 use Agentyllo\Rest\ChatController;
 use Agentyllo\Rest\ConfigController;
 use Agentyllo\Rest\CopilotController;
@@ -170,7 +172,7 @@ final class Plugin {
 		 * @param bool   $enabled Whether the feature is unlocked. Default false.
 		 * @param string $flag    Feature flag id.
 		 */
-		return (bool) apply_filters( 'agy_feature_enabled', false, $flag );
+		return (bool) apply_filters( 'agyl_feature_enabled', false, $flag );
 	}
 
 	/**
@@ -186,7 +188,7 @@ final class Plugin {
 		 *
 		 * @param Container $container The Agentyllo container.
 		 */
-		$this->container = apply_filters( 'agy_container', $this->container );
+		$this->container = apply_filters( 'agyl_container', $this->container );
 
 		$container = $this->container;
 
@@ -226,6 +228,7 @@ final class Plugin {
 				$container->get( ChatController::class )->register_routes();
 				$container->get( PrivacyController::class )->register_routes();
 				$container->get( StatsController::class )->register_routes();
+				$container->get( AddonsController::class )->register_routes();
 				$container->get( ModelsController::class )->register_routes();
 				$container->get( CopilotController::class )->register_routes();
 			}
@@ -234,7 +237,7 @@ final class Plugin {
 		// AI settings changed (key/model/provider): stale cached answers and
 		// tripped circuits must not outlive the change.
 		add_action(
-			'agy_settings_updated',
+			'agyl_settings_updated',
 			static function ( string $tab ) use ( $container ): void {
 				if ( 'models' !== $tab ) {
 					return;
@@ -252,7 +255,7 @@ final class Plugin {
 
 		// Manual KB entries: trash is purged after 30 days (hourly maintenance).
 		add_action(
-			'agy_maintenance',
+			'agyl_maintenance',
 			static function () use ( $container ): void {
 				$container->get( ManualEntries::class )->purge_trashed( 30 );
 			}
@@ -267,7 +270,7 @@ final class Plugin {
 
 		// Core roster registration (low priority so addons see the core set).
 		add_filter(
-			'agy_register_agents',
+			'agyl_register_agents',
 			static function ( array $agents ) use ( $container ): array {
 				$agents[] = $container->get( SentinelAgent::class );
 				$agents[] = $container->get( JanitorAgent::class );
@@ -309,7 +312,7 @@ final class Plugin {
 		 *
 		 * @param Container $container The Agentyllo container.
 		 */
-		do_action( 'agy_init', $this->container );
+		do_action( 'agyl_init', $this->container );
 	}
 
 	/**
@@ -748,6 +751,11 @@ final class Plugin {
 			)
 		);
 		$c->singleton( ProbeController::class, static fn (): ProbeController => new ProbeController() );
+		$c->singleton( AddonCatalog::class, static fn (): AddonCatalog => new AddonCatalog() );
+		$c->singleton(
+			AddonsController::class,
+			static fn ( Container $c ): AddonsController => new AddonsController( $c->get( AddonCatalog::class ) )
+		);
 		$c->singleton(
 			AgentsController::class,
 			static fn ( Container $c ): AgentsController => new AgentsController(

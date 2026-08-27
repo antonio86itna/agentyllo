@@ -12,7 +12,7 @@ namespace Agentyllo\Install;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Compares the stored schema version with AGY_DB_VERSION on admin_init and
+ * Compares the stored schema version with AGYL_DB_VERSION on admin_init and
  * upgrades when behind. dbDelta is idempotent, so re-running Schema::install()
  * is always safe; version-specific data migrations register in steps().
  */
@@ -22,9 +22,9 @@ final class Migrator {
 	 * Upgrade when the stored schema version is behind. Cheap no-op otherwise.
 	 */
 	public function maybe_upgrade(): void {
-		$installed = (int) get_option( 'agy_db_version', 0 );
+		$installed = (int) get_option( 'agyl_db_version', 0 );
 
-		if ( $installed >= AGY_DB_VERSION ) {
+		if ( $installed >= AGYL_DB_VERSION ) {
 			return;
 		}
 
@@ -36,7 +36,7 @@ final class Migrator {
 			}
 		}
 
-		update_option( 'agy_db_version', AGY_DB_VERSION, false );
+		update_option( 'agyl_db_version', AGYL_DB_VERSION, false );
 	}
 
 	/**

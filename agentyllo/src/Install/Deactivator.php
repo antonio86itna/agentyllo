@@ -50,6 +50,6 @@ final class Deactivator {
 			}
 		}
 
-		delete_transient( 'agy_activation_redirect' );
+		delete_transient( 'agyl_activation_redirect' );
 	}
 }

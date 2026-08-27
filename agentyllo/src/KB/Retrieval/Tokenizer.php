@@ -3,7 +3,7 @@
  * Shared tokenizer for indexing and querying.
  *
  * Immune to hosting FULLTEXT quirks (min token size, CJK breakage): the
- * inverted index in agy_kb_terms is built from THESE tokens on both sides.
+ * inverted index in agyl_kb_terms is built from THESE tokens on both sides.
  *
  * @package Agentyllo
  */
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Lowercase → unicode word segmentation → CJK bigrams → stopword removal →
  * light suffix stemming. Dynamic stopwords (terms in >20% of the corpus,
- * recomputed nightly) come from the `agy_kb_dynamic_stopwords` option.
+ * recomputed nightly) come from the `agyl_kb_dynamic_stopwords` option.
  */
 final class Tokenizer {
 
@@ -162,7 +162,7 @@ final class Tokenizer {
 	 */
 	private function dynamic_stopwords(): array {
 		if ( null === $this->dynamic_stopwords ) {
-			$stored                  = get_option( 'agy_kb_dynamic_stopwords', array() );
+			$stored                  = get_option( 'agyl_kb_dynamic_stopwords', array() );
 			$this->dynamic_stopwords = is_array( $stored ) ? array_map( 'strval', $stored ) : array();
 		}
 

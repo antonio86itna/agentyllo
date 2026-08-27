@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  * and an optional `dry_run` callable that describes the effect without
  * applying it. The slash parser, the (future) AI tool-calling, the REST
  * validation and the auto-generated Help page all read this one registry —
- * they can never drift apart. Addons register through `agy_copilot_actions`.
+ * they can never drift apart. Addons register through `agyl_copilot_actions`.
  * The registry executes ONLY predefined, schema-validated operations: no
  * arbitrary code, no raw SQL, no arbitrary options.
  */
@@ -54,7 +54,7 @@ final class ActionRegistry {
 				'description' => '',
 				'group'       => 'general',
 				'args'        => array(),
-				'cap'         => 'agy_use_copilot',
+				'cap'         => 'agyl_use_copilot',
 				'destructive' => false,
 				'dry_run'     => null,
 			),
@@ -75,7 +75,7 @@ final class ActionRegistry {
 			 *
 			 * @param ActionRegistry $registry Registry (call register()).
 			 */
-			do_action( 'agy_copilot_actions', $this );
+			do_action( 'agyl_copilot_actions', $this );
 		}
 
 		return $this->actions;

@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 
 import Drawer from './copilot/Drawer';
+import Addons from './pages/Addons';
 import Agents from './pages/Agents';
 import AiModels from './pages/AiModels';
 import Conversations from './pages/Conversations';
@@ -19,6 +20,7 @@ const PAGES: Record< string, () => JSX.Element > = {
 	kb: KnowledgeBase,
 	conversations: Conversations,
 	agents: Agents,
+	addons: Addons,
 	models: AiModels,
 	help: Help,
 	stats: Statistics,
@@ -32,7 +34,7 @@ export default function App( { page }: { page: string } ) {
 			<header className="agy-admin__header">
 				<h1>
 					{ __( 'Agentyllo', 'agentyllo' ) }
-					<span className="agy-admin__version">v{ window.agyAdmin.version }</span>
+					<span className="agy-admin__version">v{ window.agylAdmin.version }</span>
 				</h1>
 			</header>
 			<main className="agy-admin__main">

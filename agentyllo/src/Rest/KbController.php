@@ -59,7 +59,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_overview' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 			)
 		);
 
@@ -69,7 +69,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'reindex' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 				'args'                => array(
 					'source' => array(
 						'type'     => 'string',
@@ -85,7 +85,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 			)
 		);
 
@@ -95,7 +95,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'toggle_item' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 				'args'                => array(
 					'source'      => array(
 						'type'     => 'string',
@@ -123,7 +123,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_entries' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 			)
 		);
 
@@ -133,7 +133,7 @@ final class KbController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::DELETABLE,
 				'callback'            => array( $this, 'delete_entry' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 				'args'                => array(
 					'id' => array(
 						'type'     => 'integer',
@@ -184,9 +184,9 @@ final class KbController extends Controller {
 		return $this->respond(
 			array(
 				'coverage'   => $coverage ? $coverage : (object) array(),
-				'health'     => (array) get_option( 'agy_kb_health', array() ),
-				'kb_version' => (int) get_option( 'agy_kb_version', 0 ),
-				'last_crawl' => get_option( 'agy_kb_last_crawl', null ),
+				'health'     => (array) get_option( 'agyl_kb_health', array() ),
+				'kb_version' => (int) get_option( 'agyl_kb_version', 0 ),
+				'last_crawl' => get_option( 'agyl_kb_last_crawl', null ),
 			)
 		);
 	}
@@ -201,7 +201,7 @@ final class KbController extends Controller {
 
 		if ( ! $this->index_manager->start_full_crawl( '' !== $source ? $source : null ) ) {
 			return new WP_Error(
-				'agy_no_crawl_target',
+				'agyl_no_crawl_target',
 				__( 'No enabled source matches that id.', 'agentyllo' ),
 				array( 'status' => 400 )
 			);
@@ -224,7 +224,7 @@ final class KbController extends Controller {
 		[ $page, $per_page ] = $this->paging( $request );
 
 		if ( ! in_array( $source, self::ITEM_SOURCES, true ) ) {
-			return new WP_Error( 'agy_invalid_source', __( 'Unknown item source.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_source', __( 'Unknown item source.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		switch ( $source ) {
@@ -278,7 +278,7 @@ final class KbController extends Controller {
 		$include     = rest_sanitize_boolean( $request->get_param( 'include' ) );
 
 		if ( '' === $source || '' === $external_id ) {
-			return new WP_Error( 'agy_invalid_item', __( 'A source and item id are required.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_item', __( 'A source and item id are required.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		/*
@@ -288,13 +288,13 @@ final class KbController extends Controller {
 		 * garbage tombstones no reconcile ever cleans.
 		 */
 		if ( ! in_array( $source, self::TOGGLE_SOURCES, true ) ) {
-			return new WP_Error( 'agy_invalid_source', __( 'This source cannot be toggled per item.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_source', __( 'This source cannot be toggled per item.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		if ( $include ) {
 			$this->store->remove_tombstone( $source, $external_id );
 			if ( function_exists( 'as_enqueue_async_action' ) ) {
-				as_enqueue_async_action( 'agy_kb_index_item', array( $source, $external_id ), 'agentyllo-kb', true );
+				as_enqueue_async_action( 'agyl_kb_index_item', array( $source, $external_id ), 'agentyllo-kb', true );
 			}
 			$state = 'not_indexed'; // Re-index queued; becomes 'indexed' when the job lands.
 		} else {
@@ -345,7 +345,7 @@ final class KbController extends Controller {
 			$args[]  = $status;
 		}
 
-		$table     = $wpdb->prefix . 'agy_kb_documents';
+		$table     = $wpdb->prefix . 'agyl_kb_documents';
 		$where_sql = implode( ' AND ', $where );
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -405,14 +405,14 @@ final class KbController extends Controller {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT source, external_id, subtype FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE id = %d',
+				'SELECT source, external_id, subtype FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE id = %d',
 				$id
 			),
 			ARRAY_A
 		);
 
 		if ( ! $row ) {
-			return new WP_Error( 'agy_not_found', __( 'Knowledge base entry not found.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_not_found', __( 'Knowledge base entry not found.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		if ( 'manual' === $row['source'] ) {
@@ -450,7 +450,7 @@ final class KbController extends Controller {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- placeholder list is built from count(external_ids).
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT external_id, status FROM ' . $wpdb->prefix . "agy_kb_documents WHERE source = %s AND external_id IN ({$placeholders})",
+				'SELECT external_id, status FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE source = %s AND external_id IN ({$placeholders})",
 				$source,
 				...$external_ids
 			),
@@ -515,7 +515,7 @@ final class KbController extends Controller {
 	 */
 	private function product_items( string $search, int $page, int $per_page ): array|WP_Error {
 		if ( ! function_exists( 'wc_get_products' ) ) {
-			return new WP_Error( 'agy_woocommerce_inactive', __( 'WooCommerce is not active.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_woocommerce_inactive', __( 'WooCommerce is not active.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		$result = wc_get_products(

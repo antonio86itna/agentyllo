@@ -72,7 +72,7 @@ final class LocalEndpointEmbeddings implements EmbeddingProvider {
 	 * {@inheritDoc}
 	 */
 	public function dimensions(): int {
-		$cached = get_option( 'agy_local_embed_dims' );
+		$cached = get_option( 'agyl_local_embed_dims' );
 
 		return is_array( $cached ) && ( $cached['model'] ?? '' ) === $this->model_id() ? (int) ( $cached['dims'] ?? 0 ) : 0;
 	}
@@ -126,7 +126,7 @@ final class LocalEndpointEmbeddings implements EmbeddingProvider {
 
 		if ( 0 === $this->dimensions() ) {
 			update_option(
-				'agy_local_embed_dims',
+				'agyl_local_embed_dims',
 				array(
 					'model' => $this->model_id(),
 					'dims'  => count( $out[0] ),

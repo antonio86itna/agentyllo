@@ -262,7 +262,7 @@ final class PostProcessStage implements Stage {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT id, external_id FROM ' . $wpdb->prefix . "agy_kb_documents WHERE id IN ({$in}) AND source = %s AND status = %s",
+				'SELECT id, external_id FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE id IN ({$in}) AND source = %s AND status = %s",
 				'product',
 				Store::STATUS_ACTIVE
 			),

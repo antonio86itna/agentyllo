@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Manual documents (notes, FAQs, uploads) do not live in WordPress content —
- * they are written straight into `agy_kb_documents` (source 'manual',
+ * they are written straight into `agyl_kb_documents` (source 'manual',
  * pre-chunked) by the manual-entry admin/REST surface. This adapter only
  * makes them visible to the reconciler and the coverage dashboard, and is
  * carefully inert everywhere else:
@@ -66,7 +66,7 @@ final class ManualAdapter implements SourceAdapter {
 	public function count_items( string $subtype = '' ): int {
 		global $wpdb;
 
-		$sql  = 'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND status = %s';
+		$sql  = 'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND status = %s';
 		$args = array( $this->id(), Store::STATUS_ACTIVE );
 		if ( '' !== $subtype ) {
 			$sql   .= ' AND subtype = %s';
@@ -88,7 +88,7 @@ final class ManualAdapter implements SourceAdapter {
 	public function enumerate_ids( string $subtype, int $offset, int $limit ): array {
 		global $wpdb;
 
-		$sql  = 'SELECT external_id FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND status = %s';
+		$sql  = 'SELECT external_id FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND status = %s';
 		$args = array( $this->id(), Store::STATUS_ACTIVE );
 		if ( '' !== $subtype ) {
 			$sql   .= ' AND subtype = %s';
@@ -118,7 +118,7 @@ final class ManualAdapter implements SourceAdapter {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$hash = $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT content_hash FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND external_id = %s AND status = %s',
+				'SELECT content_hash FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND external_id = %s AND status = %s',
 				$this->id(),
 				substr( $external_id, 0, 64 ),
 				Store::STATUS_ACTIVE

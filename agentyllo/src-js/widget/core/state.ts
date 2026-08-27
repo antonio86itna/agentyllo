@@ -2,9 +2,9 @@
  * Minimal widget store: messages, status, session.
  *
  * Persistence model:
- * - Session token in sessionStorage 'agy_session' as {token, expires}
+ * - Session token in sessionStorage 'agyl_session' as {token, expires}
  *   (Unix seconds; matches SessionManager token payload).
- * - Transcript cache in localStorage 'agy_transcript' with a TTL equal to
+ * - Transcript cache in localStorage 'agyl_transcript' with a TTL equal to
  *   the session expiry, so a visitor who navigates away and reopens the
  *   widget within the session window sees the conversation again.
  *   Privacy note: the cache holds only what the visitor typed plus the
@@ -24,8 +24,8 @@ export type SessionInfo = {
 	gated?: boolean;
 };
 
-const SESSION_KEY = 'agy_session';
-const TRANSCRIPT_KEY = 'agy_transcript';
+const SESSION_KEY = 'agyl_session';
+const TRANSCRIPT_KEY = 'agyl_transcript';
 const MAX_CACHED_MESSAGES = 40;
 
 export class WidgetState {

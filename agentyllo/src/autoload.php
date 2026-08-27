@@ -23,10 +23,10 @@ spl_autoload_register(
 );
 
 // Third-party dependencies: scoped build output first, dev vendor as fallback.
-foreach ( array( dirname( __DIR__ ) . '/vendor-prefixed/autoload.php', dirname( __DIR__ ) . '/vendor/autoload.php' ) as $agy_autoload ) {
-	if ( is_file( $agy_autoload ) ) {
-		require_once $agy_autoload;
+foreach ( array( dirname( __DIR__ ) . '/vendor-prefixed/autoload.php', dirname( __DIR__ ) . '/vendor/autoload.php' ) as $agyl_autoload ) {
+	if ( is_file( $agyl_autoload ) ) {
+		require_once $agyl_autoload;
 		break;
 	}
 }
-unset( $agy_autoload );
+unset( $agyl_autoload );

@@ -1,7 +1,7 @@
 <?php
 $c = \Agentyllo\Plugin::instance()->container();
 $store = $c->get( \Agentyllo\Admin\Settings\SettingsStore::class );
-update_option( 'agy_mock_enabled', false );
+update_option( 'agyl_mock_enabled', false );
 $store->update( 'general', array( 'operating_mode' => 'free_ai' ) );
 $store->update( 'models', array( 'local_endpoint_url' => 'http://127.0.0.1:8123', 'local_model' => '', 'embedding_provider' => 'local', 'local_min_tok_s' => 8 ) );
 delete_option( \Agentyllo\AI\Budget\Manager::OPTION_EMA );

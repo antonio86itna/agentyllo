@@ -12,12 +12,12 @@ namespace Agentyllo\Infra;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * All Agentyllo options live under the `agy_` prefix. JSON-ish array values
+ * All Agentyllo options live under the `agyl_` prefix. JSON-ish array values
  * are stored as native arrays (WordPress serializes them).
  */
 final class Options {
 
-	private const PREFIX = 'agy_';
+	private const PREFIX = 'agyl_';
 
 	/**
 	 * Read an option.

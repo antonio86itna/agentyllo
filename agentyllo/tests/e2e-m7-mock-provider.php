@@ -5,10 +5,10 @@
  * Copy to wp-content/mu-plugins/ in the test container. NOT shipped.
  *
  * Control via options:
- *   agy_mock_enabled  (bool)   force the provider chain to [mock]
- *   agy_mock_reply    (string) canned reply text ('' = grounded default)
- *   agy_mock_delay_ms (int)    per-word delay to make streaming visible
- *   agy_mock_fail     (string) '' | 'timeout' | 'auth' | 'refusal'
+ *   agyl_mock_enabled  (bool)   force the provider chain to [mock]
+ *   agyl_mock_reply    (string) canned reply text ('' = grounded default)
+ *   agyl_mock_delay_ms (int)    per-word delay to make streaming visible
+ *   agyl_mock_fail     (string) '' | 'timeout' | 'auth' | 'refusal'
  *
  * @package Agentyllo
  */
@@ -16,7 +16,7 @@
 declare( strict_types=1 );
 
 add_action(
-	'agy_init',
+	'agyl_init',
 	static function (): void {
 		if ( ! interface_exists( \Agentyllo\AI\Contracts\LLMProvider::class ) ) {
 			return;
@@ -28,7 +28,7 @@ add_action(
 			}
 
 			public function is_available(): bool {
-				return (bool) get_option( 'agy_mock_enabled', false );
+				return (bool) get_option( 'agyl_mock_enabled', false );
 			}
 
 			public function capabilities(): array {
@@ -54,7 +54,7 @@ add_action(
 			}
 
 			public function stream( \Agentyllo\AI\Contracts\ChatRequest $request, callable $on_delta ): \Agentyllo\AI\Contracts\ChatResult {
-				$fail = (string) get_option( 'agy_mock_fail', '' );
+				$fail = (string) get_option( 'agyl_mock_fail', '' );
 				if ( 'timeout' === $fail ) {
 					return \Agentyllo\AI\Contracts\ChatResult::failed( 'timeout', 'mock', 'mock-1', 5000 );
 				}
@@ -65,7 +65,7 @@ add_action(
 					return new \Agentyllo\AI\Contracts\ChatResult( false, '', 'mock', 'mock-1', 50, 0, 80, 'refusal', 'refusal' );
 				}
 
-				$reply = (string) get_option( 'agy_mock_reply', '' );
+				$reply = (string) get_option( 'agyl_mock_reply', '' );
 				if ( '' === $reply ) {
 					// Default: echo the first source sentence, grounded by construction.
 					$turns = $request->messages;
@@ -78,7 +78,7 @@ add_action(
 					}
 				}
 
-				$delay = (int) get_option( 'agy_mock_delay_ms', 0 );
+				$delay = (int) get_option( 'agyl_mock_delay_ms', 0 );
 				$words = preg_split( '/(?<=\s)/u', $reply ) ?: array( $reply );
 				$sent  = '';
 				$start = microtime( true );
@@ -105,7 +105,7 @@ add_action(
 		};
 
 		add_filter(
-			'agy_llm_providers',
+			'agyl_llm_providers',
 			static function ( array $providers ) use ( $mock ): array {
 				$providers['mock'] = $mock;
 
@@ -113,9 +113,9 @@ add_action(
 			}
 		);
 		add_filter(
-			'agy_provider_chain',
+			'agyl_provider_chain',
 			static function ( array $chain ) use ( $mock ): array {
-				return get_option( 'agy_mock_enabled', false ) ? array( $mock ) : $chain;
+				return get_option( 'agyl_mock_enabled', false ) ? array( $mock ) : $chain;
 			}
 		);
 	}

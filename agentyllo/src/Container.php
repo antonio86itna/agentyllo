@@ -4,7 +4,7 @@
  *
  * Deliberately tiny (~PSR-11-shaped): every third-party DI library is a
  * scoping liability on WordPress.org, and this stays auditable. Addons can
- * override any binding through the `agy_container` filter fired at boot.
+ * override any binding through the `agyl_container` filter fired at boot.
  *
  * @package Agentyllo
  */

@@ -43,7 +43,7 @@ final class StatsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'overview' ),
-				'permission_callback' => $this->require_cap( 'agy_view_stats' ),
+				'permission_callback' => $this->require_cap( 'agyl_view_stats' ),
 				'args'                => array( 'days' => array( 'type' => 'integer', 'default' => 30 ) ),
 			)
 		);
@@ -54,7 +54,7 @@ final class StatsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'set_unanswered' ),
-				'permission_callback' => $this->require_cap( 'agy_view_stats' ),
+				'permission_callback' => $this->require_cap( 'agyl_view_stats' ),
 				'args'                => array(
 					'status' => array( 'type' => 'string', 'required' => true, 'enum' => array( 'open', 'dismissed', 'resolved' ) ),
 				),
@@ -67,7 +67,7 @@ final class StatsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'rollup' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 			)
 		);
 
@@ -77,7 +77,7 @@ final class StatsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'conversations' ),
-				'permission_callback' => $this->require_cap( 'agy_view_stats' ),
+				'permission_callback' => $this->require_cap( 'agyl_view_stats' ),
 				'args'                => array(
 					'page'     => array( 'type' => 'integer', 'default' => 1, 'minimum' => 1 ),
 					'per_page' => array( 'type' => 'integer', 'default' => 20, 'minimum' => 1, 'maximum' => 100 ),
@@ -91,7 +91,7 @@ final class StatsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'transcript' ),
-				'permission_callback' => $this->require_cap( 'agy_view_stats' ),
+				'permission_callback' => $this->require_cap( 'agyl_view_stats' ),
 			)
 		);
 	}
@@ -104,11 +104,6 @@ final class StatsController extends Controller {
 	public function overview( WP_REST_Request $request ): WP_REST_Response {
 		$days = (int) $request->get_param( 'days' );
 		if ( ! in_array( $days, self::RANGES, true ) ) {
-			$days = 30;
-		}
-
-		// Free tier: 30 days max (Pro unlocks 90 + CSV).
-		if ( $days > 30 && ! \Agentyllo\Plugin::feature_enabled( 'advanced_analytics' ) ) {
 			$days = 30;
 		}
 
@@ -132,7 +127,7 @@ final class StatsController extends Controller {
 	public function set_unanswered( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$ok = $this->stats->set_unanswered_status( (int) $request['id'], (string) $request->get_param( 'status' ) );
 		if ( ! $ok ) {
-			return new WP_Error( 'agy_update_failed', __( 'Could not update the item.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_update_failed', __( 'Could not update the item.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		return $this->respond( array( 'ok' => true, 'unanswered' => $this->stats->unanswered( 20 ) ) );
@@ -165,7 +160,7 @@ final class StatsController extends Controller {
 	public function transcript( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$conv = $this->stats->transcript( (int) $request['id'] );
 		if ( ! $conv ) {
-			return new WP_Error( 'agy_not_found', __( 'Conversation not found.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_not_found', __( 'Conversation not found.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		return $this->respond( $conv );

@@ -15,9 +15,9 @@ use Agentyllo\Infra\Options;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Collects Agent instances via the `agy_register_agents` filter and merges
+ * Collects Agent instances via the `agyl_register_agents` filter and merges
  * per-agent runtime config (enabled, quarantine state, health streaks) from
- * the `agy_agents` option.
+ * the `agyl_agents` option.
  */
 final class Registry {
 
@@ -65,7 +65,7 @@ final class Registry {
 		 *
 		 * @param Agent[] $agents Registered agents.
 		 */
-		$registered = (array) apply_filters( 'agy_register_agents', array() );
+		$registered = (array) apply_filters( 'agyl_register_agents', array() );
 
 		foreach ( $registered as $agent ) {
 			if ( $agent instanceof Agent ) {

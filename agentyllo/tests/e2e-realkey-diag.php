@@ -10,8 +10,8 @@ $store     = $container->get( Agentyllo\Admin\Settings\SettingsStore::class );
 
 echo 'chat_provider=' . wp_json_encode( $store->value( 'models', 'chat_provider' ) )
 	. ' mode=' . wp_json_encode( $store->value( 'general', 'operating_mode' ) ) . "\n";
-echo 'cb_anthropic=' . wp_json_encode( get_transient( 'agy_cb_anthropic' ) )
-	. ' cb_openai=' . wp_json_encode( get_transient( 'agy_cb_openai' ) ) . "\n";
+echo 'cb_anthropic=' . wp_json_encode( get_transient( 'agyl_cb_anthropic' ) )
+	. ' cb_openai=' . wp_json_encode( get_transient( 'agyl_cb_openai' ) ) . "\n";
 
 $provider = $container->get( Agentyllo\AI\Providers\AnthropicProvider::class );
 $result   = $provider->complete(
@@ -31,8 +31,8 @@ echo 'direct anthropic: ok=' . (int) $result->ok . ' model=' . $result->model
 
 global $wpdb;
 echo 'latest journal error: ' . wp_json_encode(
-	$wpdb->get_row( "SELECT message, created_at FROM {$wpdb->prefix}agy_agent_journal WHERE level='error' ORDER BY id DESC LIMIT 1", ARRAY_A )
+	$wpdb->get_row( "SELECT message, created_at FROM {$wpdb->prefix}agyl_agent_journal WHERE level='error' ORDER BY id DESC LIMIT 1", ARRAY_A )
 ) . "\n";
 echo 'latest inference: ' . wp_json_encode(
-	$wpdb->get_row( "SELECT provider, model, ok, error FROM {$wpdb->prefix}agy_inference_log ORDER BY id DESC LIMIT 1", ARRAY_A )
+	$wpdb->get_row( "SELECT provider, model, ok, error FROM {$wpdb->prefix}agyl_inference_log ORDER BY id DESC LIMIT 1", ARRAY_A )
 ) . "\n";

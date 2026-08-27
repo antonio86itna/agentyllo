@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * No WP nonces, no cookies for visitors — fully cache-proof and cookie-
  * banner-neutral. The client holds an HMAC token "id.expires.signature"
- * (X-Agy-Session header); the signature is recomputable server-side, so
+ * (X-Agyl-Session header); the signature is recomputable server-side, so
  * tokens are never stored. IPs are hashed at write time with a rotating salt.
  */
 final class SessionManager {
@@ -37,7 +37,7 @@ final class SessionManager {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$inserted = $wpdb->insert(
-			$wpdb->prefix . 'agy_sessions',
+			$wpdb->prefix . 'agyl_sessions',
 			array(
 				'ip_hash'      => $ip ? self::hash_ip( $ip ) : null,
 				'created_at'   => $now,
@@ -87,7 +87,7 @@ final class SessionManager {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT * FROM ' . $wpdb->prefix . 'agy_sessions WHERE id = %d AND expires_at > UTC_TIMESTAMP()',
+				'SELECT * FROM ' . $wpdb->prefix . 'agyl_sessions WHERE id = %d AND expires_at > UTC_TIMESTAMP()',
 				$id
 			),
 			ARRAY_A
@@ -118,7 +118,7 @@ final class SessionManager {
 		$args[] = $id;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agy_sessions SET ' . $sets . ' WHERE id = %d', ...$args ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agyl_sessions SET ' . $sets . ' WHERE id = %d', ...$args ) );
 	}
 
 	/**
@@ -128,9 +128,9 @@ final class SessionManager {
 		global $wpdb;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$removed  = (int) $wpdb->query( 'DELETE FROM ' . $wpdb->prefix . 'agy_sessions WHERE expires_at <= UTC_TIMESTAMP()' );
+		$removed  = (int) $wpdb->query( 'DELETE FROM ' . $wpdb->prefix . 'agyl_sessions WHERE expires_at <= UTC_TIMESTAMP()' );
 		$removed += (int) $wpdb->query(
-			'DELETE FROM ' . $wpdb->prefix . "agy_rate_events WHERE event_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)"
+			'DELETE FROM ' . $wpdb->prefix . "agyl_rate_events WHERE event_time < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)"
 		);
 		// phpcs:enable
 
@@ -154,10 +154,10 @@ final class SessionManager {
 	 * @param string $ip Raw IP.
 	 */
 	public static function hash_ip( string $ip ): string {
-		$salt = get_option( 'agy_ip_salt' );
+		$salt = get_option( 'agyl_ip_salt' );
 		if ( ! is_string( $salt ) || '' === $salt ) {
 			$salt = wp_generate_password( 32, false, false );
-			add_option( 'agy_ip_salt', $salt, '', false );
+			add_option( 'agyl_ip_salt', $salt, '', false );
 		}
 
 		return hash( 'sha256', $ip . '|' . $salt );

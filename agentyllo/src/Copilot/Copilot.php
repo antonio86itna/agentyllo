@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  * actions — a single-use HMAC confirmation token (10-minute TTL, bound to
  * user + action + args hash). Execution happens exclusively on the human
  * click that returns that token. Every executed action is written to
- * agy_audit_log (who, what, args hash, result). Free-text questions in
+ * agyl_audit_log (who, what, args hash, result). Free-text questions in
  * classic mode are answered from the site's KB (same retriever the widget
  * uses) plus a short built-in help index.
  */
@@ -179,7 +179,7 @@ final class Copilot {
 		$expires = time() + self::TOKEN_TTL;
 		$payload = $nonce . '|' . $expires;
 		$sig     = hash_hmac( 'sha256', $payload . '|' . $this->binding( $action_id, $args ), wp_salt( 'auth' ) );
-		set_transient( 'agy_cp_' . $nonce, 1, self::TOKEN_TTL );
+		set_transient( 'agyl_cp_' . $nonce, 1, self::TOKEN_TTL );
 
 		return $payload . '|' . $sig;
 	}
@@ -204,10 +204,10 @@ final class Copilot {
 		if ( ! hash_equals( $expected, $sig ) ) {
 			return false;
 		}
-		if ( ! get_transient( 'agy_cp_' . $nonce ) ) {
+		if ( ! get_transient( 'agyl_cp_' . $nonce ) ) {
 			return false; // Already consumed or never issued.
 		}
-		delete_transient( 'agy_cp_' . $nonce );
+		delete_transient( 'agyl_cp_' . $nonce );
 
 		return true;
 	}

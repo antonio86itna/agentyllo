@@ -10,12 +10,12 @@ $c = \Agentyllo\Plugin::instance()->container();
 $p = $wpdb->prefix;
 
 $counts = array(
-	'documents' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_documents" ),
-	'active'    => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_documents WHERE status='active'" ),
-	'chunks'    => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_chunks" ),
-	'terms'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_terms" ),
-	'links'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_links" ),
-	'by_source' => $wpdb->get_results( "SELECT source, status, COUNT(*) n FROM {$p}agy_kb_documents GROUP BY source, status", ARRAY_A ),
+	'documents' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_documents" ),
+	'active'    => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_documents WHERE status='active'" ),
+	'chunks'    => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_chunks" ),
+	'terms'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_terms" ),
+	'links'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_links" ),
+	'by_source' => $wpdb->get_results( "SELECT source, status, COUNT(*) n FROM {$p}agyl_kb_documents GROUP BY source, status", ARRAY_A ),
 );
 
 $retriever = $c->get( \Agentyllo\KB\Retrieval\HybridRetriever::class );

@@ -14,13 +14,13 @@ use Agentyllo\Agents\Contracts\Task;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Tasks ride Action Scheduler hook `agy_task` with args {agent_id, task}.
+ * Tasks ride Action Scheduler hook `agyl_task` with args {agent_id, task}.
  * AS 4.x `unique` dedupes on hook+args; on sites where an older 3.x copy wins
  * the version election we replicate that with as_has_scheduled_action.
  */
 final class AsyncBus {
 
-	public const HOOK = 'agy_task';
+	public const HOOK = 'agyl_task';
 
 	public const GROUP_DEFAULT = 'agentyllo';
 

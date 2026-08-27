@@ -95,7 +95,7 @@ export default function Help() {
 				<CardBody>
 					<ul>
 						<li><code>[agentyllo_transparency]</code> — { __( 'AI transparency page content (generated from your configuration).', 'agentyllo' ) }</li>
-						<li><code>agy_powered_by</code>, <code>agy_feature_enabled</code>, <code>agy_llm_providers</code>, <code>agy_embedding_providers</code>, <code>agy_copilot_actions</code>, <code>agy_settings_tabs</code>, <code>agy_registry_url</code> — { __( 'extension points for addons and the Local AI companion.', 'agentyllo' ) }</li>
+						<li><code>agyl_addons</code>, <code>agyl_powered_by</code>, <code>agyl_feature_enabled</code>, <code>agyl_llm_providers</code>, <code>agyl_embedding_providers</code>, <code>agyl_copilot_actions</code>, <code>agyl_settings_tabs</code>, <code>agyl_registry_url</code> — { __( 'extension points for addons and the Local AI companion.', 'agentyllo' ) }</li>
 					</ul>
 				</CardBody>
 			</Card>

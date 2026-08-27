@@ -19,10 +19,10 @@ use Agentyllo\KB\Indexer\IndexManager;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * On 'kb.reconcile' it enqueues an agy_kb_reconcile(source, 0) job for every
+ * On 'kb.reconcile' it enqueues an agyl_kb_reconcile(source, 0) job for every
  * enabled source; the paged comparison, re-enqueueing of changed items and
  * cleanup of vanished ones happen inside IndexManager's job handler. Meant to
- * be dispatched daily by the recurring agy_kb_reconcile_all hook (via the
+ * be dispatched daily by the recurring agyl_kb_reconcile_all hook (via the
  * Orchestrator, like Jobs::run_health_sweep).
  */
 final class ReconcilerAgent implements Agent {

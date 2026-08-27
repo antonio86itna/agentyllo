@@ -4,8 +4,8 @@
  *
  * Honors the tri-state Advanced setting `uninstall_mode`:
  *   keep            – remove nothing but scheduled actions (default)
- *   remove_settings – also delete all agy_* options/transients
- *   remove_all      – also drop agy_* tables and Agentyllo's upload dirs
+ *   remove_settings – also delete all agyl_* options/transients
+ *   remove_all      – also drop agyl_* tables and Agentyllo's upload dirs
  *
  * Deliberately self-contained: no plugin classes are loaded here. Action
  * Scheduler may belong to another plugin (or not be loaded at all) during
@@ -20,37 +20,37 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
  * Table list mirrored from Agentyllo\Install\Schema::table_names().
  * Keep in sync when milestones add tables.
  */
-function agy_uninstall_table_names(): array {
+function agyl_uninstall_table_names(): array {
 	return array(
-		'agy_agent_memory',
-		'agy_agent_journal',
-		'agy_kb_documents',
-		'agy_kb_chunks',
-		'agy_kb_terms',
-		'agy_kb_links',
-		'agy_kb_vectors',
-		'agy_sessions',
-		'agy_rate_events',
-		'agy_conversations',
-		'agy_messages',
-		'agy_consents',
-		'agy_audit_log',
-		'agy_stats_daily',
-		'agy_stats_intents',
-		'agy_stats_unanswered',
-		'agy_inference_log',
-		'agy_response_cache',
-		'agy_chat_events',
+		'agyl_agent_memory',
+		'agyl_agent_journal',
+		'agyl_kb_documents',
+		'agyl_kb_chunks',
+		'agyl_kb_terms',
+		'agyl_kb_links',
+		'agyl_kb_vectors',
+		'agyl_sessions',
+		'agyl_rate_events',
+		'agyl_conversations',
+		'agyl_messages',
+		'agyl_consents',
+		'agyl_audit_log',
+		'agyl_stats_daily',
+		'agyl_stats_intents',
+		'agyl_stats_unanswered',
+		'agyl_inference_log',
+		'agyl_response_cache',
+		'agyl_chat_events',
 	);
 }
 
 /**
  * Uninstall one site (current $wpdb prefix scope).
  */
-function agy_uninstall_site(): void {
+function agyl_uninstall_site(): void {
 	global $wpdb;
 
-	$settings = get_option( 'agy_settings_advanced', array() );
+	$settings = get_option( 'agyl_settings_advanced', array() );
 	$mode     = is_array( $settings ) && isset( $settings['uninstall_mode'] ) ? $settings['uninstall_mode'] : 'keep';
 
 	/*
@@ -80,11 +80,11 @@ function agy_uninstall_site(): void {
 		return;
 	}
 
-	// remove_settings and remove_all: delete every agy_* option and transient.
+	// remove_settings and remove_all: delete every agyl_* option and transient.
 	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'agy\\_%' OR option_name LIKE '\\_transient\\_agy\\_%' OR option_name LIKE '\\_transient\\_timeout\\_agy\\_%'" );
 
 	if ( 'remove_all' === $mode ) {
-		foreach ( agy_uninstall_table_names() as $table ) {
+		foreach ( agyl_uninstall_table_names() as $table ) {
 			$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}{$table}" );
 		}
 
@@ -99,13 +99,13 @@ function agy_uninstall_site(): void {
 			foreach ( array( 'cache', 'registry', 'private' ) as $sub ) {
 				$dir = $base . '/' . $sub;
 				if ( is_dir( $dir ) && ! is_link( $dir ) ) {
-					agy_uninstall_rmdir( $dir );
+					agyl_uninstall_rmdir( $dir );
 				}
 			}
 			// Remove the base dir only when nothing (companion data) remains.
 			$leftovers = array_diff( (array) scandir( $base ), array( '.', '..', 'index.php' ) );
 			if ( empty( $leftovers ) ) {
-				agy_uninstall_rmdir( $base );
+				agyl_uninstall_rmdir( $base );
 			}
 		}
 	}
@@ -126,7 +126,7 @@ function agy_uninstall_site(): void {
  *
  * @param string $dir Absolute directory path.
  */
-function agy_uninstall_rmdir( $dir ): void {
+function agyl_uninstall_rmdir( $dir ): void {
 	global $wp_filesystem;
 
 	if ( ! function_exists( 'WP_Filesystem' ) ) {
@@ -141,13 +141,13 @@ function agy_uninstall_rmdir( $dir ): void {
 }
 
 if ( is_multisite() ) {
-	$agy_site_ids = get_sites( array( 'fields' => 'ids', 'number' => 0 ) );
-	foreach ( $agy_site_ids as $agy_site_id ) {
-		switch_to_blog( (int) $agy_site_id );
-		agy_uninstall_site();
+	$agyl_site_ids = get_sites( array( 'fields' => 'ids', 'number' => 0 ) );
+	foreach ( $agyl_site_ids as $agyl_site_id ) {
+		switch_to_blog( (int) $agyl_site_id );
+		agyl_uninstall_site();
 		restore_current_blog();
 	}
-	unset( $agy_site_ids, $agy_site_id );
+	unset( $agyl_site_ids, $agyl_site_id );
 } else {
-	agy_uninstall_site();
+	agyl_uninstall_site();
 }

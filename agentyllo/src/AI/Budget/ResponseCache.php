@@ -35,7 +35,7 @@ final class ResponseCache {
 	 * @param string $facts_hash     Hash of fact-slot values.
 	 */
 	public static function key( string $provider, string $model, string $prompt_version, string $lang, string $question, string $facts_hash ): string {
-		$kb_version = (int) get_option( 'agy_kb_version', 0 );
+		$kb_version = (int) get_option( 'agyl_kb_version', 0 );
 		$normalized = mb_strtolower( trim( (string) preg_replace( '/\s+/u', ' ', $question ) ) );
 
 		return sha1( implode( '|', array( $provider, $model, $prompt_version, (string) $kb_version, $lang, $normalized, $facts_hash ) ) );
@@ -53,7 +53,7 @@ final class ResponseCache {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT id, provider, model, text, blocks FROM ' . $wpdb->prefix . 'agy_response_cache WHERE cache_key = %s AND expires_at > %s',
+				'SELECT id, provider, model, text, blocks FROM ' . $wpdb->prefix . 'agyl_response_cache WHERE cache_key = %s AND expires_at > %s',
 				$key,
 				gmdate( 'Y-m-d H:i:s' )
 			),
@@ -64,7 +64,7 @@ final class ResponseCache {
 		}
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agy_response_cache SET hits = hits + 1 WHERE id = %d', (int) $row['id'] ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agyl_response_cache SET hits = hits + 1 WHERE id = %d', (int) $row['id'] ) );
 
 		$blocks = json_decode( (string) $row['blocks'], true );
 
@@ -92,7 +92,7 @@ final class ResponseCache {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query(
 			$wpdb->prepare(
-				'INSERT INTO ' . $wpdb->prefix . 'agy_response_cache (cache_key, provider, model, prompt_version, text, blocks, hits, created_at, expires_at)
+				'INSERT INTO ' . $wpdb->prefix . 'agyl_response_cache (cache_key, provider, model, prompt_version, text, blocks, hits, created_at, expires_at)
 				 VALUES (%s, %s, %s, %s, %s, %s, 0, %s, %s)
 				 ON DUPLICATE KEY UPDATE text = VALUES(text), blocks = VALUES(blocks), expires_at = VALUES(expires_at)',
 				$key,
@@ -114,7 +114,7 @@ final class ResponseCache {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$deleted = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'agy_response_cache WHERE expires_at < %s', gmdate( 'Y-m-d H:i:s' ) ) );
+		$deleted = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'agyl_response_cache WHERE expires_at < %s', gmdate( 'Y-m-d H:i:s' ) ) );
 
 		return false === $deleted ? 0 : (int) $deleted;
 	}
@@ -126,6 +126,6 @@ final class ResponseCache {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'TRUNCATE TABLE ' . $wpdb->prefix . 'agy_response_cache' );
+		$wpdb->query( 'TRUNCATE TABLE ' . $wpdb->prefix . 'agyl_response_cache' );
 	}
 }

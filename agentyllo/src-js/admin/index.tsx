@@ -9,12 +9,12 @@ import './style.scss';
 
 declare global {
 	interface Window {
-		agyAdmin: { restRoot: string; nonce: string; version: string };
+		agylAdmin: { restRoot: string; nonce: string; version: string };
 	}
 }
 
-apiFetch.use( apiFetch.createRootURLMiddleware( window.agyAdmin.restRoot ) );
-apiFetch.use( apiFetch.createNonceMiddleware( window.agyAdmin.nonce ) );
+apiFetch.use( apiFetch.createRootURLMiddleware( window.agylAdmin.restRoot ) );
+apiFetch.use( apiFetch.createNonceMiddleware( window.agylAdmin.nonce ) );
 
 const mount = document.getElementById( 'agentyllo-admin' );
 if ( mount ) {

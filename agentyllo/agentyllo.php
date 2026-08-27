@@ -3,7 +3,7 @@
  * Plugin Name:       Agentyllo
  * Plugin URI:        https://www.agentyllo.com
  * Description:       Intelligent AI assistant for your site: classic agents, an automatic knowledge base, free local AI, and optional OpenAI/Anthropic models.
- * Version:           0.1.4
+ * Version:           0.2.0
  * Requires at least: 6.8
  * Requires PHP:      8.2
  * Author:            Agentyllo
@@ -23,12 +23,12 @@ defined( 'ABSPATH' ) || exit;
  * can render an admin notice instead of a fatal error. No PHP 8 syntax here.
  */
 
-define( 'AGY_VERSION', '0.1.4' );
-define( 'AGY_DB_VERSION', 8 );
-define( 'AGY_API_VERSION', 1 );
-define( 'AGY_FILE', __FILE__ );
-define( 'AGY_DIR', plugin_dir_path( __FILE__ ) );
-define( 'AGY_URL', plugin_dir_url( __FILE__ ) );
+define( 'AGYL_VERSION', '0.2.0' );
+define( 'AGYL_DB_VERSION', 8 );
+define( 'AGYL_API_VERSION', 1 );
+define( 'AGYL_FILE', __FILE__ );
+define( 'AGYL_DIR', plugin_dir_path( __FILE__ ) );
+define( 'AGYL_URL', plugin_dir_url( __FILE__ ) );
 
 if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 	add_action(
@@ -83,7 +83,7 @@ if ( file_exists( __DIR__ . '/lib/action-scheduler/action-scheduler.php' ) ) {
  * fs_dynamic_init() snippet from the Freemius dashboard RIGHT HERE — after the
  * guards above, before any other Agentyllo code, so it runs ahead of
  * `plugins_loaded` as the SDK requires. Until then, feature gating goes through
- * the `agy_feature_enabled` filter (see Agentyllo\Plugin::feature_enabled()).
+ * the `agyl_feature_enabled` filter (see Agentyllo\Plugin::feature_enabled()).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

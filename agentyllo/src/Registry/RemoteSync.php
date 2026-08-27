@@ -16,17 +16,17 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Fetches stable.json + stable.json.sig from registry.agentyllo.com, verifies
  * the Ed25519 signature over the raw bytes, refuses rollbacks (sequence must
- * increase) and stores the payload in the agy_registry option. Every failure
+ * increase) and stores the payload in the agyl_registry option. Every failure
  * is recorded (for the AI Models page) and leaves the current manifest in
  * place — a broken registry can never break a site.
  *
  * External service disclosure (readme "External Services"): the request
- * carries no site data beyond the plugin version in the User-Agent.
+ * carries no site data; the User-Agent names the plugin without a version.
  */
 final class RemoteSync {
 
 	public const DEFAULT_URL   = 'https://registry.agentyllo.com/v1/stable.json';
-	public const STATUS_OPTION = 'agy_registry_sync';
+	public const STATUS_OPTION = 'agyl_registry_sync';
 	private const MAX_BYTES    = 512 * 1024;
 	private const TIMEOUT      = 15;
 
@@ -50,11 +50,11 @@ final class RemoteSync {
 	public function sync(): array {
 		/**
 		 * Filter the registry manifest URL. Self-hosted registries override
-		 * this together with `agy_registry_public_key`.
+		 * this together with `agyl_registry_public_key`.
 		 *
 		 * @param string $url Manifest URL.
 		 */
-		$url = (string) apply_filters( 'agy_registry_url', self::DEFAULT_URL );
+		$url = (string) apply_filters( 'agyl_registry_url', self::DEFAULT_URL );
 
 		$payload = $this->fetch( $url );
 		if ( null === $payload ) {
@@ -131,7 +131,7 @@ final class RemoteSync {
 				'timeout'             => self::TIMEOUT,
 				'redirection'         => 2,
 				'limit_response_size' => self::MAX_BYTES,
-				'user-agent'          => 'Agentyllo/' . AGY_VERSION . ' (+https://www.agentyllo.com)',
+				'user-agent'          => 'Agentyllo (+https://www.agentyllo.com)',
 				'headers'             => array( 'Accept' => 'application/json, text/plain' ),
 			)
 		);

@@ -12,8 +12,8 @@ namespace Agentyllo\Infra;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Agentyllo uses virtual capabilities (agy_manage, agy_manage_kb,
- * agy_manage_settings, agy_use_copilot, agy_view_stats) that all map to
+ * Agentyllo uses virtual capabilities (agyl_manage, agyl_manage_kb,
+ * agyl_manage_settings, agyl_use_copilot, agyl_view_stats) that all map to
  * `manage_options` by default. Site owners can remap them via filter.
  */
 final class Caps {
@@ -21,7 +21,7 @@ final class Caps {
 	/**
 	 * Whether the current user holds an Agentyllo capability.
 	 *
-	 * @param string $cap Virtual capability id (e.g. 'agy_manage').
+	 * @param string $cap Virtual capability id (e.g. 'agyl_manage').
 	 */
 	public static function can( string $cap ): bool {
 		/**
@@ -31,7 +31,7 @@ final class Caps {
 		 * @param string $mapped Real capability. Default 'manage_options'.
 		 * @param string $cap    Agentyllo virtual capability.
 		 */
-		$mapped = (string) apply_filters( 'agy_capability_map', 'manage_options', $cap );
+		$mapped = (string) apply_filters( 'agyl_capability_map', 'manage_options', $cap );
 
 		return current_user_can( $mapped );
 	}

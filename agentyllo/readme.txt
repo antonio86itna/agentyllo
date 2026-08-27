@@ -1,10 +1,10 @@
 === Agentyllo ===
-Contributors: agentyllo
+Contributors: agentyllo, totaliweb
 Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.1.4
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,10 +26,20 @@ Agentyllo adds a smart assistant to your site that answers visitors from your ow
 * Backend copilot on every Agentyllo page: manage the knowledge base, settings and memories by command — every change is proposed first and applied only when you confirm; import TXT/Markdown/CSV with a reviewable preview.
 * GDPR: optional pre-chat registration, consent evidence, retention, PII redaction, data export/erasure (also via WordPress privacy tools).
 * EU AI Act ready: assistant disclosure badge, machine-readable marking of AI-generated messages, audit trail per message, generated transparency page.
-* Statistics: conversations, resolution and deflection, top intents, knowledge gaps, latency per tier, tokens and estimated cost.
+* Statistics: conversations, resolution and deflection, top intents, knowledge gaps, latency per tier, tokens and estimated cost — 7/30/90-day ranges, all included.
 * Fully translatable; replies in the site language, optionally in the visitor's language with AI.
 
 The core plugin never downloads or executes code from the network. Local model *installation* (binaries and weights) is a separate, consented companion plugin distributed by agentyllo.com — Agentyllo itself only connects to a local engine you already run.
+
+**Addons.** Agentyllo is complete as it is — nothing in this plugin is locked or limited. Optional addons (separate plugins from agentyllo.com, each requiring Agentyllo) add extra capabilities such as document import, advanced analytics, white-labeling, lead capture, live handoff and more. See the Addons page inside the plugin.
+
+== Source Code & Build ==
+
+The complete, human-readable source code — including the un-minified JavaScript/TypeScript for the admin app and the chat widget, and the build configuration — is publicly available at:
+
+https://github.com/antonio86itna/agentyllo
+
+The minified files in `assets/build/` are produced from `src-js/` with `npm install && npm run build` (@wordpress/scripts / webpack). PHP development dependencies are managed with Composer (`composer install` for the test suite and static analysis). The bundled `lib/action-scheduler/` is Action Scheduler 4.1.0, unmodified: https://github.com/woocommerce/action-scheduler
 
 == External Services ==
 
@@ -38,8 +48,8 @@ Agentyllo makes no external request in its default configuration. Every integrat
 * **OpenAI API (api.openai.com)** — only when you enter your own OpenAI API key and select an AI operating mode. Visitor messages (optionally with personal data masked), a few relevant knowledge-base excerpts and your assistant instructions are sent to OpenAI to generate the answer or to compute embeddings; requests are sent with storage disabled. Terms: https://openai.com/policies/terms-of-use — Privacy: https://openai.com/policies/privacy-policy
 * **Anthropic API (api.anthropic.com)** — only when you enter your own Anthropic API key and select an AI operating mode. Same data as above is sent to Anthropic to generate the answer. Terms: https://www.anthropic.com/legal/consumer-terms — Privacy: https://www.anthropic.com/legal/privacy
 * **Your own local AI endpoint** — only when you enter the URL of an OpenAI-compatible server you operate (llama-server, Ollama, LM Studio…). Data stays on that server.
-* **Agentyllo model registry (registry.agentyllo.com)** — a weekly fetch (and "Sync now" button) of a small, Ed25519-signed JSON manifest containing model identifiers, prices and prompt-pack versions. It contains data only, never code; the request carries no site data beyond the plugin version. Can be disabled in AI Models. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
-* **agentyllo.com** — the "Powered by Agentyllo" footer link in the widget points to https://www.agentyllo.com (no data is transmitted; the link can be removed with the Pro plan).
+* **Agentyllo model registry (registry.agentyllo.com)** — OFF by default. Only when you press "Sync now" or explicitly enable weekly auto-sync in AI Models, the plugin fetches a small, Ed25519-signed JSON manifest containing model identifiers, prices and prompt-pack versions. It contains data only, never code; the request carries no site data. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
+* **agentyllo.com** — a "Powered by Agentyllo" footer link exists but is OFF by default; it appears only if you explicitly enable it in Settings → Widget (no data is transmitted).
 
 == Installation ==
 
@@ -74,6 +84,15 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.2.0 =
+* Add: Addons page — a catalog of optional extensions (each a separate plugin that requires Agentyllo); the free plugin remains complete, nothing is locked.
+* Change: the 90-day statistics range is available to everyone (no feature gating anywhere in the plugin).
+* Change: the model-registry sync is strictly opt-in — nothing is fetched unless you press "Sync now" or explicitly enable weekly auto-sync; requests no longer carry the plugin version.
+* Change: the "Powered by Agentyllo" widget link is OFF by default and only appears if the site owner enables it in Settings → Widget.
+* Change: private uploads no longer write an .htaccess file; protection relies on unguessable random filenames, index placeholders and a 72-hour retention.
+* Change: internal prefix renamed from agy_ to agyl_ (options, hooks, tables, REST headers) to meet the 4-character prefix guideline. Breaking for pre-0.2.0 test installs: deactivate and reinstall.
+* Dev: translation files are no longer shipped in the distributed zip (translate.wordpress.org will serve them); sources stay in the repository.
 
 = 0.1.4 =
 * Add: complete Italian (it_IT) translation - 712 strings covering the admin app (script translations included), the chat widget, the copilot and the transparency page.

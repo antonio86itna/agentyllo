@@ -21,7 +21,7 @@ use WP_REST_Server;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * All routes require the agy_manage capability.
+ * All routes require the agyl_manage capability.
  */
 final class AgentsController extends Controller {
 
@@ -49,7 +49,7 @@ final class AgentsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'roster' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 			)
 		);
 
@@ -59,7 +59,7 @@ final class AgentsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'toggle' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array(
 					'enabled' => array(
 						'type'     => 'boolean',
@@ -75,7 +75,7 @@ final class AgentsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'release' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 			)
 		);
 
@@ -85,7 +85,7 @@ final class AgentsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'memory' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array(
 					'kind' => array(
 						'type'    => 'string',
@@ -102,7 +102,7 @@ final class AgentsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'journal_tail' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array(
 					'limit' => array(
 						'type'    => 'integer',
@@ -154,7 +154,7 @@ final class AgentsController extends Controller {
 		$id = (string) $request['id'];
 
 		if ( ! $this->registry->get( $id ) ) {
-			return new WP_Error( 'agy_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		$this->registry->update_config( $id, array( 'enabled' => rest_sanitize_boolean( $request->get_param( 'enabled' ) ) ) );
@@ -172,7 +172,7 @@ final class AgentsController extends Controller {
 		$id = (string) $request['id'];
 
 		if ( ! $this->registry->get( $id ) ) {
-			return new WP_Error( 'agy_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		$this->quarantine->release( $id );
@@ -190,7 +190,7 @@ final class AgentsController extends Controller {
 		$id = (string) $request['id'];
 
 		if ( ! $this->registry->get( $id ) ) {
-			return new WP_Error( 'agy_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_agent', __( 'Unknown agent.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		$kind = (string) $request->get_param( 'kind' );
@@ -218,7 +218,7 @@ final class AgentsController extends Controller {
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT agent_id, task_ref, level, event, message, occurrences, created_at
-				 FROM ' . $wpdb->prefix . 'agy_agent_journal ORDER BY id DESC LIMIT %d',
+				 FROM ' . $wpdb->prefix . 'agyl_agent_journal ORDER BY id DESC LIMIT %d',
 				max( 1, min( 200, $limit ) )
 			),
 			ARRAY_A

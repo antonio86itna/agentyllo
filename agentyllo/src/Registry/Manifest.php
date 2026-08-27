@@ -17,13 +17,13 @@ defined( 'ABSPATH' ) || exit;
  * hardcoded in providers: they come from here, so a vendor rename is a
  * registry sync — not a plugin update.
  *
- * Resolution order: verified remote snapshot (option agy_registry) → bundled
+ * Resolution order: verified remote snapshot (option agyl_registry) → bundled
  * assets/registry/stable.json → empty manifest (providers report "no
  * models"; the classic floor is unaffected).
  */
 final class Manifest {
 
-	public const OPTION = 'agy_registry';
+	public const OPTION = 'agyl_registry';
 
 	/**
 	 * Decoded manifest.
@@ -55,7 +55,7 @@ final class Manifest {
 		 *
 		 * @param array $manifest Manifest array.
 		 */
-		$this->data = (array) apply_filters( 'agy_registry_manifest', $this->data );
+		$this->data = (array) apply_filters( 'agyl_registry_manifest', $this->data );
 
 		return $this->data;
 	}
@@ -73,7 +73,7 @@ final class Manifest {
 	 * @return array<string, mixed>
 	 */
 	public static function bundled(): array {
-		$file = AGY_DIR . 'assets/registry/stable.json';
+		$file = AGYL_DIR . 'assets/registry/stable.json';
 		if ( ! is_readable( $file ) ) {
 			return array();
 		}

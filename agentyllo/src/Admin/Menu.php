@@ -41,6 +41,7 @@ final class Menu {
 			'-models'        => array( __( 'AI Models', 'agentyllo' ), 'models' ),
 			'-stats'         => array( __( 'Statistics', 'agentyllo' ), 'stats' ),
 			'-privacy'       => array( __( 'Privacy & Legal', 'agentyllo' ), 'privacy' ),
+			'-addons'        => array( __( 'Addons', 'agentyllo' ), 'addons' ),
 			'-settings'      => array( __( 'Settings', 'agentyllo' ), 'settings' ),
 			'-help'          => array( __( 'Help', 'agentyllo' ), 'help' ),
 		);
@@ -50,7 +51,7 @@ final class Menu {
 	 * Register menu + submenus. Hooked on admin_menu.
 	 */
 	public function register(): void {
-		if ( ! Caps::can( 'agy_manage' ) ) {
+		if ( ! Caps::can( 'agyl_manage' ) ) {
 			return;
 		}
 
@@ -60,7 +61,7 @@ final class Menu {
 		 * @param string $capability Default 'manage_options'.
 		 * @param string $permission Agentyllo permission id being mapped.
 		 */
-		$menu_cap = (string) apply_filters( 'agy_capability_map', 'manage_options', 'agy_manage' );
+		$menu_cap = (string) apply_filters( 'agyl_capability_map', 'manage_options', 'agyl_manage' );
 
 		add_menu_page(
 			__( 'Agentyllo', 'agentyllo' ),

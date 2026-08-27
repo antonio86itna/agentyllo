@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Synchronous, same-request events (dot notation, e.g. 'kb.delta').
- * Every emit is mirrored to WordPress as `do_action('agy_' . str_replace('.', '_', $event), $payload)`
+ * Every emit is mirrored to WordPress as `do_action('agyl_' . str_replace('.', '_', $event), $payload)`
  * so addons hear everything. Durable cross-request messaging rides Action
  * Scheduler through the AsyncBus instead.
  */

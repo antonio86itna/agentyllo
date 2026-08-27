@@ -61,7 +61,7 @@ final class Store {
 		if ( $row && $row['content_hash'] === $hash && self::STATUS_ACTIVE === $row['status'] ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->update(
-				$wpdb->prefix . 'agy_kb_documents',
+				$wpdb->prefix . 'agyl_kb_documents',
 				array(
 					'indexed_at'          => $now,
 					'source_modified_gmt' => $draft->source_modified_gmt,
@@ -92,11 +92,11 @@ final class Store {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( $row ) {
 			$doc_id = (int) $row['id'];
-			$wpdb->update( $wpdb->prefix . 'agy_kb_documents', $data, array( 'id' => $doc_id ) );
+			$wpdb->update( $wpdb->prefix . 'agyl_kb_documents', $data, array( 'id' => $doc_id ) );
 			$this->delete_document_data( $doc_id );
 		} else {
 			$data['created_at'] = $now;
-			if ( false === $wpdb->insert( $wpdb->prefix . 'agy_kb_documents', $data ) ) {
+			if ( false === $wpdb->insert( $wpdb->prefix . 'agyl_kb_documents', $data ) ) {
 				return 0;
 			}
 			$doc_id = (int) $wpdb->insert_id;
@@ -123,7 +123,7 @@ final class Store {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT * FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND external_id = %s',
+				'SELECT * FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND external_id = %s',
 				$source,
 				substr( $external_id, 0, 64 )
 			),
@@ -149,7 +149,7 @@ final class Store {
 
 		$this->delete_document_data( (int) $row['id'] );
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete( $wpdb->prefix . 'agy_kb_documents', array( 'id' => (int) $row['id'] ) );
+		$wpdb->delete( $wpdb->prefix . 'agyl_kb_documents', array( 'id' => (int) $row['id'] ) );
 
 		$this->bump_kb_version();
 	}
@@ -183,7 +183,7 @@ final class Store {
 		if ( $row ) {
 			$this->delete_document_data( (int) $row['id'] );
 			$wpdb->update(
-				$wpdb->prefix . 'agy_kb_documents',
+				$wpdb->prefix . 'agyl_kb_documents',
 				array(
 					'status'      => self::STATUS_EXCLUDED,
 					'chunk_count' => 0,
@@ -195,7 +195,7 @@ final class Store {
 		} else {
 			// Tombstone for a never-indexed item: blocks future indexing too.
 			$wpdb->insert(
-				$wpdb->prefix . 'agy_kb_documents',
+				$wpdb->prefix . 'agyl_kb_documents',
 				array(
 					'source'       => $source,
 					'external_id'  => substr( $external_id, 0, 64 ),
@@ -224,7 +224,7 @@ final class Store {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->delete(
-			$wpdb->prefix . 'agy_kb_documents',
+			$wpdb->prefix . 'agyl_kb_documents',
 			array(
 				'source'      => substr( $source, 0, 32 ),
 				'external_id' => substr( $external_id, 0, 64 ),
@@ -246,7 +246,7 @@ final class Store {
 	public function mark_purging( string $source, ?string $subtype = null ): int {
 		global $wpdb;
 
-		$sql  = 'UPDATE ' . $wpdb->prefix . 'agy_kb_documents SET status = %s WHERE source = %s';
+		$sql  = 'UPDATE ' . $wpdb->prefix . 'agyl_kb_documents SET status = %s WHERE source = %s';
 		$args = array( self::STATUS_PURGING, $source );
 		if ( null !== $subtype ) {
 			$sql   .= ' AND subtype = %s';
@@ -269,7 +269,7 @@ final class Store {
 	 */
 	public function purge_batch( int $limit = 100 ): int {
 		global $wpdb;
-		$table = $wpdb->prefix . 'agy_kb_documents';
+		$table = $wpdb->prefix . 'agyl_kb_documents';
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$ids = $wpdb->get_col(
@@ -302,7 +302,7 @@ final class Store {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			'SELECT source, subtype, status, COUNT(*) AS docs, COALESCE(SUM(chunk_count),0) AS chunks
-			 FROM ' . $wpdb->prefix . 'agy_kb_documents GROUP BY source, subtype, status',
+			 FROM ' . $wpdb->prefix . 'agyl_kb_documents GROUP BY source, subtype, status',
 			ARRAY_A
 		);
 
@@ -323,8 +323,8 @@ final class Store {
 	 * invalidates response caches.
 	 */
 	public function bump_kb_version(): void {
-		$version = (int) get_option( 'agy_kb_version', 0 );
-		update_option( 'agy_kb_version', $version + 1, false );
+		$version = (int) get_option( 'agyl_kb_version', 0 );
+		update_option( 'agyl_kb_version', $version + 1, false );
 
 		/**
 		 * Fires after any KB write that changes the active set (documents,
@@ -332,7 +332,7 @@ final class Store {
 		 *
 		 * @param int $version New KB version.
 		 */
-		do_action( 'agy_kb_changed', $version + 1 );
+		do_action( 'agyl_kb_changed', $version + 1 );
 	}
 
 	/**
@@ -345,13 +345,13 @@ final class Store {
 		$p = $wpdb->prefix;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$chunk_ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$p}agy_kb_chunks WHERE document_id = %d", $doc_id ) );
+		$chunk_ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$p}agyl_kb_chunks WHERE document_id = %d", $doc_id ) );
 		if ( $chunk_ids ) {
 			$in = implode( ',', array_map( 'absint', $chunk_ids ) );
-			$wpdb->query( "DELETE FROM {$p}agy_kb_terms WHERE chunk_id IN ({$in})" );
-			$wpdb->query( "DELETE FROM {$p}agy_kb_chunks WHERE id IN ({$in})" );
+			$wpdb->query( "DELETE FROM {$p}agyl_kb_terms WHERE chunk_id IN ({$in})" );
+			$wpdb->query( "DELETE FROM {$p}agyl_kb_chunks WHERE id IN ({$in})" );
 		}
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agy_kb_links WHERE from_document_id = %d", $doc_id ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agyl_kb_links WHERE from_document_id = %d", $doc_id ) );
 		// phpcs:enable
 	}
 
@@ -367,7 +367,7 @@ final class Store {
 		foreach ( $chunks as $chunk ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$inserted = $wpdb->insert(
-				$wpdb->prefix . 'agy_kb_chunks',
+				$wpdb->prefix . 'agyl_kb_chunks',
 				array(
 					'document_id'  => $doc_id,
 					'seq'          => (int) $chunk['seq'],
@@ -412,7 +412,7 @@ final class Store {
 
 		foreach ( array_chunk( $rows, 500 ) as $batch ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-			$wpdb->query( 'INSERT IGNORE INTO ' . $wpdb->prefix . 'agy_kb_terms (term, chunk_id, lang, tf) VALUES ' . implode( ',', $batch ) );
+			$wpdb->query( 'INSERT IGNORE INTO ' . $wpdb->prefix . 'agyl_kb_terms (term, chunk_id, lang, tf) VALUES ' . implode( ',', $batch ) );
 		}
 	}
 
@@ -438,7 +438,7 @@ final class Store {
 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->insert(
-				$wpdb->prefix . 'agy_kb_links',
+				$wpdb->prefix . 'agyl_kb_links',
 				array(
 					'from_document_id' => $doc_id,
 					'to_document_id'   => null,

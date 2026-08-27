@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 // phpcs:disable WordPress.DB, PluginCheck.Security.DirectDB -- Repository for Agentyllo's own custom tables: core APIs cannot express these queries, table names are $wpdb->prefix plus literal constants, every value goes through $wpdb->prepare(), and dynamic IN() lists build a matching list of %s placeholders.
 
 /**
- * agy_kb_vectors keeps one L2-normalized float32 vector per chunk per
+ * agyl_kb_vectors keeps one L2-normalized float32 vector per chunk per
  * embedding model (LONGBLOB, packed with pack('g*')). Search runs entirely in
  * PHP: for small/medium corpora (≤ FULL_SCAN_MAX vectors) the whole set is
  * scanned in pages — dense DISCOVERY of paraphrases the lexical channel
@@ -49,7 +49,7 @@ final class VectorStore {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$ok = $wpdb->query(
 				$wpdb->prepare(
-					'INSERT INTO ' . $wpdb->prefix . 'agy_kb_vectors (chunk_id, document_id, model, dims, vec, updated_at) VALUES (%d, %d, %s, %d, %s, %s)
+					'INSERT INTO ' . $wpdb->prefix . 'agyl_kb_vectors (chunk_id, document_id, model, dims, vec, updated_at) VALUES (%d, %d, %s, %d, %s, %s)
 					 ON DUPLICATE KEY UPDATE document_id = VALUES(document_id), model = VALUES(model), dims = VALUES(dims), vec = VALUES(vec), updated_at = VALUES(updated_at)',
 					(int) $chunk_id,
 					(int) ( $documents[ $chunk_id ] ?? 0 ),
@@ -102,10 +102,10 @@ final class VectorStore {
 					break;
 				}
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT chunk_id, vec FROM ' . $wpdb->prefix . "agy_kb_vectors WHERE model = %s AND dims = %d AND chunk_id IN ({$ids})", $model, $dims ), ARRAY_A );
+				$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT chunk_id, vec FROM ' . $wpdb->prefix . "agyl_kb_vectors WHERE model = %s AND dims = %d AND chunk_id IN ({$ids})", $model, $dims ), ARRAY_A );
 			} else {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-				$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT chunk_id, vec FROM ' . $wpdb->prefix . 'agy_kb_vectors WHERE model = %s AND dims = %d ORDER BY chunk_id LIMIT %d OFFSET %d', $model, $dims, self::PAGE, $offset ), ARRAY_A );
+				$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT chunk_id, vec FROM ' . $wpdb->prefix . 'agyl_kb_vectors WHERE model = %s AND dims = %d ORDER BY chunk_id LIMIT %d OFFSET %d', $model, $dims, self::PAGE, $offset ), ARRAY_A );
 			}
 			if ( ! is_array( $rows ) || ! $rows ) {
 				break;
@@ -146,7 +146,7 @@ final class VectorStore {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agy_kb_vectors WHERE model = %s', $model ) );
+		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agyl_kb_vectors WHERE model = %s', $model ) );
 	}
 
 	/**
@@ -162,9 +162,9 @@ final class VectorStore {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT c.id, c.document_id, c.content FROM ' . $wpdb->prefix . 'agy_kb_chunks c
-				 INNER JOIN ' . $wpdb->prefix . 'agy_kb_documents d ON d.id = c.document_id AND d.status = %s
-				 LEFT JOIN ' . $wpdb->prefix . 'agy_kb_vectors v ON v.chunk_id = c.id AND v.model = %s
+				'SELECT c.id, c.document_id, c.content FROM ' . $wpdb->prefix . 'agyl_kb_chunks c
+				 INNER JOIN ' . $wpdb->prefix . 'agyl_kb_documents d ON d.id = c.document_id AND d.status = %s
+				 LEFT JOIN ' . $wpdb->prefix . 'agyl_kb_vectors v ON v.chunk_id = c.id AND v.model = %s
 				 WHERE v.chunk_id IS NULL ORDER BY c.id ASC LIMIT %d',
 				'active',
 				$model,
@@ -186,11 +186,11 @@ final class VectorStore {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$orphans = $wpdb->query( 'DELETE v FROM ' . $wpdb->prefix . 'agy_kb_vectors v LEFT JOIN ' . $wpdb->prefix . 'agy_kb_chunks c ON c.id = v.chunk_id WHERE c.id IS NULL' );
+		$orphans = $wpdb->query( 'DELETE v FROM ' . $wpdb->prefix . 'agyl_kb_vectors v LEFT JOIN ' . $wpdb->prefix . 'agyl_kb_chunks c ON c.id = v.chunk_id WHERE c.id IS NULL' );
 		$stale   = 0;
 		if ( '' !== $keep_model ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$stale = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'agy_kb_vectors WHERE model <> %s', $keep_model ) );
+			$stale = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'agyl_kb_vectors WHERE model <> %s', $keep_model ) );
 		}
 
 		return (int) $orphans + (int) $stale;
@@ -203,7 +203,7 @@ final class VectorStore {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'TRUNCATE TABLE ' . $wpdb->prefix . 'agy_kb_vectors' );
+		$wpdb->query( 'TRUNCATE TABLE ' . $wpdb->prefix . 'agyl_kb_vectors' );
 	}
 
 	/**

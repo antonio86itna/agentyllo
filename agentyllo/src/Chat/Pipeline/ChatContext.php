@@ -25,7 +25,7 @@ final class ChatContext {
 	public const ROUTE_HANDOFF            = 'handoff';
 
 	/**
-	 * Intent taxonomy (filterable via agy_intents at classification time).
+	 * Intent taxonomy (filterable via agyl_intents at classification time).
 	 */
 	public const INTENTS = array(
 		'greeting',

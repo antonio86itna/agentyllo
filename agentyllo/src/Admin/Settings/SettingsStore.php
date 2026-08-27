@@ -14,7 +14,7 @@ use Agentyllo\Infra\Options;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * One option per tab (`agy_settings_{tab}`, JSON-shaped array). Reads merge
+ * One option per tab (`agyl_settings_{tab}`, JSON-shaped array). Reads merge
  * stored values over schema defaults; writes are schema-sanitized partial
  * merges. Only `general` autoloads (it is consulted on frontend requests).
  */
@@ -115,7 +115,7 @@ final class SettingsStore {
 		 * @param array  $new New effective values.
 		 * @param array  $old Previous effective values.
 		 */
-		do_action( 'agy_settings_updated', $tab, $new, $old );
+		do_action( 'agyl_settings_updated', $tab, $new, $old );
 
 		return $new;
 	}

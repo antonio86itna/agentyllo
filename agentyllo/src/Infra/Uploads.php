@@ -57,15 +57,12 @@ final class Uploads {
 			}
 		}
 
-		$private_htaccess = self::dir( 'private' ) . '/.htaccess';
-		if ( ! file_exists( $private_htaccess ) ) {
-			// Apache 2.4 + 2.2 syntax; Nginx users are covered by the random-filename + short-TTL policy.
-			@file_put_contents( // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-				$private_htaccess,
-				"<IfModule mod_authz_core.c>\nRequire all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\nDeny from all\n</IfModule>\n"
-			);
-		}
-
+		/*
+		 * Private files rely on unguessable random filenames plus a short
+		 * retention window (no .htaccess is written): index.php placeholders
+		 * stop directory listing, filenames carry 24 random characters, and
+		 * the retention job deletes exports after 72 hours.
+		 */
 		return $ok && wp_is_writable( $base );
 	}
 }

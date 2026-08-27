@@ -182,7 +182,7 @@ final class TaxonomyAdapter implements SourceAdapter {
 		$thumbnail_id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
 
 		/** This filter is documented in src/KB/Source/PostTypeAdapter.php */
-		$lang = (string) apply_filters( 'agy_kb_document_lang', determine_locale(), $term );
+		$lang = (string) apply_filters( 'agyl_kb_document_lang', determine_locale(), $term );
 
 		return new DocumentDraft(
 			$this->id(),

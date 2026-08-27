@@ -1,6 +1,6 @@
 <?php
 /**
- * Audit log writer (agy_audit_log).
+ * Audit log writer (agyl_audit_log).
  *
  * @package Agentyllo
  */
@@ -36,7 +36,7 @@ final class Audit {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->insert(
-			$wpdb->prefix . 'agy_audit_log',
+			$wpdb->prefix . 'agyl_audit_log',
 			array(
 				'actor_id'   => get_current_user_id() ?: null,
 				'actor_type' => is_user_logged_in() ? 'user' : 'system',

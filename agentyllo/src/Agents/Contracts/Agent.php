@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Agents are stateless services: durable state lives in the memory store,
- * outcomes in the journal. Registered through the `agy_register_agents`
+ * outcomes in the journal. Registered through the `agyl_register_agents`
  * filter and orchestrated by the kernel.
  */
 interface Agent {

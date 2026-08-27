@@ -12,7 +12,7 @@ namespace Agentyllo\Agents\Contracts;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Backed by wp_agy_agent_memory. Kinds: fact | state | task | lesson | msg.
+ * Backed by wp_agyl_agent_memory. Kinds: fact | state | task | lesson | msg.
  * Writes are upserts on (agent_id, mem_key).
  */
 interface MemoryStoreInterface {

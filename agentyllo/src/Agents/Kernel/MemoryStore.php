@@ -1,6 +1,6 @@
 <?php
 /**
- * Agent memory backed by wp_agy_agent_memory.
+ * Agent memory backed by wp_agyl_agent_memory.
  *
  * @package Agentyllo
  */
@@ -29,7 +29,7 @@ final class MemoryStore implements MemoryStoreInterface {
 	private function table(): string {
 		global $wpdb;
 
-		return $wpdb->prefix . 'agy_agent_memory';
+		return $wpdb->prefix . 'agyl_agent_memory';
 	}
 
 	/**

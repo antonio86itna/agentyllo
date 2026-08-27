@@ -19,7 +19,7 @@ use Throwable;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handler behind the `agy_task` Action Scheduler hook.
+ * Handler behind the `agyl_task` Action Scheduler hook.
  */
 final class Orchestrator {
 
@@ -48,7 +48,7 @@ final class Orchestrator {
 	}
 
 	/**
-	 * Deliver one task to one agent. Hooked on `agy_task` (Action Scheduler).
+	 * Deliver one task to one agent. Hooked on `agyl_task` (Action Scheduler).
 	 *
 	 * @param string $agent_id  Target agent id.
 	 * @param array  $task_data Serialized task (Task::to_array()).

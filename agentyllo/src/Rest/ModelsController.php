@@ -73,7 +73,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_overview' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 		register_rest_route(
@@ -82,7 +82,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_test' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 				'args'                => array(
 					'provider' => array(
 						'type'     => 'string',
@@ -98,7 +98,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_registry_sync' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 		register_rest_route(
@@ -107,7 +107,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_circuit_reset' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 				'args'                => array(
 					'provider' => array(
 						'type'     => 'string',
@@ -122,7 +122,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_embed_now' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 		register_rest_route(
@@ -131,7 +131,7 @@ final class ModelsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_cache_flush' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 	}
@@ -171,7 +171,7 @@ final class ModelsController extends Controller {
 
 		$local     = $this->router->provider( LocalEndpointProvider::ID );
 		$local_url = $local instanceof LocalEndpointProvider ? $local->base_url() : '';
-		$vec_state = get_option( 'agy_kb_vectors_status' );
+		$vec_state = get_option( 'agyl_kb_vectors_status' );
 		$vec_model = $this->embeddings->model_key();
 
 		return $this->respond(
@@ -188,7 +188,7 @@ final class ModelsController extends Controller {
 					'generated_at' => (string) ( $manifest['generated_at'] ?? '' ),
 					'synced_at'    => is_array( $registry_stored ) ? (int) ( $registry_stored['synced_at'] ?? 0 ) : 0,
 					'last_sync'    => $this->sync->status(),
-					'url'          => (string) apply_filters( 'agy_registry_url', RemoteSync::DEFAULT_URL ),
+					'url'          => (string) apply_filters( 'agyl_registry_url', RemoteSync::DEFAULT_URL ),
 				),
 				'transport' => array(
 					'streaming_capable' => $this->http->supports_streaming(),
@@ -225,7 +225,7 @@ final class ModelsController extends Controller {
 		$id       = (string) $request['provider'];
 		$provider = $this->router->provider( $id );
 		if ( null === $provider ) {
-			return new WP_Error( 'agy_unknown_provider', __( 'Unknown provider.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_provider', __( 'Unknown provider.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		$result = $provider->test_connection();
@@ -261,7 +261,7 @@ final class ModelsController extends Controller {
 	 */
 	public function post_embed_now(): WP_REST_Response|WP_Error {
 		if ( null === $this->embeddings->active() ) {
-			return new WP_Error( 'agy_no_embeddings', __( 'No embedding provider is configured.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_no_embeddings', __( 'No embedding provider is configured.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 		$result = $this->vector_indexer->run();
 		if ( $result['remaining'] > 0 ) {

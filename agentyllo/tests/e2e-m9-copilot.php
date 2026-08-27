@@ -38,4 +38,4 @@ echo "restore: {$rr['message']}\n";
 echo "help: " . substr( $cp->handle( '/help' )['blocks'][0]['md'], 0, 160 ) . "…\n";
 // Reset tone.
 $c->get( \Agentyllo\Admin\Settings\SettingsStore::class )->update( 'general', array( 'tone' => 'friendly' ) );
-global $wpdb; echo "audit rows: " . $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}agy_audit_log WHERE action LIKE 'copilot.%'" ) . "\n";
+global $wpdb; echo "audit rows: " . $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}agyl_audit_log WHERE action LIKE 'copilot.%'" ) . "\n";

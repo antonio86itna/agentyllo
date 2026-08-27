@@ -1,6 +1,6 @@
 <?php
 /**
- * Background embedding of KB chunks into agy_kb_vectors.
+ * Background embedding of KB chunks into agyl_kb_vectors.
  *
  * @package Agentyllo
  */
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class VectorIndexer {
 
-	public const HOOK  = 'agy_kb_embed';
+	public const HOOK  = 'agyl_kb_embed';
 	public const GROUP = 'agentyllo-ai';
 
 	private const BATCH    = 32;
@@ -51,7 +51,7 @@ final class VectorIndexer {
 				$this->run();
 			}
 		);
-		add_action( 'agy_kb_changed', array( $this, 'schedule' ) );
+		add_action( 'agyl_kb_changed', array( $this, 'schedule' ) );
 	}
 
 	/**
@@ -113,7 +113,7 @@ final class VectorIndexer {
 			$this->schedule();
 		}
 		update_option(
-			'agy_kb_vectors_status',
+			'agyl_kb_vectors_status',
 			array(
 				'model'     => $model,
 				'count'     => $this->vectors->count( $model ),

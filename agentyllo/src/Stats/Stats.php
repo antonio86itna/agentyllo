@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Raw conversations/messages are purged by retention; rollups
- * (agy_stats_daily / agy_stats_intents) hold only counters and survive
+ * (agyl_stats_daily / agyl_stats_intents) hold only counters and survive
  * 24 months. The unanswered queue feeds the copilot suggestions.
  */
 final class Stats {
@@ -44,7 +44,7 @@ final class Stats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query(
 			$wpdb->prepare(
-				'INSERT INTO ' . $wpdb->prefix . 'agy_stats_unanswered (question_hash, question_sample, lang, intent, hits, first_seen, last_seen, status)
+				'INSERT INTO ' . $wpdb->prefix . 'agyl_stats_unanswered (question_hash, question_sample, lang, intent, hits, first_seen, last_seen, status)
 				 VALUES (%s, %s, %s, %s, 1, %s, %s, %s)
 				 ON DUPLICATE KEY UPDATE hits = hits + 1, last_seen = VALUES(last_seen), question_sample = VALUES(question_sample)',
 				$hash,
@@ -60,7 +60,7 @@ final class Stats {
 
 	/**
 	 * Nightly rollup of yesterday (and today so far, so the dashboard is
-	 * fresh) into agy_stats_daily / agy_stats_intents. Idempotent (upsert).
+	 * fresh) into agyl_stats_daily / agyl_stats_intents. Idempotent (upsert).
 	 *
 	 * @param int $days_back How many days back to (re)compute. Default 2.
 	 */
@@ -85,7 +85,7 @@ final class Stats {
 						SUM(COALESCE(m.tokens_in, 0)) AS tokens_in,
 						SUM(COALESCE(m.tokens_out, 0)) AS tokens_out,
 						SUM(COALESCE(m.cost_usd, 0)) AS cost_usd
-					 FROM {$p}agy_messages m
+					 FROM {$p}agyl_messages m
 					 WHERE DATE(m.created_at) = %s
 					 GROUP BY m.tier",
 					$day
@@ -99,7 +99,7 @@ final class Stats {
 
 				$wpdb->query(
 					$wpdb->prepare(
-						"INSERT INTO {$p}agy_stats_daily (stat_date, tier, conversations, messages, resolved, handoffs, oos_refusals, unanswered, kb_hit_answers, avg_latency_ms, p95_latency_ms, tokens_in, tokens_out, cost_usd)
+						"INSERT INTO {$p}agyl_stats_daily (stat_date, tier, conversations, messages, resolved, handoffs, oos_refusals, unanswered, kb_hit_answers, avg_latency_ms, p95_latency_ms, tokens_in, tokens_out, cost_usd)
 						 VALUES (%s, %s, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %f)
 						 ON DUPLICATE KEY UPDATE conversations = VALUES(conversations), messages = VALUES(messages), resolved = VALUES(resolved), handoffs = VALUES(handoffs),
 							oos_refusals = VALUES(oos_refusals), unanswered = VALUES(unanswered), kb_hit_answers = VALUES(kb_hit_answers), avg_latency_ms = VALUES(avg_latency_ms),
@@ -125,7 +125,7 @@ final class Stats {
 			$intents = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT intent, COUNT(*) hits, SUM(flagged_unanswered = 0) answered
-					 FROM {$p}agy_messages WHERE role = 'assistant' AND intent IS NOT NULL AND DATE(created_at) = %s GROUP BY intent",
+					 FROM {$p}agyl_messages WHERE role = 'assistant' AND intent IS NOT NULL AND DATE(created_at) = %s GROUP BY intent",
 					$day
 				),
 				ARRAY_A
@@ -133,7 +133,7 @@ final class Stats {
 			foreach ( (array) $intents as $r ) {
 				$wpdb->query(
 					$wpdb->prepare(
-						"INSERT INTO {$p}agy_stats_intents (stat_date, intent, hits, answered) VALUES (%s, %s, %d, %d)
+						"INSERT INTO {$p}agyl_stats_intents (stat_date, intent, hits, answered) VALUES (%s, %s, %d, %d)
 						 ON DUPLICATE KEY UPDATE hits = VALUES(hits), answered = VALUES(answered)",
 						$day,
 						(string) $r['intent'],
@@ -160,7 +160,7 @@ final class Stats {
 		return (array) $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT stat_date, tier, conversations, messages, resolved, handoffs, oos_refusals, unanswered, kb_hit_answers, avg_latency_ms, p95_latency_ms, tokens_in, tokens_out, cost_usd
-				 FROM ' . $wpdb->prefix . 'agy_stats_daily WHERE stat_date >= DATE_SUB(CURDATE(), INTERVAL %d DAY) ORDER BY stat_date ASC',
+				 FROM ' . $wpdb->prefix . 'agyl_stats_daily WHERE stat_date >= DATE_SUB(CURDATE(), INTERVAL %d DAY) ORDER BY stat_date ASC',
 				max( 1, $days )
 			),
 			ARRAY_A
@@ -234,7 +234,7 @@ final class Stats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (array) $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT intent, SUM(hits) hits, SUM(answered) answered FROM ' . $wpdb->prefix . 'agy_stats_intents
+				'SELECT intent, SUM(hits) hits, SUM(answered) answered FROM ' . $wpdb->prefix . 'agyl_stats_intents
 				 WHERE stat_date >= DATE_SUB(CURDATE(), INTERVAL %d DAY) GROUP BY intent ORDER BY hits DESC LIMIT %d',
 				max( 1, $days ),
 				max( 1, min( 50, $limit ) )
@@ -254,7 +254,7 @@ final class Stats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (array) $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT id, question_sample, lang, intent, hits, first_seen, last_seen, status FROM ' . $wpdb->prefix . 'agy_stats_unanswered
+				'SELECT id, question_sample, lang, intent, hits, first_seen, last_seen, status FROM ' . $wpdb->prefix . 'agyl_stats_unanswered
 				 WHERE status = %s ORDER BY hits DESC, last_seen DESC LIMIT %d',
 				'open',
 				max( 1, min( 100, $limit ) )
@@ -276,7 +276,7 @@ final class Stats {
 			return false;
 		}
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return false !== $wpdb->update( $wpdb->prefix . 'agy_stats_unanswered', array( 'status' => $status ), array( 'id' => $id ) );
+		return false !== $wpdb->update( $wpdb->prefix . 'agyl_stats_unanswered', array( 'status' => $status ), array( 'id' => $id ) );
 	}
 
 	/**
@@ -295,13 +295,13 @@ final class Stats {
 		$rows  = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT id, uuid, visitor_name, visitor_email, lang, tier, message_count, resolved, handoff, started_at, last_activity_at
-				 FROM {$p}agy_conversations ORDER BY last_activity_at DESC LIMIT %d OFFSET %d",
+				 FROM {$p}agyl_conversations ORDER BY last_activity_at DESC LIMIT %d OFFSET %d",
 				$per_page,
 				$offset
 			),
 			ARRAY_A
 		);
-		$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_conversations" );
+		$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_conversations" );
 		// phpcs:enable
 
 		return array(
@@ -322,12 +322,12 @@ final class Stats {
 		$p = $wpdb->prefix;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$conv = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$p}agy_conversations WHERE id = %d", $id ), ARRAY_A );
+		$conv = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$p}agyl_conversations WHERE id = %d", $id ), ARRAY_A );
 		if ( ! $conv ) {
 			return null;
 		}
 		$conv['messages'] = (array) $wpdb->get_results(
-			$wpdb->prepare( "SELECT id, role, content, blocks, tier, intent, confidence, latency_ms, flagged_unanswered, created_at FROM {$p}agy_messages WHERE conversation_id = %d ORDER BY id", $id ),
+			$wpdb->prepare( "SELECT id, role, content, blocks, tier, intent, confidence, latency_ms, flagged_unanswered, created_at FROM {$p}agyl_messages WHERE conversation_id = %d ORDER BY id", $id ),
 			ARRAY_A
 		);
 		// phpcs:enable
@@ -353,7 +353,7 @@ final class Stats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$values = $wpdb->get_col(
 			$wpdb->prepare(
-				'SELECT latency_ms FROM ' . $wpdb->prefix . "agy_messages WHERE role = 'assistant' AND latency_ms IS NOT NULL AND tier = %s AND DATE(created_at) = %s ORDER BY latency_ms ASC",
+				'SELECT latency_ms FROM ' . $wpdb->prefix . "agyl_messages WHERE role = 'assistant' AND latency_ms IS NOT NULL AND tier = %s AND DATE(created_at) = %s ORDER BY latency_ms ASC",
 				$tier,
 				$day
 			)
@@ -380,9 +380,9 @@ final class Stats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$p}agy_conversations c
+				"SELECT COUNT(*) FROM {$p}agyl_conversations c
 				 WHERE DATE(c.last_activity_at) = %s AND c.tier = %s AND c.handoff = 0
-				   AND NOT EXISTS (SELECT 1 FROM {$p}agy_messages m WHERE m.conversation_id = c.id AND m.flagged_unanswered = 1)",
+				   AND NOT EXISTS (SELECT 1 FROM {$p}agyl_messages m WHERE m.conversation_id = c.id AND m.flagged_unanswered = 1)",
 				$day,
 				$tier
 			)
@@ -397,8 +397,8 @@ final class Stats {
 		$p = $wpdb->prefix;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agy_stats_daily WHERE stat_date < DATE_SUB(CURDATE(), INTERVAL %d MONTH)", self::ROLLUP_RETENTION_MONTHS ) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agy_stats_intents WHERE stat_date < DATE_SUB(CURDATE(), INTERVAL %d MONTH)", self::ROLLUP_RETENTION_MONTHS ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agyl_stats_daily WHERE stat_date < DATE_SUB(CURDATE(), INTERVAL %d MONTH)", self::ROLLUP_RETENTION_MONTHS ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$p}agyl_stats_intents WHERE stat_date < DATE_SUB(CURDATE(), INTERVAL %d MONTH)", self::ROLLUP_RETENTION_MONTHS ) );
 		// phpcs:enable
 	}
 }

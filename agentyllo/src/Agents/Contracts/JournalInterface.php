@@ -12,7 +12,7 @@ namespace Agentyllo\Agents\Contracts;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Backed by wp_agy_agent_journal. Errors are fingerprinted: duplicate
+ * Backed by wp_agyl_agent_journal. Errors are fingerprinted: duplicate
  * signatures increment `occurrences` instead of inserting, and the nightly
  * learner promotes fingerprints with ≥3 occurrences into lessons.
  */

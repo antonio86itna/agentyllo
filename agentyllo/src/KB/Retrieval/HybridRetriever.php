@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * The single authoritative retrieval engine. Every consumer (chat pipeline,
  * copilot, REST, agents) goes through search() so the invisibility rules are
- * enforced in exactly one place: hydration joins agy_kb_documents with
+ * enforced in exactly one place: hydration joins agyl_kb_documents with
  * status='active', so purging/excluded/error documents can never surface.
  *
  * `extra_lists` is the M8 merge point: pre-ranked chunk-id lists (e.g. from a
@@ -253,7 +253,7 @@ final class HybridRetriever {
 			$args[] = '%' . $wpdb->esc_like( $term ) . '%';
 		}
 
-		$sql = 'SELECT id, title, permalink, source FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' AND permalink <> '' AND (" . implode( ' OR ', $like ) . ')';
+		$sql = 'SELECT id, title, permalink, source FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE status = %s AND title <> '' AND permalink <> '' AND (" . implode( ' OR ', $like ) . ')';
 		if ( '' !== $lang ) {
 			$sql   .= " AND (lang = %s OR lang = '')";
 			$args[] = $lang;
@@ -331,7 +331,7 @@ final class HybridRetriever {
 	}
 
 	/**
-	 * BM25-ranked chunk ids from the agy_kb_terms inverted index.
+	 * BM25-ranked chunk ids from the agyl_kb_terms inverted index.
 	 *
 	 * df comes from a cheap index-only COUNT per query term (status-blind —
 	 * an acceptable approximation: non-active documents are a small fraction
@@ -340,7 +340,7 @@ final class HybridRetriever {
 	 * starve the others, and joined to active documents only so invisible
 	 * documents never crowd out visible candidates. N is the active-doc
 	 * chunk count; chunk lengths come from chunks.token_est with the corpus
-	 * average cached in option agy_kb_avg_len (refreshed nightly).
+	 * average cached in option agyl_kb_avg_len (refreshed nightly).
 	 *
 	 * @param string[] $terms Distinct query terms.
 	 * @param string   $lang  Language filter ('' = any).
@@ -354,7 +354,7 @@ final class HybridRetriever {
 
 		// Document frequency per query term, index-only (status-blind df).
 		$placeholders = implode( ',', array_fill( 0, count( $terms ), '%s' ) );
-		$df_sql       = "SELECT term, COUNT(*) AS df FROM {$p}agy_kb_terms WHERE term IN ({$placeholders})";
+		$df_sql       = "SELECT term, COUNT(*) AS df FROM {$p}agyl_kb_terms WHERE term IN ({$placeholders})";
 		$df_args      = $terms;
 		if ( '' !== $lang_norm ) {
 			$df_sql   .= " AND ( lang = %s OR lang = '' )";
@@ -377,9 +377,9 @@ final class HybridRetriever {
 		$by_chunk = array();
 		foreach ( array_keys( $df ) as $term ) {
 			$sql  = "SELECT t.chunk_id, t.tf
-				FROM {$p}agy_kb_terms t
-				INNER JOIN {$p}agy_kb_chunks c ON c.id = t.chunk_id
-				INNER JOIN {$p}agy_kb_documents d ON d.id = c.document_id AND d.status = %s
+				FROM {$p}agyl_kb_terms t
+				INNER JOIN {$p}agyl_kb_chunks c ON c.id = t.chunk_id
+				INNER JOIN {$p}agyl_kb_documents d ON d.id = c.document_id AND d.status = %s
 				WHERE t.term = %s";
 			$args = array( Store::STATUS_ACTIVE, $term );
 			if ( '' !== $lang_norm ) {
@@ -406,20 +406,20 @@ final class HybridRetriever {
 			1,
 			(int) $wpdb->get_var(
 				$wpdb->prepare(
-					"SELECT COUNT(*) FROM {$p}agy_kb_chunks c INNER JOIN {$p}agy_kb_documents d ON d.id = c.document_id WHERE d.status = %s",
+					"SELECT COUNT(*) FROM {$p}agyl_kb_chunks c INNER JOIN {$p}agyl_kb_documents d ON d.id = c.document_id WHERE d.status = %s",
 					Store::STATUS_ACTIVE
 				)
 			)
 		);
 
-		$avg_len = (float) get_option( 'agy_kb_avg_len', self::DEFAULT_AVG_LEN );
+		$avg_len = (float) get_option( 'agyl_kb_avg_len', self::DEFAULT_AVG_LEN );
 		if ( $avg_len <= 0 ) {
 			$avg_len = (float) self::DEFAULT_AVG_LEN;
 		}
 
 		$in = implode( ',', array_map( 'absint', array_keys( $by_chunk ) ) );
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$len_rows = $wpdb->get_results( "SELECT id, token_est FROM {$p}agy_kb_chunks WHERE id IN ({$in})", ARRAY_A );
+		$len_rows = $wpdb->get_results( "SELECT id, token_est FROM {$p}agyl_kb_chunks WHERE id IN ({$in})", ARRAY_A );
 		$lengths  = array();
 		foreach ( (array) $len_rows as $len_row ) {
 			$lengths[ (int) $len_row['id'] ] = (int) $len_row['token_est'];
@@ -448,7 +448,7 @@ final class HybridRetriever {
 
 	/**
 	 * FULLTEXT boost list, only when the schema installer recorded a working
-	 * FULLTEXT index (option agy_kb_caps, key 'fulltext'). BM25 is the
+	 * FULLTEXT index (option agyl_kb_caps, key 'fulltext'). BM25 is the
 	 * floor, FULLTEXT is an opportunistic booster: wpdb never throws, so a
 	 * failed MATCH (index dropped, table rebuilt) surfaces via last_error —
 	 * the capability flag is cleared (self-healing) and the boost skipped.
@@ -458,7 +458,7 @@ final class HybridRetriever {
 	 * @return int[] Chunk ids, best first (max 50).
 	 */
 	private function fulltext_list( string $query, string $lang ): array {
-		$caps = get_option( 'agy_kb_caps', array() );
+		$caps = get_option( 'agyl_kb_caps', array() );
 		if ( ! is_array( $caps ) || empty( $caps['fulltext'] ) ) {
 			return array();
 		}
@@ -466,8 +466,8 @@ final class HybridRetriever {
 		global $wpdb;
 		$p = $wpdb->prefix;
 
-		$sql  = "SELECT c.id FROM {$p}agy_kb_chunks c
-			INNER JOIN {$p}agy_kb_documents d ON d.id = c.document_id AND d.status = %s
+		$sql  = "SELECT c.id FROM {$p}agyl_kb_chunks c
+			INNER JOIN {$p}agyl_kb_documents d ON d.id = c.document_id AND d.status = %s
 			WHERE MATCH(c.heading_path, c.content) AGAINST (%s)";
 		$args = array( Store::STATUS_ACTIVE, $query );
 		if ( '' !== $lang ) {
@@ -487,7 +487,7 @@ final class HybridRetriever {
 
 		if ( '' !== (string) $wpdb->last_error ) {
 			$caps['fulltext'] = false;
-			update_option( 'agy_kb_caps', $caps, false );
+			update_option( 'agyl_kb_caps', $caps, false );
 
 			return array();
 		}
@@ -515,8 +515,8 @@ final class HybridRetriever {
 
 		$sql  = "SELECT c.id AS chunk_id, c.document_id, c.kind, c.heading_path, c.content, c.lang,
 			d.source, d.subtype, d.title, d.permalink, d.thumbnail_id, d.structured, d.weight
-			FROM {$p}agy_kb_chunks c
-			INNER JOIN {$p}agy_kb_documents d ON d.id = c.document_id
+			FROM {$p}agyl_kb_chunks c
+			INNER JOIN {$p}agyl_kb_documents d ON d.id = c.document_id
 			WHERE c.id IN ({$in}) AND d.status = %s";
 		$args = array( Store::STATUS_ACTIVE );
 

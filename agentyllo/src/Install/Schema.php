@@ -4,7 +4,7 @@
  *
  * Rules: VARCHAR instead of ENUM (dbDelta mishandles ENUM), explicit
  * $charset_collate on every table, indexes named, utf8mb4-safe key lengths.
- * New milestones append tables HERE and bump AGY_DB_VERSION.
+ * New milestones append tables HERE and bump AGYL_DB_VERSION.
  *
  * @package Agentyllo
  */
@@ -23,32 +23,32 @@ defined( 'ABSPATH' ) || exit;
 final class Schema {
 
 	/**
-	 * Unprefixed Agentyllo table names (without the `agy_` prefix).
+	 * Unprefixed Agentyllo table names (without the `agyl_` prefix).
 	 * Used by the migrator and mirrored (as a literal list) in uninstall.php.
 	 *
 	 * @return string[]
 	 */
 	public static function table_names(): array {
 		return array(
-			'agy_agent_memory',
-			'agy_agent_journal',
-			'agy_kb_documents',
-			'agy_kb_chunks',
-			'agy_kb_terms',
-			'agy_kb_links',
-			'agy_kb_vectors',
-			'agy_sessions',
-			'agy_rate_events',
-			'agy_conversations',
-			'agy_messages',
-			'agy_consents',
-			'agy_audit_log',
-			'agy_stats_daily',
-			'agy_stats_intents',
-			'agy_stats_unanswered',
-			'agy_inference_log',
-			'agy_response_cache',
-			'agy_chat_events',
+			'agyl_agent_memory',
+			'agyl_agent_journal',
+			'agyl_kb_documents',
+			'agyl_kb_chunks',
+			'agyl_kb_terms',
+			'agyl_kb_links',
+			'agyl_kb_vectors',
+			'agyl_sessions',
+			'agyl_rate_events',
+			'agyl_conversations',
+			'agyl_messages',
+			'agyl_consents',
+			'agyl_audit_log',
+			'agyl_stats_daily',
+			'agyl_stats_intents',
+			'agyl_stats_unanswered',
+			'agyl_inference_log',
+			'agyl_response_cache',
+			'agyl_chat_events',
 		);
 	}
 
@@ -66,7 +66,7 @@ final class Schema {
 
 		// Composite unique key must stay ≤191 utf8mb4 chars total (767-byte
 		// InnoDB prefix limit on older MySQL/MariaDB): 64 + 125 = 189.
-		$tables[ "{$p}agy_agent_memory" ] = "CREATE TABLE {$p}agy_agent_memory (
+		$tables[ "{$p}agyl_agent_memory" ] = "CREATE TABLE {$p}agyl_agent_memory (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   agent_id VARCHAR(64) NOT NULL,
   mem_key VARCHAR(125) NOT NULL,
@@ -84,7 +84,7 @@ final class Schema {
   KEY expires_at (expires_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_agent_journal" ] = "CREATE TABLE {$p}agy_agent_journal (
+		$tables[ "{$p}agyl_agent_journal" ] = "CREATE TABLE {$p}agyl_agent_journal (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   agent_id VARCHAR(64) NOT NULL,
   task_ref VARCHAR(36) NULL,
@@ -101,7 +101,7 @@ final class Schema {
   KEY event_time (event, created_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_kb_documents" ] = "CREATE TABLE {$p}agy_kb_documents (
+		$tables[ "{$p}agyl_kb_documents" ] = "CREATE TABLE {$p}agyl_kb_documents (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   source VARCHAR(32) NOT NULL,
   external_id VARCHAR(64) NOT NULL,
@@ -126,7 +126,7 @@ final class Schema {
   KEY permalink (permalink(191))
 ) {$charset};";
 
-		$tables[ "{$p}agy_kb_chunks" ] = "CREATE TABLE {$p}agy_kb_chunks (
+		$tables[ "{$p}agyl_kb_chunks" ] = "CREATE TABLE {$p}agyl_kb_chunks (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   document_id BIGINT UNSIGNED NOT NULL,
   seq SMALLINT UNSIGNED NOT NULL,
@@ -141,7 +141,7 @@ final class Schema {
   UNIQUE KEY doc_seq (document_id, seq)
 ) {$charset};";
 
-		$tables[ "{$p}agy_kb_terms" ] = "CREATE TABLE {$p}agy_kb_terms (
+		$tables[ "{$p}agyl_kb_terms" ] = "CREATE TABLE {$p}agyl_kb_terms (
   term VARCHAR(48) NOT NULL,
   chunk_id BIGINT UNSIGNED NOT NULL,
   lang VARCHAR(10) NOT NULL DEFAULT '',
@@ -150,7 +150,7 @@ final class Schema {
   KEY by_chunk (chunk_id)
 ) {$charset};";
 
-		$tables[ "{$p}agy_sessions" ] = "CREATE TABLE {$p}agy_sessions (
+		$tables[ "{$p}agyl_sessions" ] = "CREATE TABLE {$p}agyl_sessions (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   ip_hash CHAR(64) NULL,
   lang VARCHAR(10) NOT NULL DEFAULT '',
@@ -164,7 +164,7 @@ final class Schema {
   KEY expires_at (expires_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_rate_events" ] = "CREATE TABLE {$p}agy_rate_events (
+		$tables[ "{$p}agyl_rate_events" ] = "CREATE TABLE {$p}agyl_rate_events (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   bucket CHAR(64) NOT NULL,
   event_time DATETIME NOT NULL,
@@ -172,7 +172,7 @@ final class Schema {
   KEY bucket_time (bucket, event_time)
 ) {$charset};";
 
-		$tables[ "{$p}agy_conversations" ] = "CREATE TABLE {$p}agy_conversations (
+		$tables[ "{$p}agyl_conversations" ] = "CREATE TABLE {$p}agyl_conversations (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   uuid CHAR(36) NOT NULL,
   session_id BIGINT UNSIGNED NULL,
@@ -196,7 +196,7 @@ final class Schema {
   KEY by_session (session_id)
 ) {$charset};";
 
-		$tables[ "{$p}agy_messages" ] = "CREATE TABLE {$p}agy_messages (
+		$tables[ "{$p}agyl_messages" ] = "CREATE TABLE {$p}agyl_messages (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   conversation_id BIGINT UNSIGNED NOT NULL,
   role VARCHAR(12) NOT NULL,
@@ -221,7 +221,7 @@ final class Schema {
   KEY intent (intent(80))
 ) {$charset};";
 
-		$tables[ "{$p}agy_consents" ] = "CREATE TABLE {$p}agy_consents (
+		$tables[ "{$p}agyl_consents" ] = "CREATE TABLE {$p}agyl_consents (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   session_id BIGINT UNSIGNED NULL,
   conversation_id BIGINT UNSIGNED NULL,
@@ -240,7 +240,7 @@ final class Schema {
   KEY created (created_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_audit_log" ] = "CREATE TABLE {$p}agy_audit_log (
+		$tables[ "{$p}agyl_audit_log" ] = "CREATE TABLE {$p}agyl_audit_log (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   actor_id BIGINT UNSIGNED NULL,
   actor_type VARCHAR(20) NOT NULL DEFAULT 'user',
@@ -256,7 +256,7 @@ final class Schema {
   KEY actor (actor_id)
 ) {$charset};";
 
-		$tables[ "{$p}agy_stats_daily" ] = "CREATE TABLE {$p}agy_stats_daily (
+		$tables[ "{$p}agyl_stats_daily" ] = "CREATE TABLE {$p}agyl_stats_daily (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   stat_date DATE NOT NULL,
   tier VARCHAR(20) NOT NULL DEFAULT 'classic',
@@ -276,7 +276,7 @@ final class Schema {
   UNIQUE KEY day_tier (stat_date, tier)
 ) {$charset};";
 
-		$tables[ "{$p}agy_stats_intents" ] = "CREATE TABLE {$p}agy_stats_intents (
+		$tables[ "{$p}agyl_stats_intents" ] = "CREATE TABLE {$p}agyl_stats_intents (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   stat_date DATE NOT NULL,
   intent VARCHAR(100) NOT NULL,
@@ -286,7 +286,7 @@ final class Schema {
   UNIQUE KEY day_intent (stat_date, intent(80))
 ) {$charset};";
 
-		$tables[ "{$p}agy_stats_unanswered" ] = "CREATE TABLE {$p}agy_stats_unanswered (
+		$tables[ "{$p}agyl_stats_unanswered" ] = "CREATE TABLE {$p}agyl_stats_unanswered (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   question_hash CHAR(40) NOT NULL,
   question_sample TEXT NOT NULL,
@@ -302,7 +302,7 @@ final class Schema {
   KEY status_hits (status, hits)
 ) {$charset};";
 
-		$tables[ "{$p}agy_kb_links" ] = "CREATE TABLE {$p}agy_kb_links (
+		$tables[ "{$p}agyl_kb_links" ] = "CREATE TABLE {$p}agyl_kb_links (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   from_document_id BIGINT UNSIGNED NULL,
   to_document_id BIGINT UNSIGNED NULL,
@@ -319,7 +319,7 @@ final class Schema {
   KEY url (to_url_hash)
 ) {$charset};";
 
-		$tables[ "{$p}agy_kb_vectors" ] = "CREATE TABLE {$p}agy_kb_vectors (
+		$tables[ "{$p}agyl_kb_vectors" ] = "CREATE TABLE {$p}agyl_kb_vectors (
   chunk_id BIGINT UNSIGNED NOT NULL,
   document_id BIGINT UNSIGNED NOT NULL,
   model VARCHAR(80) NOT NULL,
@@ -330,7 +330,7 @@ final class Schema {
   KEY model_doc (model, document_id)
 ) {$charset};";
 
-		$tables[ "{$p}agy_inference_log" ] = "CREATE TABLE {$p}agy_inference_log (
+		$tables[ "{$p}agyl_inference_log" ] = "CREATE TABLE {$p}agyl_inference_log (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   provider VARCHAR(32) NOT NULL,
   model VARCHAR(80) NOT NULL DEFAULT '',
@@ -349,7 +349,7 @@ final class Schema {
   KEY created (created_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_response_cache" ] = "CREATE TABLE {$p}agy_response_cache (
+		$tables[ "{$p}agyl_response_cache" ] = "CREATE TABLE {$p}agyl_response_cache (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   cache_key CHAR(40) NOT NULL,
   provider VARCHAR(32) NOT NULL DEFAULT '',
@@ -365,7 +365,7 @@ final class Schema {
   KEY expires (expires_at)
 ) {$charset};";
 
-		$tables[ "{$p}agy_chat_events" ] = "CREATE TABLE {$p}agy_chat_events (
+		$tables[ "{$p}agyl_chat_events" ] = "CREATE TABLE {$p}agyl_chat_events (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   conversation_id BIGINT UNSIGNED NOT NULL,
   message_id BIGINT UNSIGNED NULL,
@@ -389,9 +389,9 @@ final class Schema {
 	private static function install_fulltext(): void {
 		global $wpdb;
 
-		$caps  = get_option( 'agy_kb_caps', array() );
+		$caps  = get_option( 'agyl_kb_caps', array() );
 		$caps  = is_array( $caps ) ? $caps : array();
-		$table = $wpdb->prefix . 'agy_kb_chunks';
+		$table = $wpdb->prefix . 'agyl_kb_chunks';
 
 		if ( ! isset( $caps['fulltext'] ) ) {
 			// MATCH … AGAINST is MySQL/MariaDB-only. On SQLite backends
@@ -401,7 +401,7 @@ final class Schema {
 			$server = strtolower( (string) $wpdb->db_server_info() );
 			if ( ( defined( 'DB_ENGINE' ) && 'mysql' !== DB_ENGINE ) || str_contains( $server, 'sqlite' ) ) {
 				$caps['fulltext'] = false;
-				update_option( 'agy_kb_caps', $caps, false );
+				update_option( 'agyl_kb_caps', $caps, false );
 
 				return;
 			}
@@ -414,7 +414,7 @@ final class Schema {
 			}
 			// phpcs:enable
 			$caps['fulltext'] = ! empty( $existing );
-			update_option( 'agy_kb_caps', $caps, false );
+			update_option( 'agyl_kb_caps', $caps, false );
 		}
 	}
 
@@ -438,15 +438,15 @@ final class Schema {
 		foreach ( array_keys( self::tables() ) as $table ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) !== $table ) {
-				update_option( 'agy_schema_error', $table, false );
+				update_option( 'agyl_schema_error', $table, false );
 				return false;
 			}
 		}
 
 		self::install_fulltext();
 
-		delete_option( 'agy_schema_error' );
-		update_option( 'agy_db_version', AGY_DB_VERSION, false );
+		delete_option( 'agyl_schema_error' );
+		update_option( 'agyl_db_version', AGYL_DB_VERSION, false );
 
 		return true;
 	}

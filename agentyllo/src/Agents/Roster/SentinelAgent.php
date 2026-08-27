@@ -116,7 +116,7 @@ final class SentinelAgent implements Agent {
 		$report = new HealthReport();
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$memory_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agy_agent_memory' ) );
+		$memory_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agyl_agent_memory' ) );
 		$report->add( 'memory_table_exists', ! empty( $memory_table ), '', true );
 
 		$report->add( 'scheduler_available', function_exists( 'as_enqueue_async_action' ), '', true );

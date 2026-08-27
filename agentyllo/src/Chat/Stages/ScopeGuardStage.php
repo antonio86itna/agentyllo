@@ -21,10 +21,10 @@ defined( 'ABSPATH' ) || exit;
  * Runs AFTER retrieve so the top fused score is available. Two layers:
  *
  * 1. Deny-list categories (phrase patterns, translatable, filterable via
- *    'agy_scope_guard_policy'). Jailbreak/adult stay active even when the
+ *    'agyl_scope_guard_policy'). Jailbreak/adult stay active even when the
  *    site owner disables the out-of-scope guard; the others are gated.
  * 2. Score threshold: when the guard is on and the top fused score falls
- *    below option 'agy_scope_threshold' for KB-answerable intents, the
+ *    below option 'agyl_scope_threshold' for KB-answerable intents, the
  *    question is judged off-topic → ROUTE_REFUSE.
  *
  * Refusals soften over two strikes: the first one is a warm redirect with
@@ -38,7 +38,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class ScopeGuardStage implements Stage {
 
-	public const THRESHOLD_OPTION  = 'agy_scope_threshold';
+	public const THRESHOLD_OPTION  = 'agyl_scope_threshold';
 	public const DEFAULT_THRESHOLD = 0.35;
 
 	/**
@@ -301,7 +301,7 @@ final class ScopeGuardStage implements Stage {
 		 *
 		 * @param array $policy category => {always: bool, patterns: string[]}.
 		 */
-		return (array) apply_filters( 'agy_scope_guard_policy', $policy );
+		return (array) apply_filters( 'agyl_scope_guard_policy', $policy );
 	}
 
 	/**
@@ -367,7 +367,7 @@ final class ScopeGuardStage implements Stage {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$titles = $wpdb->get_col(
 			$wpdb->prepare(
-				'SELECT title FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' AND source <> %s ORDER BY weight DESC, id ASC LIMIT %d",
+				'SELECT title FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE status = %s AND title <> '' AND source <> %s ORDER BY weight DESC, id ASC LIMIT %d",
 				Store::STATUS_ACTIVE,
 				'site',
 				self::EXAMPLE_COUNT
@@ -381,7 +381,7 @@ final class ScopeGuardStage implements Stage {
 	 * Calibrate the score threshold from self-retrieval: sample up to 30
 	 * active document titles, search each title, and record the top fused
 	 * score. Half of the 5th percentile becomes the new threshold (stored in
-	 * option agy_scope_threshold). Called by the KB health job.
+	 * option agyl_scope_threshold). Called by the KB health job.
 	 *
 	 * @param HybridRetriever|null $retriever Optional injected engine.
 	 * @return float The effective threshold after calibration.
@@ -394,7 +394,7 @@ final class ScopeGuardStage implements Stage {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$titles = $wpdb->get_col(
 			$wpdb->prepare(
-				'SELECT title FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' ORDER BY weight DESC, id ASC LIMIT %d",
+				'SELECT title FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE status = %s AND title <> '' ORDER BY weight DESC, id ASC LIMIT %d",
 				Store::STATUS_ACTIVE,
 				self::CALIBRATE_SAMPLE
 			)

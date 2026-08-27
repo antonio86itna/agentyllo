@@ -181,7 +181,7 @@ final class RouteStage implements Stage {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$external_id = $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT external_id FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE id = %d AND source = %s AND status = %s',
+				'SELECT external_id FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE id = %d AND source = %s AND status = %s',
 				$doc_id,
 				'product',
 				Store::STATUS_ACTIVE

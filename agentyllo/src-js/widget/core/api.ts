@@ -2,7 +2,7 @@
  * Tiny fetch wrapper for the public widget REST surface.
  *
  * Responsibilities: JSON handling, error normalization (ApiError with HTTP
- * status, WP error code and Retry-After), X-Agy-Session header injection,
+ * status, WP error code and Retry-After), X-Agyl-Session header injection,
  * lazy session creation, and the retry-once-on-401 rule. All requests are
  * sent cookieless (credentials: 'omit') — visitor auth is the HMAC session
  * token only, which keeps the endpoints cache-proof and cookie-banner
@@ -37,7 +37,7 @@ export type WidgetConfig = {
 	badge?: string;
 	/** Art. 50 footer disclosure line. */
 	footer_note?: string;
-	/** Removable server-side via the agy_powered_by filter (null = removed). */
+	/** Removable server-side via the agyl_powered_by filter (null = removed). */
 	powered_by?: { label: string; url: string } | null;
 	/** Optional suggestion chips. */
 	suggestions?: string[];
@@ -234,13 +234,13 @@ export class AgyApi {
 				credentials: 'omit',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-Agy-Session': token,
+					'X-Agyl-Session': token,
 					Accept: wantStream ? 'text/event-stream, application/json' : 'application/json',
 				},
 				body: JSON.stringify( { text } ),
 			} );
 		} catch ( e ) {
-			throw new ApiError( 0, 'agy_network', 'Network error.' );
+			throw new ApiError( 0, 'agyl_network', 'Network error.' );
 		}
 
 		const contentType = ( res.headers.get( 'Content-Type' ) || '' ).toLowerCase();
@@ -258,7 +258,7 @@ export class AgyApi {
 			throw this.httpError( res, body );
 		}
 		if ( null === body ) {
-			throw new ApiError( res.status, 'agy_bad_json', 'Malformed response.' );
+			throw new ApiError( res.status, 'agyl_bad_json', 'Malformed response.' );
 		}
 		return this.normalizeMessage( body );
 	}
@@ -346,7 +346,7 @@ export class AgyApi {
 			}
 		} catch ( e ) {
 			if ( ! message ) {
-				throw new ApiError( 0, 'agy_stream', 'Stream interrupted.' );
+				throw new ApiError( 0, 'agyl_stream', 'Stream interrupted.' );
 			}
 		}
 		if ( ! message ) {
@@ -357,7 +357,7 @@ export class AgyApi {
 			dispatch();
 		}
 		if ( ! message ) {
-			throw new ApiError( 0, 'agy_stream', 'Stream ended without a message.' );
+			throw new ApiError( 0, 'agyl_stream', 'Stream ended without a message.' );
 		}
 		return message;
 	}
@@ -422,7 +422,7 @@ export class AgyApi {
 
 		const raw = body && 'string' === typeof body.token ? body : body && body.session;
 		if ( ! raw || 'string' !== typeof raw.token ) {
-			throw new ApiError( 0, 'agy_bad_session', 'Could not create a chat session.' );
+			throw new ApiError( 0, 'agyl_bad_session', 'Could not create a chat session.' );
 		}
 
 		const session: SessionInfo = { token: raw.token, expires: Number( raw.expires ) || 0 };
@@ -437,7 +437,7 @@ export class AgyApi {
 			credentials: 'omit',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Agy-Session': token,
+				'X-Agyl-Session': token,
 			},
 			body: JSON.stringify( data ),
 		} );
@@ -448,7 +448,7 @@ export class AgyApi {
 		try {
 			res = await fetch( this.base + path, init );
 		} catch ( e ) {
-			throw new ApiError( 0, 'agy_network', 'Network error.' );
+			throw new ApiError( 0, 'agyl_network', 'Network error.' );
 		}
 
 		let body: any = null;
@@ -463,7 +463,7 @@ export class AgyApi {
 		}
 
 		if ( null === body ) {
-			throw new ApiError( res.status, 'agy_bad_json', 'Malformed response.' );
+			throw new ApiError( res.status, 'agyl_bad_json', 'Malformed response.' );
 		}
 
 		return body as T;
@@ -478,7 +478,7 @@ export class AgyApi {
 				: undefined;
 		return new ApiError(
 			res.status,
-			( body && body.code ) || 'agy_http_' + res.status,
+			( body && body.code ) || 'agyl_http_' + res.status,
 			( body && body.message ) || res.statusText || 'Request failed.',
 			retryAfter
 		);
@@ -490,7 +490,7 @@ export class AgyApi {
 	private normalizeMessage( body: any ): AssistantMessage {
 		const raw = body && Array.isArray( body.blocks ) ? body : body && body.message;
 		if ( ! raw || ! Array.isArray( raw.blocks ) ) {
-			throw new ApiError( 0, 'agy_bad_message', 'Malformed message payload.' );
+			throw new ApiError( 0, 'agyl_bad_message', 'Malformed message payload.' );
 		}
 		return {
 			id: 'string' === typeof raw.id ? raw.id : 'a' + Date.now(),

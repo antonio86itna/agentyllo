@@ -7,7 +7,7 @@
  * sealed by KeyVault and never returned in clear to the REST surface. The store sanitizes strictly against this
  * schema — unknown keys are dropped, so the REST surface can never write
  * arbitrary options. Later milestones extend tabs here; addons add tabs via
- * the `agy_settings_tabs` filter.
+ * the `agyl_settings_tabs` filter.
  *
  * @package Agentyllo
  */
@@ -87,6 +87,7 @@ final class SettingsSchema {
 				'welcome_message'     => array( 'type' => 'text', 'default' => '', 'maxlen' => 300 ),
 				'launcher_teaser'     => array( 'type' => 'string', 'default' => '', 'maxlen' => 100 ),
 				'show_thumbnails'     => array( 'type' => 'bool', 'default' => true ),
+				'show_powered_by'     => array( 'type' => 'bool', 'default' => false ),
 				'show_internal_links' => array( 'type' => 'bool', 'default' => true ),
 				'animations'          => array( 'type' => 'bool', 'default' => true ),
 				'z_index'             => array( 'type' => 'int', 'default' => 99990, 'min' => 1, 'max' => 2147483000 ),
@@ -118,7 +119,7 @@ final class SettingsSchema {
 				'monthly_cost_cap_usd'   => array( 'type' => 'float', 'default' => 20.0, 'min' => 0, 'max' => 100000 ),
 				'max_output_tokens'      => array( 'type' => 'int', 'default' => 600, 'min' => 100, 'max' => 4000 ),
 				'request_timeout_s'      => array( 'type' => 'int', 'default' => 25, 'min' => 8, 'max' => 90 ),
-				'registry_auto_sync'     => array( 'type' => 'bool', 'default' => true ),
+				'registry_auto_sync'     => array( 'type' => 'bool', 'default' => false ),
 				// Free / local tiers (M8).
 				'local_endpoint_url'     => array( 'type' => 'string', 'default' => '', 'maxlen' => 300 ),
 				'local_model'            => array( 'type' => 'string', 'default' => '', 'maxlen' => 120 ),
@@ -183,13 +184,13 @@ final class SettingsSchema {
 		 *
 		 * @param array $tabs Tab schemas keyed by tab id.
 		 */
-		return (array) apply_filters( 'agy_settings_tabs', $tabs );
+		return (array) apply_filters( 'agyl_settings_tabs', $tabs );
 	}
 
 	/**
 	 * Content Sources tab. Toggling any field off must purge its data from
 	 * the KB immediately (KB\Indexer\IndexManager listens on
-	 * agy_settings_updated). Public CPTs are enumerated dynamically so new
+	 * agyl_settings_updated). Public CPTs are enumerated dynamically so new
 	 * post types appear without a plugin update.
 	 *
 	 * @return array<string, array<string, mixed>>

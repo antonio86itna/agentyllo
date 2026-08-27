@@ -1,6 +1,6 @@
 <?php
 /**
- * Consent records (agy_consents).
+ * Consent records (agyl_consents).
  *
  * @package Agentyllo
  */
@@ -53,7 +53,7 @@ final class Consent {
 		if ( $log_consent ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$ok = $wpdb->insert(
-				$wpdb->prefix . 'agy_consents',
+				$wpdb->prefix . 'agyl_consents',
 				array(
 					'session_id'   => $session_id,
 					'email'        => '' !== $email ? substr( $email, 0, 190 ) : null,
@@ -73,7 +73,7 @@ final class Consent {
 		// Gate the session; stash identity + consent id in session meta so
 		// the conversation row inherits them on first message.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$row  = $wpdb->get_row( $wpdb->prepare( 'SELECT meta FROM ' . $wpdb->prefix . 'agy_sessions WHERE id = %d', $session_id ), ARRAY_A );
+		$row  = $wpdb->get_row( $wpdb->prepare( 'SELECT meta FROM ' . $wpdb->prefix . 'agyl_sessions WHERE id = %d', $session_id ), ARRAY_A );
 		$meta = $row && is_string( $row['meta'] ) ? json_decode( $row['meta'], true ) : array();
 		$meta = is_array( $meta ) ? $meta : array();
 
@@ -83,7 +83,7 @@ final class Consent {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->update(
-			$wpdb->prefix . 'agy_sessions',
+			$wpdb->prefix . 'agyl_sessions',
 			array(
 				'gated' => 1,
 				'meta'  => (string) wp_json_encode( $meta ),
@@ -98,7 +98,7 @@ final class Consent {
 		 * @param int      $session_id Session id.
 		 * @param string   $type       Consent type.
 		 */
-		do_action( 'agy_consent_recorded', $consent_id, $session_id, $type );
+		do_action( 'agyl_consent_recorded', $consent_id, $session_id, $type );
 
 		return $consent_id;
 	}

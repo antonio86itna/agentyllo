@@ -1,6 +1,6 @@
 <?php
 /**
- * Link graph service over agy_kb_links.
+ * Link graph service over agyl_kb_links.
  *
  * @package Agentyllo
  */
@@ -45,7 +45,7 @@ final class LinkGraph {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$links = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT id, to_url FROM {$p}agy_kb_links WHERE is_internal = 1 AND to_document_id IS NULL AND to_url <> '' ORDER BY id ASC LIMIT %d",
+				"SELECT id, to_url FROM {$p}agyl_kb_links WHERE is_internal = 1 AND to_document_id IS NULL AND to_url <> '' ORDER BY id ASC LIMIT %d",
 				max( 1, $batch )
 			),
 			ARRAY_A
@@ -64,7 +64,7 @@ final class LinkGraph {
 			$placeholders = implode( ',', array_fill( 0, count( $candidates ), '%s' ) );
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			$docs = $wpdb->get_results(
-				$wpdb->prepare( "SELECT id, permalink FROM {$p}agy_kb_documents WHERE permalink IN ({$placeholders})", ...$candidates ),
+				$wpdb->prepare( "SELECT id, permalink FROM {$p}agyl_kb_documents WHERE permalink IN ({$placeholders})", ...$candidates ),
 				ARRAY_A
 			);
 
@@ -89,19 +89,19 @@ final class LinkGraph {
 			foreach ( $assignments as $doc_id => $link_ids ) {
 				$in = implode( ',', array_map( 'absint', $link_ids ) );
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				$wpdb->query( $wpdb->prepare( "UPDATE {$p}agy_kb_links SET to_document_id = %d WHERE id IN ({$in})", $doc_id ) );
+				$wpdb->query( $wpdb->prepare( "UPDATE {$p}agyl_kb_links SET to_document_id = %d WHERE id IN ({$in})", $doc_id ) );
 			}
 
 			if ( $unmatched ) {
 				$in = implode( ',', array_map( 'absint', $unmatched ) );
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-				$wpdb->query( "UPDATE {$p}agy_kb_links SET to_document_id = 0 WHERE id IN ({$in})" );
+				$wpdb->query( "UPDATE {$p}agyl_kb_links SET to_document_id = 0 WHERE id IN ({$in})" );
 			}
 		}
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (int) $wpdb->get_var(
-			"SELECT COUNT(*) FROM {$p}agy_kb_links WHERE is_internal = 1 AND to_document_id IS NULL AND to_url <> ''"
+			"SELECT COUNT(*) FROM {$p}agyl_kb_links WHERE is_internal = 1 AND to_document_id IS NULL AND to_url <> ''"
 		);
 	}
 
@@ -129,7 +129,7 @@ final class LinkGraph {
 		$in      = implode( ',', array_map( 'absint', $doc_ids ) );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$menu_targets = $wpdb->get_col( "SELECT DISTINCT to_document_id FROM {$p}agy_kb_links WHERE rel = 'menu' AND to_document_id IN ({$in})" );
+		$menu_targets = $wpdb->get_col( "SELECT DISTINCT to_document_id FROM {$p}agyl_kb_links WHERE rel = 'menu' AND to_document_id IN ({$in})" );
 		$in_menu      = array_flip( array_map( 'intval', (array) $menu_targets ) );
 
 		$best = array();
@@ -174,8 +174,8 @@ final class LinkGraph {
 		$cocited = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT l2.to_document_id AS related_id, COUNT(*) AS shared
-				 FROM {$p}agy_kb_links l1
-				 INNER JOIN {$p}agy_kb_links l2 ON l2.from_document_id = l1.from_document_id
+				 FROM {$p}agyl_kb_links l1
+				 INNER JOIN {$p}agyl_kb_links l2 ON l2.from_document_id = l1.from_document_id
 				 WHERE l1.to_document_id = %d AND l2.to_document_id > 0 AND l2.to_document_id <> %d
 				 GROUP BY l2.to_document_id
 				 ORDER BY shared DESC
@@ -203,7 +203,7 @@ final class LinkGraph {
 		if ( count( $out ) < $limit ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$self = $wpdb->get_row(
-				$wpdb->prepare( "SELECT source, subtype FROM {$p}agy_kb_documents WHERE id = %d", $doc_id ),
+				$wpdb->prepare( "SELECT source, subtype FROM {$p}agyl_kb_documents WHERE id = %d", $doc_id ),
 				ARRAY_A
 			);
 
@@ -211,7 +211,7 @@ final class LinkGraph {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$siblings = $wpdb->get_results(
 					$wpdb->prepare(
-						"SELECT id AS document_id, title, permalink FROM {$p}agy_kb_documents
+						"SELECT id AS document_id, title, permalink FROM {$p}agyl_kb_documents
 						 WHERE source = %s AND subtype = %s AND status = %s AND id <> %d
 						 ORDER BY indexed_at DESC LIMIT %d",
 						(string) $self['source'],
@@ -258,8 +258,8 @@ final class LinkGraph {
 		$broken = $wpdb->get_results(
 			"SELECT l.id AS link_id, l.to_url, l.anchor, l.http_status, l.checked_at,
 				l.from_document_id, COALESCE(d.title, '') AS from_title
-			 FROM {$p}agy_kb_links l
-			 LEFT JOIN {$p}agy_kb_documents d ON d.id = l.from_document_id
+			 FROM {$p}agyl_kb_links l
+			 LEFT JOIN {$p}agyl_kb_documents d ON d.id = l.from_document_id
 			 WHERE l.http_status >= 400
 			 ORDER BY l.http_status DESC, l.id ASC
 			 LIMIT 500",
@@ -270,10 +270,10 @@ final class LinkGraph {
 		$orphans = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT d.id AS document_id, d.source, d.subtype, d.title, d.permalink
-				 FROM {$p}agy_kb_documents d
+				 FROM {$p}agyl_kb_documents d
 				 WHERE d.status = %s AND d.permalink <> ''
 				 AND NOT EXISTS (
-					SELECT 1 FROM {$p}agy_kb_links l
+					SELECT 1 FROM {$p}agyl_kb_links l
 					WHERE l.to_document_id = d.id AND l.is_internal = 1
 				 )
 				 ORDER BY d.id ASC
@@ -326,7 +326,7 @@ final class LinkGraph {
 		$targets = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT to_url_hash, to_url
-				 FROM {$p}agy_kb_links
+				 FROM {$p}agyl_kb_links
 				 WHERE is_internal = 1 AND to_document_id > 0
 				 AND ( checked_at IS NULL OR checked_at < %s )
 				 GROUP BY to_url_hash, to_url
@@ -357,7 +357,7 @@ final class LinkGraph {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->query(
 				$wpdb->prepare(
-					"UPDATE {$p}agy_kb_links SET http_status = %d, checked_at = %s WHERE to_url_hash = %s AND is_internal = 1",
+					"UPDATE {$p}agyl_kb_links SET http_status = %d, checked_at = %s WHERE to_url_hash = %s AND is_internal = 1",
 					$status,
 					$now,
 					(string) $target['to_url_hash']
@@ -368,7 +368,7 @@ final class LinkGraph {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(DISTINCT to_url_hash) FROM {$p}agy_kb_links
+				"SELECT COUNT(DISTINCT to_url_hash) FROM {$p}agyl_kb_links
 				 WHERE is_internal = 1 AND to_document_id > 0
 				 AND ( checked_at IS NULL OR checked_at < %s )",
 				$cutoff
@@ -393,7 +393,7 @@ final class LinkGraph {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$rows = $wpdb->get_results(
-			$wpdb->prepare( "SELECT id, title, permalink FROM {$p}agy_kb_documents WHERE id IN ({$in}) AND status = %s", Store::STATUS_ACTIVE ),
+			$wpdb->prepare( "SELECT id, title, permalink FROM {$p}agyl_kb_documents WHERE id IN ({$in}) AND status = %s", Store::STATUS_ACTIVE ),
 			ARRAY_A
 		);
 

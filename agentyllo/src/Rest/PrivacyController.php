@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * POST /consent (visitor, session-validated) — records the pre-chat gate.
- * Admin (agy_manage): GET /privacy/search, POST /privacy/export,
+ * Admin (agyl_manage): GET /privacy/search, POST /privacy/export,
  * POST /privacy/erase, POST /privacy/transparency-page.
  */
 final class PrivacyController extends Controller {
@@ -71,7 +71,7 @@ final class PrivacyController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'search' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array( 'email' => array( 'type' => 'string', 'required' => true ) ),
 			)
 		);
@@ -82,7 +82,7 @@ final class PrivacyController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'export' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array( 'email' => array( 'type' => 'string', 'required' => true ) ),
 			)
 		);
@@ -93,7 +93,7 @@ final class PrivacyController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'erase' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array(
 					'email'   => array( 'type' => 'string', 'required' => true ),
 					'confirm' => array( 'type' => 'boolean', 'required' => true ),
@@ -107,7 +107,7 @@ final class PrivacyController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'transparency_page' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 			)
 		);
 	}
@@ -119,9 +119,9 @@ final class PrivacyController extends Controller {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function consent( WP_REST_Request $request ): WP_REST_Response|WP_Error {
-		$session = $this->sessions->validate( (string) $request->get_header( 'X-Agy-Session' ) );
+		$session = $this->sessions->validate( (string) $request->get_header( 'X-Agyl-Session' ) );
 		if ( ! $session ) {
-			return new WP_Error( 'agy_invalid_session', __( 'Invalid or expired chat session.', 'agentyllo' ), array( 'status' => 401 ) );
+			return new WP_Error( 'agyl_invalid_session', __( 'Invalid or expired chat session.', 'agentyllo' ), array( 'status' => 401 ) );
 		}
 
 		$privacy = $this->settings->get( 'privacy' );
@@ -132,12 +132,12 @@ final class PrivacyController extends Controller {
 
 		if ( 'name_email' === $gate ) {
 			if ( '' === $name || '' === $email || ! is_email( $email ) ) {
-				return new WP_Error( 'agy_gate_fields', __( 'Please enter your name and a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
+				return new WP_Error( 'agyl_gate_fields', __( 'Please enter your name and a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
 			}
 		}
 
 		if ( ! empty( $privacy['privacy_checkbox_required'] ) && ! rest_sanitize_boolean( $request->get_param( 'accepted' ) ) ) {
-			return new WP_Error( 'agy_gate_consent', __( 'Please accept the privacy policy to continue.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_gate_consent', __( 'Please accept the privacy policy to continue.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		$label = trim( (string) $privacy['privacy_checkbox_label'] );
@@ -179,7 +179,7 @@ final class PrivacyController extends Controller {
 	public function search( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$email = sanitize_email( (string) $request->get_param( 'email' ) );
 		if ( ! is_email( $email ) ) {
-			return new WP_Error( 'agy_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		return $this->respond( array( 'email' => $email ) + $this->dsar->summary( $email ) );
@@ -195,7 +195,7 @@ final class PrivacyController extends Controller {
 	public function export( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$email = sanitize_email( (string) $request->get_param( 'email' ) );
 		if ( ! is_email( $email ) ) {
-			return new WP_Error( 'agy_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		$this->dsar->export_to_file( $email );
@@ -212,10 +212,10 @@ final class PrivacyController extends Controller {
 	public function erase( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$email = sanitize_email( (string) $request->get_param( 'email' ) );
 		if ( ! is_email( $email ) ) {
-			return new WP_Error( 'agy_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 		if ( ! rest_sanitize_boolean( $request->get_param( 'confirm' ) ) ) {
-			return new WP_Error( 'agy_confirm_required', __( 'Erasure must be explicitly confirmed.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_confirm_required', __( 'Erasure must be explicitly confirmed.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		return $this->respond( array( 'ok' => true ) + $this->dsar->erase( $email ) );
@@ -227,7 +227,7 @@ final class PrivacyController extends Controller {
 	public function transparency_page(): WP_REST_Response|WP_Error {
 		$id = $this->ai_act->ensure_page();
 		if ( ! $id ) {
-			return new WP_Error( 'agy_page_failed', __( 'Could not create the transparency page.', 'agentyllo' ), array( 'status' => 500 ) );
+			return new WP_Error( 'agyl_page_failed', __( 'Could not create the transparency page.', 'agentyllo' ), array( 'status' => 500 ) );
 		}
 
 		return $this->respond(

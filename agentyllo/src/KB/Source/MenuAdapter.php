@@ -165,7 +165,7 @@ final class MenuAdapter implements SourceAdapter {
 		}
 
 		/** This filter is documented in src/KB/Source/PostTypeAdapter.php */
-		$lang = (string) apply_filters( 'agy_kb_document_lang', determine_locale(), $menu );
+		$lang = (string) apply_filters( 'agyl_kb_document_lang', determine_locale(), $menu );
 
 		return new DocumentDraft(
 			$this->id(),

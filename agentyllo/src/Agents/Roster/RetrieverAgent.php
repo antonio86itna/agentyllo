@@ -120,7 +120,7 @@ final class RetrieverAgent implements Agent {
 		$report = new HealthReport();
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$terms_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agy_kb_terms' ) );
+		$terms_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agyl_kb_terms' ) );
 		$report->add( 'terms_table_exists', ! empty( $terms_table ), '', true );
 
 		return $report;

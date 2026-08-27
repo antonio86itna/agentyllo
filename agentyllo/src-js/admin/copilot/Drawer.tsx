@@ -14,7 +14,7 @@ type Block = Record< string, any > & { type: string };
 type Turn = { role: 'user' | 'assistant'; blocks: Block[]; id: string };
 type PreviewRow = { title: string; content: string; type: string; include: boolean };
 
-const STORAGE_KEY = 'agy_copilot_open';
+const STORAGE_KEY = 'agyl_copilot_open';
 
 function inlineMd( text: string ): ( string | JSX.Element )[] {
 	// Minimal: `code` and **bold**; everything else literal.
@@ -72,8 +72,8 @@ export default function Drawer() {
 				window.setTimeout( () => document.querySelector< HTMLTextAreaElement >( '#agy-copilot textarea' )?.focus(), 50 );
 			}
 		};
-		document.addEventListener( 'agy:copilot-prefill', onPrefill );
-		return () => document.removeEventListener( 'agy:copilot-prefill', onPrefill );
+		document.addEventListener( 'agyl:copilot-prefill', onPrefill );
+		return () => document.removeEventListener( 'agyl:copilot-prefill', onPrefill );
 	}, [] );
 
 	useEffect( () => {

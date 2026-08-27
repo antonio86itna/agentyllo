@@ -95,7 +95,7 @@ final class ManualEntries {
 		}
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$ok = $wpdb->update(
-			$wpdb->prefix . 'agy_kb_documents',
+			$wpdb->prefix . 'agyl_kb_documents',
 			array(
 				'status'     => 'trashed',
 				'indexed_at' => gmdate( 'Y-m-d H:i:s' ),
@@ -117,7 +117,7 @@ final class ManualEntries {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$ok = $wpdb->update(
-			$wpdb->prefix . 'agy_kb_documents',
+			$wpdb->prefix . 'agyl_kb_documents',
 			array(
 				'status'     => 'active',
 				'indexed_at' => gmdate( 'Y-m-d H:i:s' ),
@@ -144,7 +144,7 @@ final class ManualEntries {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT external_id FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND status = %s AND indexed_at < %s LIMIT 200',
+				'SELECT external_id FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND status = %s AND indexed_at < %s LIMIT 200',
 				self::SOURCE,
 				'trashed',
 				gmdate( 'Y-m-d H:i:s', time() - max( 1, $days ) * DAY_IN_SECONDS )
@@ -171,7 +171,7 @@ final class ManualEntries {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
-			$wpdb->prepare( 'SELECT id, external_id, subtype, title, permalink, lang, status FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE id = %d AND source = %s', $document_id, self::SOURCE ),
+			$wpdb->prepare( 'SELECT id, external_id, subtype, title, permalink, lang, status FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE id = %d AND source = %s', $document_id, self::SOURCE ),
 			ARRAY_A
 		);
 
@@ -189,7 +189,7 @@ final class ManualEntries {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
-			$wpdb->prepare( 'SELECT id, subtype, title, status, indexed_at AS updated_at FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s ORDER BY indexed_at DESC LIMIT %d', self::SOURCE, max( 1, min( 100, $limit ) ) ),
+			$wpdb->prepare( 'SELECT id, subtype, title, status, indexed_at AS updated_at FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s ORDER BY indexed_at DESC LIMIT %d', self::SOURCE, max( 1, min( 100, $limit ) ) ),
 			ARRAY_A
 		);
 
@@ -205,7 +205,7 @@ final class ManualEntries {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$parts = $wpdb->get_col( $wpdb->prepare( 'SELECT content FROM ' . $wpdb->prefix . 'agy_kb_chunks WHERE document_id = %d ORDER BY seq ASC', $document_id ) );
+		$parts = $wpdb->get_col( $wpdb->prepare( 'SELECT content FROM ' . $wpdb->prefix . 'agyl_kb_chunks WHERE document_id = %d ORDER BY seq ASC', $document_id ) );
 
 		return implode( "\n\n", array_map( 'strval', (array) $parts ) );
 	}
@@ -268,7 +268,7 @@ final class ManualEntries {
 		// A trashed row with the same external id must come back to life.
 		global $wpdb;
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->update( $wpdb->prefix . 'agy_kb_documents', array( 'status' => 'active' ), array( 'source' => self::SOURCE, 'external_id' => $external_id, 'status' => 'trashed' ) );
+		$wpdb->update( $wpdb->prefix . 'agyl_kb_documents', array( 'status' => 'active' ), array( 'source' => self::SOURCE, 'external_id' => $external_id, 'status' => 'trashed' ) );
 
 		$chunks = $this->chunker->chunk( $draft );
 

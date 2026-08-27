@@ -39,6 +39,7 @@ const FIELD_LABELS: Record< string, string > = {
 	launcher_teaser: __( 'Launcher teaser', 'agentyllo' ),
 	show_thumbnails: __( 'Show thumbnails in answers', 'agentyllo' ),
 	show_internal_links: __( 'Show related links', 'agentyllo' ),
+	show_powered_by: __( 'Show "Powered by Agentyllo" link', 'agentyllo' ),
 	animations: __( 'Animations', 'agentyllo' ),
 	z_index: __( 'Z-index', 'agentyllo' ),
 	// Language

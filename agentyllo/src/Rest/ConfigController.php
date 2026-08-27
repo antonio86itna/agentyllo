@@ -61,7 +61,7 @@ final class ConfigController extends Controller {
 
 		$enabled = (bool) $widget['widget_enabled']
 			&& in_array( (string) $general['operating_mode'], SettingsSchema::OPERATING_MODES, true )
-			&& false === get_option( 'agy_schema_error', false );
+			&& false === get_option( 'agyl_schema_error', false );
 
 		$assistant_name = trim( (string) $general['assistant_name'] );
 		if ( '' === $assistant_name ) {
@@ -107,7 +107,7 @@ final class ConfigController extends Controller {
 
 	/**
 	 * Art. 50 transparency surfaces. The powered-by entry is removable via
-	 * the agy_powered_by filter (return null/empty to drop it) — the premium
+	 * the agyl_powered_by filter (return null/empty to drop it) — the
 	 * `remove_branding` flag hooks that filter, keeping the decision
 	 * server-side so the widget cannot be trivially de-branded client-side.
 	 *
@@ -185,19 +185,27 @@ final class ConfigController extends Controller {
 	}
 
 	private function disclosure(): array {
-		/**
-		 * Filter the powered-by attribution. Return null or an empty value to
-		 * remove it (premium `remove_branding`).
-		 *
-		 * @param array{label: string, url: string}|null $powered_by Attribution link.
+		/*
+		 * Attribution is strictly OPT-IN (WordPress.org guideline 10): nothing
+		 * is shown unless the site owner enables the Widget setting. The
+		 * filter lets addons replace or veto the link once it is enabled.
 		 */
-		$powered = apply_filters(
-			'agy_powered_by',
-			array(
-				'label' => __( 'Powered by Agentyllo', 'agentyllo' ),
-				'url'   => 'https://www.agentyllo.com',
-			)
-		);
+		$powered = null;
+		if ( ! empty( $this->settings->get( 'widget' )['show_powered_by'] ) ) {
+			/**
+			 * Filter the opt-in powered-by attribution. Return null or an
+			 * empty value to remove it.
+			 *
+			 * @param array{label: string, url: string}|null $powered_by Attribution link.
+			 */
+			$powered = apply_filters(
+				'agyl_powered_by',
+				array(
+					'label' => __( 'Powered by Agentyllo', 'agentyllo' ),
+					'url'   => 'https://www.agentyllo.com',
+				)
+			);
+		}
 
 		$valid = is_array( $powered ) && ! empty( $powered['label'] ) && ! empty( $powered['url'] );
 
@@ -215,7 +223,7 @@ final class ConfigController extends Controller {
 			$footer_note = __( 'AI responses may contain mistakes — verify important information.', 'agentyllo' );
 		}
 
-		$transparency_id  = (int) get_option( 'agy_transparency_page_id', 0 );
+		$transparency_id  = (int) get_option( 'agyl_transparency_page_id', 0 );
 		$transparency_url = $transparency_id > 0 && 'publish' === get_post_status( $transparency_id ) ? (string) get_permalink( $transparency_id ) : '';
 
 		return array(
@@ -245,7 +253,7 @@ final class ConfigController extends Controller {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$titles = $wpdb->get_col(
 			$wpdb->prepare(
-				'SELECT title FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' AND source NOT IN ('menu', 'site') ORDER BY weight DESC, id ASC LIMIT %d",
+				'SELECT title FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE status = %s AND title <> '' AND source NOT IN ('menu', 'site') ORDER BY weight DESC, id ASC LIMIT %d",
 				'active',
 				self::STARTERS_MAX
 			)

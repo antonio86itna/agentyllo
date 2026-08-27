@@ -183,6 +183,6 @@ final class Templates {
 		 *
 		 * @param array $packs intent => tone => sprintf variants (%1$s = site name).
 		 */
-		return (array) apply_filters( 'agy_chat_templates', $packs );
+		return (array) apply_filters( 'agyl_chat_templates', $packs );
 	}
 }

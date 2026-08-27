@@ -18,9 +18,9 @@ define( 'HOUR_IN_SECONDS', 3600 );
 define( 'DAY_IN_SECONDS', 86400 );
 define( 'WEEK_IN_SECONDS', 604800 );
 
-define( 'AGY_VERSION', '0.0.0-test' );
-define( 'AGY_DB_VERSION', 1 );
-define( 'AGY_API_VERSION', 1 );
-define( 'AGY_DIR', dirname( __DIR__ ) . '/' );
+define( 'AGYL_VERSION', '0.0.0-test' );
+define( 'AGYL_DB_VERSION', 1 );
+define( 'AGYL_API_VERSION', 1 );
+define( 'AGYL_DIR', dirname( __DIR__ ) . '/' );
 
 require_once __DIR__ . '/../vendor/autoload.php';

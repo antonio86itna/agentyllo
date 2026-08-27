@@ -113,7 +113,7 @@ final class LinkGrapherAgent implements Agent {
 		$report = new HealthReport();
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$links_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agy_kb_links' ) );
+		$links_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agyl_kb_links' ) );
 		$report->add( 'links_table_exists', ! empty( $links_table ), '', true );
 
 		return $report;

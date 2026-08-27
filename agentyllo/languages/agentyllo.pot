@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Agentyllo 0.1.3\n"
+"Project-Id-Version: Agentyllo 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/agentyllo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-22T22:04:57+00:00\n"
+"POT-Creation-Date: 2026-08-27T13:48:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: agentyllo\n"
@@ -17,14 +17,13 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: agentyllo.php
-#: src/Admin/Menu.php:66
 #: src/Admin/Menu.php:67
+#: src/Admin/Menu.php:68
 #: assets/build/admin.js:25
 msgid "Agentyllo"
 msgstr ""
 
 #. Plugin URI of the plugin
-#. Author URI of the plugin
 #: agentyllo.php
 msgid "https://www.agentyllo.com"
 msgstr ""
@@ -32,6 +31,11 @@ msgstr ""
 #. Description of the plugin
 #: agentyllo.php
 msgid "Intelligent AI assistant for your site: classic agents, an automatic knowledge base, free local AI, and optional OpenAI/Anthropic models."
+msgstr ""
+
+#. Author URI of the plugin
+#: agentyllo.php
+msgid "https://github.com/antonio86itna"
 msgstr ""
 
 #. translators: %s: current PHP version.
@@ -44,6 +48,206 @@ msgstr ""
 #: agentyllo.php:61
 #, php-format
 msgid "Agentyllo requires WordPress 6.8 or newer. This site runs WordPress %s, so the plugin stays inactive."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:36
+msgid "Agentyllo Local AI"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:37
+msgid "One-click free AI on your own server."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:39
+msgid "Installs verified llama.cpp engines and open-license models"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:40
+msgid "Supervised local daemon with idle shutdown"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:41
+msgid "Checksum-verified downloads with explicit consent"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:48
+msgid "Agentyllo Document Import"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:49
+msgid "Feed the knowledge base with PDFs and spreadsheets."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:51
+msgid "PDF ingestion with a reviewable preview"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:52
+msgid "XLSX, ODS and large CSV imports"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:53
+msgid "Scheduled re-imports from a folder"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:60
+msgid "Agentyllo Advanced Analytics"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:61
+msgid "Deep insight into what visitors ask."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:63
+msgid "Unlimited history and custom date ranges"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:64
+msgid "CSV export and scheduled email reports"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:65
+msgid "Topic clustering of unanswered questions"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:72
+msgid "Agentyllo White Label"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:73
+msgid "Make the assistant fully yours."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:75
+msgid "Custom launcher, fonts and full theme control"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:76
+msgid "Your brand everywhere — no Agentyllo mentions"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:77
+msgid "Per-page widget appearance rules"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:84
+msgid "Agentyllo Leads & CRM"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:85
+msgid "Turn conversations into contacts."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:87
+msgid "Smart lead capture inside the conversation"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:88
+msgid "CSV and webhook export, CRM integrations"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:89
+msgid "Consent-aware, GDPR-friendly by design"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:96
+msgid "Agentyllo Forms in Chat"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:97
+msgid "Bookings and requests without leaving the chat."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:99
+msgid "Conversational forms with validation"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:100
+msgid "Appointment and callback requests"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:101
+msgid "Email notifications and export"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:108
+msgid "Agentyllo Product Advisor"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:109
+msgid "Guided selling for WooCommerce."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:111
+msgid "Personalized product recommendations"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:112
+msgid "Side-by-side comparisons in chat"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:113
+msgid "Cross-sell prompts backed by live stock"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:120
+msgid "Agentyllo Handoff Live"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:121
+msgid "A human takes over in one click."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:123
+msgid "Live agent inbox inside wp-admin"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:124
+msgid "Seamless takeover with full transcript"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:125
+msgid "Office-hours routing and email fallback"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:132
+msgid "Agentyllo Omnichannel"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:133
+msgid "The same assistant on every channel."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:135
+msgid "WhatsApp, Messenger and Telegram"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:136
+msgid "One knowledge base, one inbox"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:137
+msgid "Channel-aware formatting"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:144
+msgid "Agentyllo Voice"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:145
+msgid "Talk to your site."
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:147
+msgid "Voice input in the widget"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:148
+msgid "Natural speech replies"
+msgstr ""
+
+#: src/Admin/AddonCatalog.php:149
+msgid "Accessibility-first design"
 msgstr ""
 
 #: src/Admin/Assets.php:37
@@ -87,11 +291,15 @@ msgid "Privacy & Legal"
 msgstr ""
 
 #: src/Admin/Menu.php:44
+msgid "Addons"
+msgstr ""
+
+#: src/Admin/Menu.php:45
 #: assets/build/admin.js:10
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/Menu.php:45
+#: src/Admin/Menu.php:46
 #: assets/build/admin.js:25
 msgid "Help"
 msgstr ""
@@ -509,7 +717,7 @@ msgstr ""
 #. translators: %s: page or article title.
 #. translators: %s: title of a page/product from the knowledge base.
 #: src/Chat/StarterSuggestions.php:151
-#: src/Rest/ConfigController.php:266
+#: src/Rest/ConfigController.php:274
 #, php-format
 msgid "Tell me about %s"
 msgstr ""
@@ -1124,7 +1332,7 @@ msgstr ""
 #. translators: %s: comma-separated extensions.
 #: src/Copilot/FileIngest.php:74
 #, php-format
-msgid "Unsupported file type. Supported: %s. PDF and spreadsheets are supported by the extended build; you can also paste text directly."
+msgid "Unsupported file type. Supported: %s. PDF and spreadsheet imports are added by the Document Import addon; you can also paste text directly."
 msgstr ""
 
 #: src/Copilot/FileIngest.php:87
@@ -1344,19 +1552,19 @@ msgstr ""
 msgid "Before we start, please tell us who you are."
 msgstr ""
 
-#: src/Rest/ConfigController.php:197
+#: src/Rest/ConfigController.php:204
 msgid "Powered by Agentyllo"
 msgstr ""
 
-#: src/Rest/ConfigController.php:215
+#: src/Rest/ConfigController.php:223
 msgid "AI responses may contain mistakes — verify important information."
 msgstr ""
 
-#: src/Rest/ConfigController.php:222
+#: src/Rest/ConfigController.php:230
 msgid "AI Assistant"
 msgstr ""
 
-#: src/Rest/ConfigController.php:222
+#: src/Rest/ConfigController.php:230
 msgid "Automated assistant"
 msgstr ""
 
@@ -1435,13 +1643,13 @@ msgstr ""
 msgid "Settings payload must be an object."
 msgstr ""
 
-#: src/Rest/StatsController.php:135
+#: src/Rest/StatsController.php:130
 #: assets/build/admin.js:11
 #: assets/build/admin.js:25
 msgid "Could not update the item."
 msgstr ""
 
-#: src/Rest/StatsController.php:168
+#: src/Rest/StatsController.php:163
 msgid "Conversation not found."
 msgstr ""
 
@@ -1536,6 +1744,24 @@ msgstr ""
 
 #: assets/build/admin.js:1
 msgid "Loading…"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Coming soon"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Available"
+msgstr ""
+
+#: assets/build/admin.js:1
+msgid "Installed"
+msgstr ""
+
+#: assets/build/admin.js:1
+#: assets/build/admin.js:12
+#: assets/build/admin.js:19
+msgid "Active"
 msgstr ""
 
 #: assets/build/admin.js:1
@@ -2112,6 +2338,10 @@ msgid "Show related links"
 msgstr ""
 
 #: assets/build/admin.js:10
+msgid "Show \"Powered by Agentyllo\" link"
+msgstr ""
+
+#: assets/build/admin.js:10
 msgid "Animations"
 msgstr ""
 
@@ -2380,11 +2610,6 @@ msgstr ""
 
 #: assets/build/admin.js:12
 msgid "All statuses"
-msgstr ""
-
-#: assets/build/admin.js:12
-#: assets/build/admin.js:19
-msgid "Active"
 msgstr ""
 
 #: assets/build/admin.js:12
@@ -2783,6 +3008,22 @@ msgid "No journal entries yet."
 msgstr ""
 
 #: assets/build/admin.js:20
+msgid "Failed to load the addon catalog."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Agentyllo is complete as it is — nothing on this site is locked. Addons are separate, optional plugins that add extra capabilities on top; each one requires Agentyllo to be installed and active."
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "Get this addon"
+msgstr ""
+
+#: assets/build/admin.js:20
+msgid "In development — it will appear here when ready."
+msgstr ""
+
+#: assets/build/admin.js:20
 msgid "Could not load AI models."
 msgstr ""
 
@@ -3119,7 +3360,7 @@ msgid "Last 30 days"
 msgstr ""
 
 #: assets/build/admin.js:25
-msgid "Last 90 days (Pro)"
+msgid "Last 90 days"
 msgstr ""
 
 #: assets/build/admin.js:25

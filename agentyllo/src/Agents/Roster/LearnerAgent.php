@@ -122,7 +122,7 @@ final class LearnerAgent implements Agent {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$journal_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agy_agent_journal' ) );
+		$journal_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'agyl_agent_journal' ) );
 
 		return ( new HealthReport() )
 			->add( 'journal_table_exists', ! empty( $journal_table ), '', true );

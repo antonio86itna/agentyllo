@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class DashboardController extends Controller {
 
-	private const CACHE_KEY = 'agy_dashboard_payload';
+	private const CACHE_KEY = 'agyl_dashboard_payload';
 	private const CACHE_TTL = 60;
 
 	/**
@@ -58,7 +58,7 @@ final class DashboardController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_dashboard' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 			)
 		);
 	}
@@ -82,13 +82,13 @@ final class DashboardController extends Controller {
 		// KB freshness.
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$kb = array(
-			'documents'   => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_documents WHERE status = 'active'" ),
-			'chunks'      => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_chunks" ),
-			'purging'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_documents WHERE status = 'purging'" ),
-			'errors'      => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_documents WHERE status = 'error'" ),
-			'last_indexed' => $wpdb->get_var( "SELECT MAX(indexed_at) FROM {$p}agy_kb_documents" ),
-			'last_crawl'  => (int) get_option( 'agy_kb_last_crawl', 0 ),
-			'health'      => get_option( 'agy_kb_health', null ),
+			'documents'   => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_documents WHERE status = 'active'" ),
+			'chunks'      => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_chunks" ),
+			'purging'     => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_documents WHERE status = 'purging'" ),
+			'errors'      => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_documents WHERE status = 'error'" ),
+			'last_indexed' => $wpdb->get_var( "SELECT MAX(indexed_at) FROM {$p}agyl_kb_documents" ),
+			'last_crawl'  => (int) get_option( 'agyl_kb_last_crawl', 0 ),
+			'health'      => get_option( 'agyl_kb_health', null ),
 		);
 		// phpcs:enable
 
@@ -111,12 +111,12 @@ final class DashboardController extends Controller {
 			}
 		}
 
-		$transparency_id = (int) get_option( 'agy_transparency_page_id', 0 );
+		$transparency_id = (int) get_option( 'agyl_transparency_page_id', 0 );
 
 		$payload = array(
 			'plugin'       => array(
-				'version'    => AGY_VERSION,
-				'db_version' => (int) get_option( 'agy_db_version', 0 ),
+				'version'    => AGYL_VERSION,
+				'db_version' => (int) get_option( 'agyl_db_version', 0 ),
 			),
 			'settings'     => array(
 				'operating_mode' => (string) $general['operating_mode'],

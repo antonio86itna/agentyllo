@@ -127,7 +127,7 @@ final class SiteIdentityAdapter implements SourceAdapter {
 		$logo_id = (int) get_theme_mod( 'custom_logo' );
 
 		/** This filter is documented in src/KB/Source/PostTypeAdapter.php */
-		$lang = (string) apply_filters( 'agy_kb_document_lang', determine_locale(), null );
+		$lang = (string) apply_filters( 'agyl_kb_document_lang', determine_locale(), null );
 
 		return new DocumentDraft(
 			$this->id(),

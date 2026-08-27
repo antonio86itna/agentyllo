@@ -102,7 +102,7 @@ export default function Statistics() {
 					options={ [
 						{ value: '7', label: __( 'Last 7 days', 'agentyllo' ) },
 						{ value: '30', label: __( 'Last 30 days', 'agentyllo' ) },
-						{ value: '90', label: __( 'Last 90 days (Pro)', 'agentyllo' ) },
+						{ value: '90', label: __( 'Last 90 days', 'agentyllo' ) },
 					] }
 					onChange={ ( v: string ) => setDays( parseInt( v, 10 ) ) }
 				/>
@@ -179,7 +179,7 @@ export default function Statistics() {
 												variant="link"
 												onClick={ () =>
 													document.dispatchEvent(
-														new CustomEvent( 'agy:copilot-prefill', {
+														new CustomEvent( 'agyl:copilot-prefill', {
 															detail: { text: `/kb add title:"${ String( row.question_sample ).replace( /"/g, "'" ).slice( 0, 120 ) }" type:faq content:"Q: ${ String( row.question_sample ).replace( /"/g, "'" ) }
 A: "` },
 														} )

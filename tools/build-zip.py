@@ -34,7 +34,7 @@ def pack(folder, out):
                 continue
             dirnames[:] = [d for d in dirnames if not (rel == '.' and d in EXCLUDE_DIRS)]
             for name in filenames:
-                if name in EXCLUDE_FILES or name.endswith('.map'):
+                if name in EXCLUDE_FILES or name.endswith(('.map', '.po', '.mo')) or ('-it_IT-' in name and name.endswith('.json')):
                     continue
                 full = os.path.join(dirpath, name)
                 arc = os.path.join(folder, os.path.relpath(full, base)).replace(os.sep, '/')

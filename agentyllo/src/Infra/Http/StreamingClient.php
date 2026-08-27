@@ -95,7 +95,7 @@ final class StreamingClient {
 				'redirection' => 0,
 				'headers'     => $assoc,
 				'body'        => $json,
-				'user-agent'  => 'Agentyllo/' . AGY_VERSION,
+				'user-agent'  => 'Agentyllo',
 			)
 		);
 
@@ -193,7 +193,7 @@ final class StreamingClient {
 			CURLOPT_TIMEOUT        => max( 5, (int) ceil( $timeout ) ),
 			CURLOPT_SSL_VERIFYPEER => true,
 			CURLOPT_SSL_VERIFYHOST => 2,
-			CURLOPT_USERAGENT      => 'Agentyllo/' . AGY_VERSION,
+			CURLOPT_USERAGENT      => 'Agentyllo',
 			CURLOPT_ENCODING       => '', // Accept any, but SSE arrives uncompressed in practice.
 		);
 

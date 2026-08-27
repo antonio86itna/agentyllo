@@ -43,7 +43,7 @@ final class SearchController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_search' ),
-				'permission_callback' => $this->require_cap( 'agy_manage' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage' ),
 				'args'                => array(
 					'q'     => array(
 						'type'              => 'string',

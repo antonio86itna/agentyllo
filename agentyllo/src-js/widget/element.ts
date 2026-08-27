@@ -229,9 +229,9 @@ export class AgentylloChat extends HTMLElement {
 			return;
 		}
 		const webgpu = 'gpu' in navigator;
-		this.setAttribute( 'data-agy-webgpu', webgpu ? '1' : '0' );
+		this.setAttribute( 'data-agyl-webgpu', webgpu ? '1' : '0' );
 		document.dispatchEvent(
-			new CustomEvent( 'agy:browser-ai', { detail: { webgpu, element: this } } )
+			new CustomEvent( 'agyl:browser-ai', { detail: { webgpu, element: this } } )
 		);
 	}
 
@@ -636,7 +636,7 @@ export class AgentylloChat extends HTMLElement {
 			footer.appendChild( a );
 		}
 
-		// Powered-by link: absent when removed server-side (agy_powered_by).
+		// Powered-by link: absent when removed server-side (agyl_powered_by).
 		const powered = this.config.powered_by;
 		if ( powered && powered.url ) {
 			const a = document.createElement( 'a' );
@@ -872,7 +872,7 @@ export class AgentylloChat extends HTMLElement {
 			}
 			if ( e instanceof ApiError && 429 === e.status ) {
 				this.startCooldown( e.retryAfter && e.retryAfter > 0 ? e.retryAfter : 30 );
-			} else if ( e instanceof ApiError && 'agy_gate_required' === e.code ) {
+			} else if ( e instanceof ApiError && 'agyl_gate_required' === e.code ) {
 				// Server insists on the gate (setting turned on mid-session):
 				// drop the local flag and show the form.
 				this.api.ungate();

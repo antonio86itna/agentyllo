@@ -34,9 +34,9 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Manager {
 
-	public const OPTION_USAGE = 'agy_ai_usage_month';
-	public const OPTION_EMA   = 'agy_ai_ema_tps';
-	private const CB_PREFIX   = 'agy_cb_';
+	public const OPTION_USAGE = 'agyl_ai_usage_month';
+	public const OPTION_EMA   = 'agyl_ai_ema_tps';
+	private const CB_PREFIX   = 'agyl_cb_';
 	private const CB_FAILS    = 3;
 	private const CB_OPEN_S   = 15 * MINUTE_IN_SECONDS;
 	private const CB_RATE_S   = MINUTE_IN_SECONDS;
@@ -223,7 +223,7 @@ final class Manager {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT provider, model, task, ok, error, tokens_in, tokens_out, cost_usd, latency_ms, tok_per_s, streamed, created_at FROM ' . $wpdb->prefix . 'agy_inference_log ORDER BY id DESC LIMIT %d',
+				'SELECT provider, model, task, ok, error, tokens_in, tokens_out, cost_usd, latency_ms, tok_per_s, streamed, created_at FROM ' . $wpdb->prefix . 'agyl_inference_log ORDER BY id DESC LIMIT %d',
 				max( 1, min( 200, $limit ) )
 			),
 			ARRAY_A
@@ -243,7 +243,7 @@ final class Manager {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT provider, COUNT(*) AS calls, SUM(ok = 0) AS errors, AVG(latency_ms) AS avg_latency_ms, AVG(NULLIF(tok_per_s, 0)) AS avg_tok_per_s, SUM(cost_usd) AS cost_usd FROM ' . $wpdb->prefix . 'agy_inference_log WHERE created_at >= %s GROUP BY provider',
+				'SELECT provider, COUNT(*) AS calls, SUM(ok = 0) AS errors, AVG(latency_ms) AS avg_latency_ms, AVG(NULLIF(tok_per_s, 0)) AS avg_tok_per_s, SUM(cost_usd) AS cost_usd FROM ' . $wpdb->prefix . 'agyl_inference_log WHERE created_at >= %s GROUP BY provider',
 				gmdate( 'Y-m-d H:i:s', time() - 7 * DAY_IN_SECONDS )
 			),
 			ARRAY_A
@@ -274,7 +274,7 @@ final class Manager {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$deleted = $wpdb->query(
 			$wpdb->prepare(
-				'DELETE FROM ' . $wpdb->prefix . 'agy_inference_log WHERE created_at < %s',
+				'DELETE FROM ' . $wpdb->prefix . 'agyl_inference_log WHERE created_at < %s',
 				gmdate( 'Y-m-d H:i:s', time() - max( 1, $days ) * DAY_IN_SECONDS )
 			)
 		);
@@ -293,7 +293,7 @@ final class Manager {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$got = $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, %d)', 'agy_infer_' . $engine, max( 0, $wait_s ) ) );
+		$got = $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, %d)', 'agyl_infer_' . $engine, max( 0, $wait_s ) ) );
 
 		return '1' === (string) $got;
 	}
@@ -307,7 +307,7 @@ final class Manager {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', 'agy_infer_' . $engine ) );
+		$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', 'agyl_infer_' . $engine ) );
 	}
 
 	/**
@@ -396,7 +396,7 @@ final class Manager {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->insert(
-			$wpdb->prefix . 'agy_inference_log',
+			$wpdb->prefix . 'agyl_inference_log',
 			array(
 				'provider'   => substr( $result->provider, 0, 32 ),
 				'model'      => substr( $result->model, 0, 80 ),
@@ -418,7 +418,7 @@ final class Manager {
 	 * Whether set_time_limit() is usable (cached probe from the Detector).
 	 */
 	private static function exec_time_extendable(): bool {
-		$report = get_option( 'agy_capabilities' );
+		$report = get_option( 'agyl_capabilities' );
 		if ( is_array( $report ) && isset( $report['probes']['exec_time_extendable'] ) ) {
 			return (bool) $report['probes']['exec_time_extendable'];
 		}

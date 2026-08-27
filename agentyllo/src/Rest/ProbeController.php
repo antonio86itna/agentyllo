@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class ProbeController extends Controller {
 
-	private const TOKEN_TRANSIENT = 'agy_probe_token';
+	private const TOKEN_TRANSIENT = 'agyl_probe_token';
 	private const TOKEN_TTL       = 120;
 
 	/**
@@ -67,7 +67,7 @@ final class ProbeController extends Controller {
 	 * @param WP_REST_Request $request Request.
 	 */
 	public function check_access( WP_REST_Request $request ): bool {
-		if ( Caps::can( 'agy_manage' ) ) {
+		if ( Caps::can( 'agyl_manage' ) ) {
 			return true;
 		}
 

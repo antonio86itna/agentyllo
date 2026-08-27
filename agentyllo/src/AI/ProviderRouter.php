@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  * Turns the operating mode + settings + live health into an ordered list of
  * usable providers. Cloud modes use the ONE provider the owner configured
  * (their key, their bill); free modes use local/browser providers (M8 and
- * the Local AI companion register them through `agy_llm_providers`). A
+ * the Local AI companion register them through `agyl_llm_providers`). A
  * provider is skipped when unavailable (no key/model), when its circuit is
  * open, or — cloud only — when the monthly cost cap is reached. An empty
  * chain means "classic composer answers", which is always allowed.
@@ -37,7 +37,7 @@ final class ProviderRouter {
 	private array $providers = array();
 
 	/**
-	 * Whether the `agy_llm_providers` filter has run.
+	 * Whether the `agyl_llm_providers` filter has run.
 	 */
 	private bool $filtered = false;
 
@@ -117,7 +117,7 @@ final class ProviderRouter {
 			 *
 			 * @param LLMProvider[] $providers Providers keyed by id.
 			 */
-			$extra = (array) apply_filters( 'agy_llm_providers', $this->providers );
+			$extra = (array) apply_filters( 'agyl_llm_providers', $this->providers );
 			foreach ( $extra as $provider ) {
 				if ( $provider instanceof LLMProvider ) {
 					$this->providers[ $provider->id() ] = $provider;
@@ -183,7 +183,7 @@ final class ProviderRouter {
 		 * @param LLMProvider[] $chain Usable providers in order.
 		 * @param string        $mode  Operating mode.
 		 */
-		return (array) apply_filters( 'agy_provider_chain', $chain, $mode );
+		return (array) apply_filters( 'agyl_provider_chain', $chain, $mode );
 	}
 
 	/**

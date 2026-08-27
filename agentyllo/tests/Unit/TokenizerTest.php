@@ -76,7 +76,7 @@ final class TokenizerTest extends TestCase {
 
 	public function test_dynamic_stopwords_are_applied(): void {
 		Functions\when( 'get_option' )->alias(
-			static fn ( string $key, mixed $default_value = false ): mixed => 'agy_kb_dynamic_stopwords' === $key ? array( 'acme' ) : $default_value
+			static fn ( string $key, mixed $default_value = false ): mixed => 'agyl_kb_dynamic_stopwords' === $key ? array( 'acme' ) : $default_value
 		);
 		$tokenizer = new Tokenizer();
 

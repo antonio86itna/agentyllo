@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  * NormalizedBlocks, harvested links, and media-library image ids.
  *
  * The default widget map is a const, overridable through the
- * `agy_kb_elementor_map` option (merged over the defaults) so the remote
+ * `agyl_kb_elementor_map` option (merged over the defaults) so the remote
  * registry can teach the extractor new widgets without a plugin release.
  *
  * Defensive everywhere: malformed data returns null, never throws.
@@ -615,7 +615,7 @@ final class ElementorAdapter {
 	}
 
 	/**
-	 * Merged widget map: `agy_kb_elementor_map` option over the defaults, so
+	 * Merged widget map: `agyl_kb_elementor_map` option over the defaults, so
 	 * the remote registry can update it without a release.
 	 *
 	 * @return array<string, string>
@@ -626,7 +626,7 @@ final class ElementorAdapter {
 		}
 
 		$map      = self::WIDGET_MAP;
-		$override = get_option( 'agy_kb_elementor_map', array() );
+		$override = get_option( 'agyl_kb_elementor_map', array() );
 
 		if ( is_array( $override ) ) {
 			foreach ( $override as $widget => $strategy ) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Agent journal backed by wp_agy_agent_journal.
+ * Agent journal backed by wp_agyl_agent_journal.
  *
  * @package Agentyllo
  */
@@ -31,7 +31,7 @@ final class Journal implements JournalInterface {
 	private function table(): string {
 		global $wpdb;
 
-		return $wpdb->prefix . 'agy_agent_journal';
+		return $wpdb->prefix . 'agyl_agent_journal';
 	}
 
 	/**
@@ -161,7 +161,7 @@ final class Journal implements JournalInterface {
 		 * @param array $retention {default: int, errors: int}.
 		 */
 		$retention = (array) apply_filters(
-			'agy_journal_retention',
+			'agyl_journal_retention',
 			array(
 				'default' => $days_default,
 				'errors'  => $days_errors,

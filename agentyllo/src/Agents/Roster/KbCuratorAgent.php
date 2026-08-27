@@ -111,7 +111,7 @@ final class KbCuratorAgent implements Agent {
 
 		$report = new HealthReport();
 
-		foreach ( array( 'agy_kb_documents', 'agy_kb_chunks', 'agy_kb_terms', 'agy_kb_links' ) as $table ) {
+		foreach ( array( 'agyl_kb_documents', 'agyl_kb_chunks', 'agyl_kb_terms', 'agyl_kb_links' ) as $table ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . $table ) );
 			$report->add( $table . '_exists', ! empty( $found ), '', true );

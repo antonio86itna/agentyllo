@@ -96,7 +96,7 @@ final class LocalEndpointProvider implements LLMProvider {
 		 *
 		 * @param string $url Base URL.
 		 */
-		$url = (string) apply_filters( 'agy_local_endpoint_url', $url );
+		$url = (string) apply_filters( 'agyl_local_endpoint_url', $url );
 
 		return rtrim( $url, '/' );
 	}

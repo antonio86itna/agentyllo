@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * One open conversation per session: a session's messages append to the same
- * agy_conversations row while it stays active (last activity within 1 hour);
+ * agyl_conversations row while it stays active (last activity within 1 hour);
  * after that, a new conversation starts. Message rows carry the block JSON
  * plus flat analytics columns (intent, confidence, tier, latency) so the M6
  * stats rollups never need to parse JSON. Feedback lives in the conversation
@@ -38,7 +38,7 @@ final class ConversationLog {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$open = $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT id FROM ' . $wpdb->prefix . 'agy_conversations WHERE session_id = %d AND last_activity_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR) ORDER BY id DESC LIMIT 1',
+				'SELECT id FROM ' . $wpdb->prefix . 'agyl_conversations WHERE session_id = %d AND last_activity_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR) ORDER BY id DESC LIMIT 1',
 				$session_id
 			)
 		);
@@ -51,7 +51,7 @@ final class ConversationLog {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$inserted = $wpdb->insert(
-			$wpdb->prefix . 'agy_conversations',
+			$wpdb->prefix . 'agyl_conversations',
 			array(
 				'uuid'             => wp_generate_uuid4(),
 				'session_id'       => $session_id,
@@ -82,7 +82,7 @@ final class ConversationLog {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$open = $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT id FROM ' . $wpdb->prefix . 'agy_conversations WHERE session_id = %d AND last_activity_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR) ORDER BY id DESC LIMIT 1',
+				'SELECT id FROM ' . $wpdb->prefix . 'agyl_conversations WHERE session_id = %d AND last_activity_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR) ORDER BY id DESC LIMIT 1',
 				$session_id
 			)
 		);
@@ -109,7 +109,7 @@ final class ConversationLog {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT role, content FROM ' . $wpdb->prefix . "agy_messages WHERE conversation_id = %d AND role IN ('user', 'assistant') ORDER BY id DESC LIMIT %d",
+				'SELECT role, content FROM ' . $wpdb->prefix . "agyl_messages WHERE conversation_id = %d AND role IN ('user', 'assistant') ORDER BY id DESC LIMIT %d",
 				$conversation_id,
 				max( 1, min( 20, $limit ) )
 			),
@@ -152,7 +152,7 @@ final class ConversationLog {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$inserted = $wpdb->insert(
-			$wpdb->prefix . 'agy_messages',
+			$wpdb->prefix . 'agyl_messages',
 			array(
 				'conversation_id'    => $conversation_id,
 				'role'               => substr( $role, 0, 12 ),
@@ -199,7 +199,7 @@ final class ConversationLog {
 		$args[] = $conversation_id;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agy_conversations SET ' . $sets . ' WHERE id = %d', ...$args ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'agyl_conversations SET ' . $sets . ' WHERE id = %d', ...$args ) );
 
 		return $message_id;
 	}
@@ -219,7 +219,7 @@ final class ConversationLog {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$raw = $wpdb->get_var(
-			$wpdb->prepare( 'SELECT meta FROM ' . $wpdb->prefix . 'agy_conversations WHERE id = %d', $conversation_id )
+			$wpdb->prepare( 'SELECT meta FROM ' . $wpdb->prefix . 'agyl_conversations WHERE id = %d', $conversation_id )
 		);
 
 		$meta             = json_decode( (string) $raw, true );
@@ -235,7 +235,7 @@ final class ConversationLog {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$updated = $wpdb->update(
-			$wpdb->prefix . 'agy_conversations',
+			$wpdb->prefix . 'agyl_conversations',
 			array( 'meta' => (string) wp_json_encode( $meta ) ),
 			array( 'id' => $conversation_id )
 		);
@@ -257,7 +257,7 @@ final class ConversationLog {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT m.conversation_id, c.session_id FROM {$p}agy_messages m INNER JOIN {$p}agy_conversations c ON c.id = m.conversation_id WHERE m.id = %d",
+				"SELECT m.conversation_id, c.session_id FROM {$p}agyl_messages m INNER JOIN {$p}agyl_conversations c ON c.id = m.conversation_id WHERE m.id = %d",
 				$message_id
 			),
 			ARRAY_A

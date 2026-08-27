@@ -15,7 +15,7 @@ use Agentyllo\Infra\Uploads;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Runs daily (Action Scheduler hook agy_retention_daily). retention_days = 0
+ * Runs daily (Action Scheduler hook agyl_retention_daily). retention_days = 0
  * keeps conversations forever (the settings UI warns about it).
  */
 final class Retention {
@@ -55,19 +55,19 @@ final class Retention {
 			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$ids = $wpdb->get_col(
 				$wpdb->prepare(
-					"SELECT id FROM {$p}agy_conversations WHERE last_activity_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY) LIMIT 2000",
+					"SELECT id FROM {$p}agyl_conversations WHERE last_activity_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY) LIMIT 2000",
 					$days
 				)
 			);
 			if ( $ids ) {
 				$in                  = implode( ',', array_map( 'absint', $ids ) );
-				$out['messages']     = (int) $wpdb->query( "DELETE FROM {$p}agy_messages WHERE conversation_id IN ({$in})" );
-				$out['conversations'] = (int) $wpdb->query( "DELETE FROM {$p}agy_conversations WHERE id IN ({$in})" );
+				$out['messages']     = (int) $wpdb->query( "DELETE FROM {$p}agyl_messages WHERE conversation_id IN ({$in})" );
+				$out['conversations'] = (int) $wpdb->query( "DELETE FROM {$p}agyl_conversations WHERE id IN ({$in})" );
 			}
 			// Consents outlive conversations by the same window (evidence), then go too.
 			$out['consents'] = (int) $wpdb->query(
 				$wpdb->prepare(
-					"DELETE FROM {$p}agy_consents WHERE created_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
+					"DELETE FROM {$p}agyl_consents WHERE created_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
 					$days * 2
 				)
 			);
@@ -82,7 +82,7 @@ final class Retention {
 		 *
 		 * @param array $out Counters.
 		 */
-		do_action( 'agy_retention_ran', $out );
+		do_action( 'agyl_retention_ran', $out );
 
 		return $out;
 	}
@@ -112,12 +112,12 @@ final class Retention {
 	 * new traffic — by design.
 	 */
 	private function maybe_rotate_ip_salt(): bool {
-		$rotated_at = (int) get_option( 'agy_ip_salt_rotated_at', 0 );
+		$rotated_at = (int) get_option( 'agyl_ip_salt_rotated_at', 0 );
 		if ( $rotated_at > 0 && ( time() - $rotated_at ) < self::SALT_ROTATE ) {
 			return false;
 		}
-		update_option( 'agy_ip_salt', wp_generate_password( 32, false, false ), false );
-		update_option( 'agy_ip_salt_rotated_at', time(), false );
+		update_option( 'agyl_ip_salt', wp_generate_password( 32, false, false ), false );
+		update_option( 'agyl_ip_salt_rotated_at', time(), false );
 
 		return true;
 	}

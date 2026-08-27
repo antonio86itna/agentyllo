@@ -1,6 +1,6 @@
 <?php
 /**
- * Sliding-window rate limiting over agy_rate_events.
+ * Sliding-window rate limiting over agyl_rate_events.
  *
  * @package Agentyllo
  */
@@ -42,7 +42,7 @@ final class RateLimiter {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->insert(
-			$wpdb->prefix . 'agy_rate_events',
+			$wpdb->prefix . 'agyl_rate_events',
 			array(
 				'bucket'     => $bucket,
 				'event_time' => gmdate( 'Y-m-d H:i:s' ),
@@ -52,7 +52,7 @@ final class RateLimiter {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$count = (int) $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agy_rate_events WHERE bucket = %s AND event_time > DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d SECOND)',
+				'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'agyl_rate_events WHERE bucket = %s AND event_time > DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d SECOND)',
 				$bucket,
 				max( 1, $window_seconds )
 			)

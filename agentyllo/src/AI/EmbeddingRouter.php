@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * The `embedding_provider` setting names the provider (openai | onnx | …);
  * core ships OpenAI, local ONNX providers register through
- * `agy_embedding_providers` (Local AI companion). Query embeddings are
+ * `agyl_embedding_providers` (Local AI companion). Query embeddings are
  * memoized per request; the query-embedding cache (transient, 1h) keeps
  * repeated visitor questions from paying twice.
  */
@@ -69,7 +69,7 @@ final class EmbeddingRouter {
 			 *
 			 * @param EmbeddingProvider[] $providers Providers keyed by id.
 			 */
-			foreach ( (array) apply_filters( 'agy_embedding_providers', $this->providers ) as $provider ) {
+			foreach ( (array) apply_filters( 'agyl_embedding_providers', $this->providers ) as $provider ) {
 				if ( $provider instanceof EmbeddingProvider ) {
 					$this->providers[ $provider->id() ] = $provider;
 				}
@@ -132,7 +132,7 @@ final class EmbeddingRouter {
 		if ( null === $provider ) {
 			return array();
 		}
-		$key    = 'agy_qv_' . md5( $this->model_key() . '|' . mb_strtolower( trim( $text ) ) );
+		$key    = 'agyl_qv_' . md5( $this->model_key() . '|' . mb_strtolower( trim( $text ) ) );
 		$cached = get_transient( $key );
 		if ( is_array( $cached ) && $cached ) {
 			return $cached;

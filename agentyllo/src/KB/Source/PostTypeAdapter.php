@@ -236,7 +236,7 @@ final class PostTypeAdapter implements SourceAdapter {
 		 * @param string  $lang Detected locale.
 		 * @param WP_Post $post The post being indexed.
 		 */
-		$lang = (string) apply_filters( 'agy_kb_document_lang', determine_locale(), $post );
+		$lang = (string) apply_filters( 'agyl_kb_document_lang', determine_locale(), $post );
 
 		return new DocumentDraft(
 			$this->id(),
@@ -456,7 +456,7 @@ final class PostTypeAdapter implements SourceAdapter {
 		 * @param string[] $keys Meta keys to index.
 		 * @param WP_Post  $post The post being indexed.
 		 */
-		$keys       = (array) apply_filters( 'agy_kb_post_meta_keys', array(), $post );
+		$keys       = (array) apply_filters( 'agyl_kb_post_meta_keys', array(), $post );
 		$structured = array();
 
 		foreach ( $keys as $key ) {

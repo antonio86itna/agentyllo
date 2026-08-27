@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * title, the longest the content — or explicit title/content/question/answer
  * columns). PDF/XLSX arrive with the scoped-vendor build (smalot/pdfparser
  * with the hardening described in the plan, OpenSpout) — this class already
- * exposes the extension point (`agy_ingest_parsers`). Limits: 3 MB, 500 rows.
+ * exposes the extension point (`agyl_ingest_parsers`). Limits: 3 MB, 500 rows.
  */
 final class FileIngest {
 
@@ -49,7 +49,7 @@ final class FileIngest {
 	 */
 	public function parse_upload( string $tmp_path, string $name, int $size ): array|WP_Error {
 		if ( $size > self::MAX_BYTES || filesize( $tmp_path ) > self::MAX_BYTES ) {
-			return new WP_Error( 'agy_file_too_large', __( 'File too large (max 3 MB).', 'agentyllo' ), array( 'status' => 413 ) );
+			return new WP_Error( 'agyl_file_too_large', __( 'File too large (max 3 MB).', 'agentyllo' ), array( 'status' => 413 ) );
 		}
 		$ext = strtolower( (string) pathinfo( $name, PATHINFO_EXTENSION ) );
 
@@ -59,7 +59,7 @@ final class FileIngest {
 		 * @param array<string, callable> $parsers Parsers.
 		 */
 		$parsers = (array) apply_filters(
-			'agy_ingest_parsers',
+			'agyl_ingest_parsers',
 			array(
 				'txt' => array( $this, 'parse_text' ),
 				'md'  => array( $this, 'parse_text' ),
@@ -68,10 +68,10 @@ final class FileIngest {
 		);
 		if ( ! isset( $parsers[ $ext ] ) || ! is_callable( $parsers[ $ext ] ) ) {
 			return new WP_Error(
-				'agy_unsupported_file',
+				'agyl_unsupported_file',
 				sprintf(
 					/* translators: %s: comma-separated extensions. */
-					__( 'Unsupported file type. Supported: %s. PDF and spreadsheets are supported by the extended build; you can also paste text directly.', 'agentyllo' ),
+					__( 'Unsupported file type. Supported: %s. PDF and spreadsheet imports are added by the Document Import addon; you can also paste text directly.', 'agentyllo' ),
 					implode( ', ', array_keys( $parsers ) )
 				),
 				array( 'status' => 415 )
@@ -84,7 +84,7 @@ final class FileIngest {
 		}
 		$rows = array_slice( array_values( array_filter( $rows, static fn ( $r ): bool => is_array( $r ) && '' !== trim( (string) ( $r['content'] ?? '' ) ) ) ), 0, self::MAX_ROWS );
 		if ( ! $rows ) {
-			return new WP_Error( 'agy_empty_file', __( 'No usable text found in the file.', 'agentyllo' ), array( 'status' => 422 ) );
+			return new WP_Error( 'agyl_empty_file', __( 'No usable text found in the file.', 'agentyllo' ), array( 'status' => 422 ) );
 		}
 
 		return array(
@@ -196,7 +196,7 @@ final class FileIngest {
 	public function parse_csv( string $path ): array|WP_Error {
 		$fh = fopen( $path, 'r' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		if ( ! $fh ) {
-			return new WP_Error( 'agy_read_failed', __( 'Could not read the file.', 'agentyllo' ), array( 'status' => 500 ) );
+			return new WP_Error( 'agyl_read_failed', __( 'Could not read the file.', 'agentyllo' ), array( 'status' => 500 ) );
 		}
 		$header = fgetcsv( $fh, 0, ',', '"', '\\' );
 		if ( ! is_array( $header ) ) {

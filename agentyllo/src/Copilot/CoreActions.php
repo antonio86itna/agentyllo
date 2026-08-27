@@ -65,7 +65,7 @@ final class CoreActions {
 				'id'          => 'kb.add_entry',
 				'group'       => 'kb',
 				'description' => __( 'Add a manual knowledge-base entry (note or FAQ) that the assistant can quote immediately.', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'args'        => array(
 					'title'   => array( 'type' => 'string', 'required' => true, 'maxlen' => 200 ),
 					'content' => array( 'type' => 'text', 'required' => true, 'maxlen' => 20000 ),
@@ -93,7 +93,7 @@ final class CoreActions {
 				'id'          => 'kb.update',
 				'group'       => 'kb',
 				'description' => __( 'Update the title or content of a manual KB entry.', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'args'        => array(
 					'id'      => array( 'type' => 'int', 'required' => true, 'min' => 1 ),
 					'title'   => array( 'type' => 'string', 'maxlen' => 200 ),
@@ -124,7 +124,7 @@ final class CoreActions {
 				'id'          => 'kb.delete',
 				'group'       => 'kb',
 				'description' => __( 'Move a manual KB entry to the trash (restorable for 30 days).', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'destructive' => true,
 				'args'        => array(
 					'id' => array( 'type' => 'int', 'required' => true, 'min' => 1 ),
@@ -154,7 +154,7 @@ final class CoreActions {
 				'id'          => 'kb.restore',
 				'group'       => 'kb',
 				'description' => __( 'Restore a trashed manual KB entry.', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'args'        => array( 'id' => array( 'type' => 'int', 'required' => true, 'min' => 1 ) ),
 				'run'         => function ( array $a ): array {
 					$ok = $this->entries->restore( (int) $a['id'] );
@@ -173,7 +173,7 @@ final class CoreActions {
 				'id'          => 'kb.list',
 				'group'       => 'kb',
 				'description' => __( 'List recent manual KB entries.', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'args'        => array( 'limit' => array( 'type' => 'int', 'default' => 10, 'min' => 1, 'max' => 50 ) ),
 				'run'         => function ( array $a ): array {
 					$rows = $this->entries->recent( (int) ( $a['limit'] ?? 10 ) );
@@ -192,7 +192,7 @@ final class CoreActions {
 				'id'          => 'kb.reindex',
 				'group'       => 'kb',
 				'description' => __( 'Start a full re-crawl of the knowledge base (background).', 'agentyllo' ),
-				'cap'         => 'agy_manage_kb',
+				'cap'         => 'agyl_manage_kb',
 				'destructive' => true,
 				'args'        => array( 'source' => array( 'type' => 'enum', 'values' => array( 'all', 'post', 'product', 'menu', 'site', 'taxonomy' ), 'default' => 'all' ) ),
 				'run'         => function ( array $a ): array {
@@ -213,7 +213,7 @@ final class CoreActions {
 				'id'          => 'settings.get',
 				'group'       => 'settings',
 				'description' => __( 'Read a non-secret setting.', 'agentyllo' ),
-				'cap'         => 'agy_manage_settings',
+				'cap'         => 'agyl_manage_settings',
 				'args'        => array(
 					'tab' => array( 'type' => 'enum', 'values' => array_keys( self::SETTINGS_WHITELIST ), 'required' => true ),
 					'key' => array( 'type' => 'string', 'required' => true, 'maxlen' => 60 ),
@@ -240,7 +240,7 @@ final class CoreActions {
 				'id'          => 'settings.set',
 				'group'       => 'settings',
 				'description' => __( 'Change a non-secret setting (schema-validated).', 'agentyllo' ),
-				'cap'         => 'agy_manage_settings',
+				'cap'         => 'agyl_manage_settings',
 				'destructive' => true,
 				'args'        => array(
 					'tab'   => array( 'type' => 'enum', 'values' => array_keys( self::SETTINGS_WHITELIST ), 'required' => true ),
@@ -283,7 +283,7 @@ final class CoreActions {
 				'id'          => 'memory.teach',
 				'group'       => 'memory',
 				'description' => __( 'Teach the assistant a fact about your business (used by the composer, e.g. "we close in August").', 'agentyllo' ),
-				'cap'         => 'agy_use_copilot',
+				'cap'         => 'agyl_use_copilot',
 				'args'        => array(
 					'fact' => array( 'type' => 'text', 'required' => true, 'maxlen' => 500 ),
 					'key'  => array( 'type' => 'string', 'maxlen' => 60 ),
@@ -304,7 +304,7 @@ final class CoreActions {
 				'id'          => 'memory.query',
 				'group'       => 'memory',
 				'description' => __( 'Show what the assistant has been taught.', 'agentyllo' ),
-				'cap'         => 'agy_use_copilot',
+				'cap'         => 'agyl_use_copilot',
 				'args'        => array( 'limit' => array( 'type' => 'int', 'default' => 20, 'min' => 1, 'max' => 100 ) ),
 				'run'         => function ( array $a ): array {
 					$facts = $this->memory->by_kind( 'composer', 'fact', (int) ( $a['limit'] ?? 20 ) );
@@ -332,7 +332,7 @@ final class CoreActions {
 				'id'          => 'stats.query',
 				'group'       => 'stats',
 				'description' => __( 'Summarize conversations, resolution and top unanswered questions for a period.', 'agentyllo' ),
-				'cap'         => 'agy_view_stats',
+				'cap'         => 'agyl_view_stats',
 				'args'        => array( 'period' => array( 'type' => 'enum', 'values' => array( '7d', '30d', '90d' ), 'default' => '30d' ) ),
 				'run'         => function ( array $a ): array {
 					$days   = (int) rtrim( (string) ( $a['period'] ?? '30d' ), 'd' );

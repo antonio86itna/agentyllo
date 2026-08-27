@@ -47,7 +47,7 @@ final class Pipeline {
 		 * @param Stage[]     $stages  Ordered stages.
 		 * @param ChatContext $context The context (read-only use here).
 		 */
-		$stages = (array) apply_filters( 'agy_pipeline_steps', $this->stages, $context );
+		$stages = (array) apply_filters( 'agyl_pipeline_steps', $this->stages, $context );
 
 		$start  = microtime( true );
 		$events = array( array( 'state' => 'queued', 'ts' => 0 ) );

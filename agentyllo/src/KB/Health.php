@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Computes coverage/staleness/quality metrics for the dashboard and refreshes
- * the corpus statistics retrieval depends on (agy_kb_avg_len) and the dynamic
- * stopword list (agy_kb_dynamic_stopwords).
+ * the corpus statistics retrieval depends on (agyl_kb_avg_len) and the dynamic
+ * stopword list (agyl_kb_dynamic_stopwords).
  *
  * Stopword changes apply EVENTUALLY — by design. A refreshed list only
  * affects future tokenization (new indexing runs and new queries); already
@@ -60,7 +60,7 @@ final class Health {
 	}
 
 	/**
-	 * Compute all health metrics, persist them to option agy_kb_health
+	 * Compute all health metrics, persist them to option agyl_kb_health
 	 * ({computed_at, data}) and refresh corpus statistics.
 	 *
 	 * @return array Health data (the 'data' part of the persisted option).
@@ -127,34 +127,34 @@ final class Health {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
 		$stale = (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$p}agy_kb_documents
+				"SELECT COUNT(*) FROM {$p}agyl_kb_documents
 				 WHERE status = %s AND source_modified_gmt IS NOT NULL AND source_modified_gmt > indexed_at",
 				Store::STATUS_ACTIVE
 			)
 		);
 
-		$broken_links = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_links WHERE http_status >= 400" );
+		$broken_links = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_links WHERE http_status >= 400" );
 
 		$orphans = (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$p}agy_kb_documents d
+				"SELECT COUNT(*) FROM {$p}agyl_kb_documents d
 				 WHERE d.status = %s AND d.permalink <> ''
 				 AND NOT EXISTS (
-					SELECT 1 FROM {$p}agy_kb_links l
+					SELECT 1 FROM {$p}agyl_kb_links l
 					WHERE l.to_document_id = d.id AND l.is_internal = 1
 				 )",
 				Store::STATUS_ACTIVE
 			)
 		);
 
-		$chunks_total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_chunks" );
+		$chunks_total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_chunks" );
 
 		// Terms cardinality estimate: postings count (PK is term+chunk_id, so
 		// this is the sum of per-term chunk-dfs — cheap, no COUNT(DISTINCT)).
-		$terms_postings = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agy_kb_terms" );
+		$terms_postings = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$p}agyl_kb_terms" );
 
 		$avg_chunks_per_doc = (float) $wpdb->get_var(
-			$wpdb->prepare( "SELECT COALESCE(AVG(chunk_count), 0) FROM {$p}agy_kb_documents WHERE status = %s", Store::STATUS_ACTIVE )
+			$wpdb->prepare( "SELECT COALESCE(AVG(chunk_count), 0) FROM {$p}agyl_kb_documents WHERE status = %s", Store::STATUS_ACTIVE )
 		);
 		// phpcs:enable
 
@@ -173,7 +173,7 @@ final class Health {
 		);
 
 		update_option(
-			'agy_kb_health',
+			'agyl_kb_health',
 			array(
 				'computed_at' => time(),
 				'data'        => $data,
@@ -199,7 +199,7 @@ final class Health {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT id, document_id, simhash FROM {$p}agy_kb_chunks WHERE simhash IS NOT NULL AND simhash <> '' LIMIT %d",
+				"SELECT id, document_id, simhash FROM {$p}agyl_kb_chunks WHERE simhash IS NOT NULL AND simhash <> '' LIMIT %d",
 				self::SIMHASH_SAMPLE
 			),
 			ARRAY_A
@@ -282,8 +282,8 @@ final class Health {
 		$p = $wpdb->prefix;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$avg_len = (float) $wpdb->get_var( "SELECT COALESCE(AVG(token_est), 0) FROM {$p}agy_kb_chunks" );
-		update_option( 'agy_kb_avg_len', $avg_len > 0 ? (int) round( $avg_len ) : 200, false );
+		$avg_len = (float) $wpdb->get_var( "SELECT COALESCE(AVG(token_est), 0) FROM {$p}agyl_kb_chunks" );
+		update_option( 'agyl_kb_avg_len', $avg_len > 0 ? (int) round( $avg_len ) : 200, false );
 
 		if ( $chunks_total > self::STOPWORD_MIN_CHUNKS ) {
 			$threshold = (int) floor( $chunks_total * self::STOPWORD_DF_RATIO );
@@ -291,15 +291,15 @@ final class Health {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$stopwords = $wpdb->get_col(
 				$wpdb->prepare(
-					"SELECT term FROM {$p}agy_kb_terms GROUP BY term HAVING COUNT(*) > %d ORDER BY COUNT(*) DESC LIMIT %d",
+					"SELECT term FROM {$p}agyl_kb_terms GROUP BY term HAVING COUNT(*) > %d ORDER BY COUNT(*) DESC LIMIT %d",
 					$threshold,
 					self::STOPWORD_CAP
 				)
 			);
 
-			update_option( 'agy_kb_dynamic_stopwords', array_map( 'strval', (array) $stopwords ), false );
+			update_option( 'agyl_kb_dynamic_stopwords', array_map( 'strval', (array) $stopwords ), false );
 		} else {
-			update_option( 'agy_kb_dynamic_stopwords', array(), false );
+			update_option( 'agyl_kb_dynamic_stopwords', array(), false );
 		}
 	}
 }

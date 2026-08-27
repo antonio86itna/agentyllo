@@ -51,11 +51,11 @@ final class Activator {
 			new \Agentyllo\Infra\Options()
 		) )->seed();
 
-		if ( false === get_option( 'agy_installed_at', false ) ) {
-			add_option( 'agy_installed_at', time(), '', false );
+		if ( false === get_option( 'agyl_installed_at', false ) ) {
+			add_option( 'agyl_installed_at', time(), '', false );
 		}
 
 		// One-time onboarding redirect flag, consumed by the admin shell.
-		set_transient( 'agy_activation_redirect', 1, 60 );
+		set_transient( 'agyl_activation_redirect', 1, 60 );
 	}
 }

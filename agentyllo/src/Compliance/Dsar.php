@@ -41,13 +41,13 @@ final class Dsar {
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$conv = $wpdb->get_row(
-			$wpdb->prepare( "SELECT COUNT(*) n, MIN(started_at) first_seen, MAX(last_activity_at) last_seen FROM {$p}agy_conversations WHERE visitor_email = %s", $email ),
+			$wpdb->prepare( "SELECT COUNT(*) n, MIN(started_at) first_seen, MAX(last_activity_at) last_seen FROM {$p}agyl_conversations WHERE visitor_email = %s", $email ),
 			ARRAY_A
 		);
 		$msgs = (int) $wpdb->get_var(
-			$wpdb->prepare( "SELECT COUNT(*) FROM {$p}agy_messages m INNER JOIN {$p}agy_conversations c ON c.id = m.conversation_id WHERE c.visitor_email = %s", $email )
+			$wpdb->prepare( "SELECT COUNT(*) FROM {$p}agyl_messages m INNER JOIN {$p}agyl_conversations c ON c.id = m.conversation_id WHERE c.visitor_email = %s", $email )
 		);
-		$cons = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$p}agy_consents WHERE email = %s", $email ) );
+		$cons = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$p}agyl_consents WHERE email = %s", $email ) );
 		// phpcs:enable
 
 		return array(
@@ -70,19 +70,19 @@ final class Dsar {
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$conversations = $wpdb->get_results(
-			$wpdb->prepare( "SELECT id, uuid, visitor_name, visitor_email, lang, tier, started_at, last_activity_at, message_count FROM {$p}agy_conversations WHERE visitor_email = %s ORDER BY id", $email ),
+			$wpdb->prepare( "SELECT id, uuid, visitor_name, visitor_email, lang, tier, started_at, last_activity_at, message_count FROM {$p}agyl_conversations WHERE visitor_email = %s ORDER BY id", $email ),
 			ARRAY_A
 		);
 		foreach ( $conversations as &$c ) {
 			$c['messages'] = $wpdb->get_results(
-				$wpdb->prepare( "SELECT role, content, intent, created_at FROM {$p}agy_messages WHERE conversation_id = %d ORDER BY id", (int) $c['id'] ),
+				$wpdb->prepare( "SELECT role, content, intent, created_at FROM {$p}agyl_messages WHERE conversation_id = %d ORDER BY id", (int) $c['id'] ),
 				ARRAY_A
 			);
 			unset( $c['id'] );
 		}
 		unset( $c );
 		$consents = $wpdb->get_results(
-			$wpdb->prepare( "SELECT consent_type, text_version, granted, created_at FROM {$p}agy_consents WHERE email = %s ORDER BY id", $email ),
+			$wpdb->prepare( "SELECT consent_type, text_version, granted, created_at FROM {$p}agyl_consents WHERE email = %s ORDER BY id", $email ),
 			ARRAY_A
 		);
 		// phpcs:enable
@@ -124,17 +124,17 @@ final class Dsar {
 		$p = $wpdb->prefix;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$p}agy_conversations WHERE visitor_email = %s", $email ) );
+		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$p}agyl_conversations WHERE visitor_email = %s", $email ) );
 
 		$messages = 0;
 		if ( $ids ) {
 			$in       = implode( ',', array_map( 'absint', $ids ) );
-			$messages = (int) $wpdb->query( "UPDATE {$p}agy_messages SET content = '[erased]', blocks = NULL, kb_sources = NULL WHERE conversation_id IN ({$in})" );
-			$wpdb->query( "UPDATE {$p}agy_conversations SET visitor_name = NULL, visitor_email = NULL, ip_hash = NULL, meta = NULL WHERE id IN ({$in})" );
+			$messages = (int) $wpdb->query( "UPDATE {$p}agyl_messages SET content = '[erased]', blocks = NULL, kb_sources = NULL WHERE conversation_id IN ({$in})" );
+			$wpdb->query( "UPDATE {$p}agyl_conversations SET visitor_name = NULL, visitor_email = NULL, ip_hash = NULL, meta = NULL WHERE id IN ({$in})" );
 		}
 		// Consent tombstone: keep type/version/hash (proof consent existed), drop identity.
 		$consents = (int) $wpdb->query(
-			$wpdb->prepare( "UPDATE {$p}agy_consents SET email = NULL, visitor_name = NULL, ip_hash = NULL, ua_hash = NULL WHERE email = %s", $email )
+			$wpdb->prepare( "UPDATE {$p}agyl_consents SET email = NULL, visitor_name = NULL, ip_hash = NULL, ua_hash = NULL WHERE email = %s", $email )
 		);
 		// phpcs:enable
 

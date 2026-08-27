@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Runs cheap, guarded probes and computes the inference tier flags.
- * Cached in option `agy_capabilities`; refreshed weekly (Action Scheduler),
+ * Cached in option `agyl_capabilities`; refreshed weekly (Action Scheduler),
  * on demand from the AI Models page, and whenever the cache is stale.
  */
 final class Detector {
@@ -66,14 +66,14 @@ final class Detector {
 	 */
 	public function schedule_deep_scan(): void {
 		if ( function_exists( 'as_enqueue_async_action' ) && function_exists( 'as_has_scheduled_action' ) ) {
-			if ( ! as_has_scheduled_action( 'agy_capabilities_rescan', array(), 'agentyllo' ) ) {
-				as_enqueue_async_action( 'agy_capabilities_rescan', array(), 'agentyllo', true );
+			if ( ! as_has_scheduled_action( 'agyl_capabilities_rescan', array(), 'agentyllo' ) ) {
+				as_enqueue_async_action( 'agyl_capabilities_rescan', array(), 'agentyllo', true );
 			}
 
 			return;
 		}
-		if ( ! wp_next_scheduled( 'agy_capabilities_rescan' ) ) {
-			wp_schedule_single_event( time() + 30, 'agy_capabilities_rescan' );
+		if ( ! wp_next_scheduled( 'agyl_capabilities_rescan' ) ) {
+			wp_schedule_single_event( time() + 30, 'agyl_capabilities_rescan' );
 		}
 	}
 
@@ -107,7 +107,7 @@ final class Detector {
 		 *
 		 * @param array $report Capability report (schema, detected_at, probes, tiers).
 		 */
-		$report = (array) apply_filters( 'agy_capability_profile', $report );
+		$report = (array) apply_filters( 'agyl_capability_profile', $report );
 
 		/*
 		 * WP-CLI probes see different memory/time limits than the web SAPI the
@@ -128,7 +128,7 @@ final class Detector {
 		 *
 		 * @param array $report The stored capability report.
 		 */
-		do_action( 'agy_capabilities_updated', $report );
+		do_action( 'agyl_capabilities_updated', $report );
 
 		return $report;
 	}
@@ -452,7 +452,7 @@ final class Detector {
 				array(
 					'timeout'   => 3,
 					'sslverify' => false,
-					'headers'   => array( 'X-Agy-Probe' => '1' ),
+					'headers'   => array( 'X-Agyl-Probe' => '1' ),
 				)
 			);
 			$ms       = (int) round( ( microtime( true ) - $start ) * 1000 );

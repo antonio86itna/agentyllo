@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class StarterSuggestions {
 
-	private const TRANSIENT = 'agy_starter_suggestions';
+	private const TRANSIENT = 'agyl_starter_suggestions';
 	private const TTL       = 5 * MINUTE_IN_SECONDS;
 	private const POOL      = 12;
 	private const MAX       = 6;
@@ -52,7 +52,7 @@ final class StarterSuggestions {
 	 */
 	public function get( int $limit = 3 ): array {
 		$limit      = max( 1, min( self::MAX, $limit ) );
-		$kb_version = (int) get_option( 'agy_kb_version', 0 );
+		$kb_version = (int) get_option( 'agyl_kb_version', 0 );
 
 		$cached = get_transient( self::TRANSIENT );
 		if ( is_array( $cached ) && $kb_version === (int) ( $cached['kb_version'] ?? -1 ) && is_array( $cached['items'] ?? null ) ) {
@@ -74,7 +74,7 @@ final class StarterSuggestions {
 		 *
 		 * @param string[] $items Suggestion strings.
 		 */
-		$items = (array) apply_filters( 'agy_starter_suggestions', $items );
+		$items = (array) apply_filters( 'agyl_starter_suggestions', $items );
 
 		return array_slice( array_values( array_unique( array_filter( array_map( 'strval', $items ) ) ) ), 0, $limit );
 	}
@@ -91,7 +91,7 @@ final class StarterSuggestions {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT source, title FROM ' . $wpdb->prefix . "agy_kb_documents WHERE status = %s AND title <> '' AND source NOT IN ('menu', 'taxonomy') ORDER BY weight DESC, indexed_at DESC LIMIT %d",
+				'SELECT source, title FROM ' . $wpdb->prefix . "agyl_kb_documents WHERE status = %s AND title <> '' AND source NOT IN ('menu', 'taxonomy') ORDER BY weight DESC, indexed_at DESC LIMIT %d",
 				Store::STATUS_ACTIVE,
 				self::POOL
 			),

@@ -40,7 +40,7 @@ abstract class Controller {
 			}
 
 			return new WP_Error(
-				'agy_forbidden',
+				'agyl_forbidden',
 				__( 'You are not allowed to do that.', 'agentyllo' ),
 				array( 'status' => rest_authorization_required_code() )
 			);

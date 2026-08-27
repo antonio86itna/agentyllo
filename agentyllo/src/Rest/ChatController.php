@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * The visitor-facing chat surface. No WP auth, no cookies: POST /session
- * mints an HMAC token, every other route validates the X-Agy-Session header.
+ * mints an HMAC token, every other route validates the X-Agyl-Session header.
  * Errors are hand-built WP_REST_Response objects in the {code, message,
  * data:{status}} shape so 429s can carry a Retry-After header (WP_Error
  * cannot). Everything here is no-store — /config is the only cacheable
@@ -133,7 +133,7 @@ final class ChatController extends Controller {
 			$bucket = RateLimiter::bucket_ip( SessionManager::hash_ip( $ip ), 'session' );
 			if ( ! $this->limiter->allow( $bucket, self::SESSION_RATE_LIMIT, MINUTE_IN_SECONDS ) ) {
 				return $this->error(
-					'agy_rate_limited',
+					'agyl_rate_limited',
 					__( 'Too many requests — please slow down.', 'agentyllo' ),
 					429,
 					array( 'Retry-After' => '60' )
@@ -143,7 +143,7 @@ final class ChatController extends Controller {
 
 		$session = $this->sessions->create( $ip );
 		if ( null === $session ) {
-			return $this->error( 'agy_session_failed', __( 'Could not start a chat session.', 'agentyllo' ), 500 );
+			return $this->error( 'agyl_session_failed', __( 'Could not start a chat session.', 'agentyllo' ), 500 );
 		}
 
 		return $this->respond(
@@ -170,14 +170,14 @@ final class ChatController extends Controller {
 	public function post_message( WP_REST_Request $request ): WP_REST_Response {
 		$session = $this->validate_session( $request );
 		if ( null === $session ) {
-			return $this->error( 'agy_invalid_session', __( 'Your chat session is invalid or expired.', 'agentyllo' ), 401 );
+			return $this->error( 'agyl_invalid_session', __( 'Your chat session is invalid or expired.', 'agentyllo' ), 401 );
 		}
 
 		$session_id = (int) $session['id'];
 		$text       = trim( (string) $request['text'] );
 		if ( '' === $text || mb_strlen( $text ) > self::TEXT_MAX ) {
 			return $this->error(
-				'agy_invalid_text',
+				'agyl_invalid_text',
 				sprintf(
 					/* translators: %d: maximum message length in characters. */
 					__( 'Messages must be between 1 and %d characters.', 'agentyllo' ),
@@ -189,7 +189,7 @@ final class ChatController extends Controller {
 
 		// Idempotency: a retried client_msg_id replays the cached response.
 		$client_msg_id = trim( (string) $request['client_msg_id'] );
-		$transient_key = '' === $client_msg_id ? '' : 'agy_msg_' . $session_id . '_' . md5( $client_msg_id );
+		$transient_key = '' === $client_msg_id ? '' : 'agyl_msg_' . $session_id . '_' . md5( $client_msg_id );
 		if ( '' !== $transient_key ) {
 			$cached = get_transient( $transient_key );
 			if ( is_array( $cached ) ) {
@@ -201,7 +201,7 @@ final class ChatController extends Controller {
 		// recorded a consent (POST /consent) before any message is accepted.
 		$privacy = $this->settings->get( 'privacy' );
 		if ( 'off' !== (string) $privacy['registration_gate'] && empty( $session['gated'] ) ) {
-			return $this->error( 'agy_gate_required', __( 'Please complete the short form before starting the chat.', 'agentyllo' ), 403 );
+			return $this->error( 'agyl_gate_required', __( 'Please complete the short form before starting the chat.', 'agentyllo' ), 403 );
 		}
 
 		$throttled = $this->check_message_limits( $session_id );
@@ -270,7 +270,7 @@ final class ChatController extends Controller {
 		$response = $this->respond( $payload );
 		if ( ! empty( $payload['message']['meta']['ai_generated'] ) ) {
 			// Machine-readable Art. 50 marking (mirrors meta.ai_generated).
-			$response->header( 'X-AGY-AI-Generated', '1' );
+			$response->header( 'X-AGYL-AI-Generated', '1' );
 		}
 
 		return $response;
@@ -411,14 +411,14 @@ final class ChatController extends Controller {
 	public function post_feedback( WP_REST_Request $request ): WP_REST_Response {
 		$session = $this->validate_session( $request );
 		if ( null === $session ) {
-			return $this->error( 'agy_invalid_session', __( 'Your chat session is invalid or expired.', 'agentyllo' ), 401 );
+			return $this->error( 'agyl_invalid_session', __( 'Your chat session is invalid or expired.', 'agentyllo' ), 401 );
 		}
 
 		$message_id = (int) $request['message_id'];
 		$owner      = $this->log->conversation_for_message( $message_id );
 
 		if ( null === $owner || $owner['session_id'] !== (int) $session['id'] ) {
-			return $this->error( 'agy_not_found', __( 'Message not found.', 'agentyllo' ), 404 );
+			return $this->error( 'agyl_not_found', __( 'Message not found.', 'agentyllo' ), 404 );
 		}
 
 		$this->log->add_feedback(
@@ -442,7 +442,7 @@ final class ChatController extends Controller {
 		$message = __( 'Message limit reached — please try again later.', 'agentyllo' );
 
 		if ( ! $this->limiter->allow( RateLimiter::bucket_session_msg( $session_id ), (int) $perf['rate_limit_session_per_min'], MINUTE_IN_SECONDS ) ) {
-			return $this->error( 'agy_rate_limited', $message, 429, array( 'Retry-After' => '60' ) );
+			return $this->error( 'agyl_rate_limited', $message, 429, array( 'Retry-After' => '60' ) );
 		}
 
 		$ip = $this->remote_ip();
@@ -452,23 +452,23 @@ final class ChatController extends Controller {
 		$ip_hash = SessionManager::hash_ip( $ip );
 
 		if ( ! $this->limiter->allow( RateLimiter::bucket_ip( $ip_hash, 'msg_h' ), (int) $perf['rate_limit_ip_per_hour'], HOUR_IN_SECONDS ) ) {
-			return $this->error( 'agy_rate_limited', $message, 429, array( 'Retry-After' => '300' ) );
+			return $this->error( 'agyl_rate_limited', $message, 429, array( 'Retry-After' => '300' ) );
 		}
 
 		if ( ! $this->limiter->allow( RateLimiter::bucket_ip( $ip_hash, 'msg_d' ), (int) $perf['rate_limit_ip_per_day'], DAY_IN_SECONDS ) ) {
-			return $this->error( 'agy_rate_limited', $message, 429, array( 'Retry-After' => '3600' ) );
+			return $this->error( 'agyl_rate_limited', $message, 429, array( 'Retry-After' => '3600' ) );
 		}
 
 		return null;
 	}
 
 	/**
-	 * Resolve the session row from the X-Agy-Session header.
+	 * Resolve the session row from the X-Agyl-Session header.
 	 *
 	 * @param WP_REST_Request $request Request.
 	 */
 	private function validate_session( WP_REST_Request $request ): ?array {
-		$token = (string) $request->get_header( 'X-Agy-Session' );
+		$token = (string) $request->get_header( 'X-Agyl-Session' );
 		if ( '' === $token ) {
 			return null;
 		}
@@ -487,7 +487,7 @@ final class ChatController extends Controller {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->update(
-			$wpdb->prefix . 'agy_sessions',
+			$wpdb->prefix . 'agyl_sessions',
 			array( 'meta' => (string) wp_json_encode( $meta ) ),
 			array( 'id' => $session_id )
 		);

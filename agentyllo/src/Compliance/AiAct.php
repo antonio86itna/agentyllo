@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  * at the latest at first interaction (widget badge + first bubble + footer,
  * all shipped via /config). Art. 50(2): machine-readable marking on
  * generated output (`data-ai-generated` on the widget's response DOM +
- * `X-AGY-AI-Generated` header on AI-tier responses). This class provides
+ * `X-AGYL-AI-Generated` header on AI-tier responses). This class provides
  * the transparency PAGE (deployer/provider identity, models in use, data
  * flows, human alternative, limitations, complaints) as a shortcode +
  * one-click generator.
@@ -57,7 +57,7 @@ final class AiAct {
 	 * Returns the page id.
 	 */
 	public function ensure_page(): int {
-		$existing = (int) get_option( 'agy_transparency_page_id', 0 );
+		$existing = (int) get_option( 'agyl_transparency_page_id', 0 );
 		if ( $existing > 0 && get_post( $existing ) ) {
 			return $existing;
 		}
@@ -73,7 +73,7 @@ final class AiAct {
 		if ( is_wp_error( $id ) || ! $id ) {
 			return 0;
 		}
-		update_option( 'agy_transparency_page_id', (int) $id, false );
+		update_option( 'agyl_transparency_page_id', (int) $id, false );
 		Audit::log( 'privacy.transparency_page_created', (string) $id );
 
 		return (int) $id;

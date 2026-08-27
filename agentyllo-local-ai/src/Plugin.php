@@ -13,9 +13,9 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Integrates with Agentyllo purely through its public hooks:
- *  - `agy_settings_tabs`         → adds the `local_ai` tab (schema-driven UI in Settings).
- *  - `agy_local_endpoint_url`    → points the core LocalEndpointProvider at the managed daemon.
- *  - `agy_provider_chain`        → touches/auto-starts the daemon when a request routes to it.
+ *  - `agyl_settings_tabs`         → adds the `local_ai` tab (schema-driven UI in Settings).
+ *  - `agyl_local_endpoint_url`    → points the core LocalEndpointProvider at the managed daemon.
+ *  - `agyl_provider_chain`        → touches/auto-starts the daemon when a request routes to it.
  *  - Agentyllo admin menu        → "Local AI" page (status, start/stop, catalog install with consent).
  * No code is ever downloaded through Agentyllo core; this plugin is the
  * consented binary installer, distributed outside WordPress.org.
@@ -45,9 +45,9 @@ final class Plugin {
 		$this->supervisor = new Supervisor( array( $this, 'settings' ) );
 		$this->installer  = new Installer();
 
-		add_filter( 'agy_settings_tabs', array( $this, 'add_settings_tab' ) );
-		add_filter( 'agy_local_endpoint_url', array( $this, 'endpoint_url' ) );
-		add_filter( 'agy_provider_chain', array( $this, 'on_chain' ), 20 );
+		add_filter( 'agyl_settings_tabs', array( $this, 'add_settings_tab' ) );
+		add_filter( 'agyl_local_endpoint_url', array( $this, 'endpoint_url' ) );
+		add_filter( 'agyl_provider_chain', array( $this, 'on_chain' ), 20 );
 
 		add_action( Supervisor::HOOK_IDLE_CHECK, array( $this->supervisor, 'idle_check' ) );
 		add_action( 'init', array( $this, 'ensure_schedule' ), 30 );
@@ -210,7 +210,7 @@ final class Plugin {
 		if ( is_array( $notice ) ) {
 			delete_transient( 'agyl_notice_' . get_current_user_id() );
 		}
-		$caps = get_option( 'agy_capabilities' );
+		$caps = get_option( 'agyl_capabilities' );
 		$tier = is_array( $caps ) ? (string) ( $caps['tiers']['best_free_tier'] ?? '' ) : '';
 		?>
 		<div class="wrap">

@@ -34,7 +34,7 @@ final class ManifestTest extends TestCase {
 	}
 
 	public function test_bundled_snapshot_is_valid_and_signed(): void {
-		$file = AGY_DIR . 'assets/registry/stable.json';
+		$file = AGYL_DIR . 'assets/registry/stable.json';
 		self::assertFileExists( $file );
 		self::assertFileExists( $file . '.sig' );
 

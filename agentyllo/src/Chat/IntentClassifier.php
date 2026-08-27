@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  * 0.7; page entities → site_info at 0.7; otherwise site_info at 0.4, which
  * falls through to retrieval. 'unknown' never surfaces to visitors.
  *
- * Addons extend via the agy_intents filter (add packs, prepend patterns);
+ * Addons extend via the agyl_intents filter (add packs, prepend patterns);
  * invalid addon regexes are skipped defensively.
  */
 final class IntentClassifier {
@@ -49,7 +49,7 @@ final class IntentClassifier {
 			 *
 			 * @param array<string, string[]> $patterns Ordered pattern packs.
 			 */
-			$patterns = apply_filters( 'agy_intents', $this->default_patterns() );
+			$patterns = apply_filters( 'agyl_intents', $this->default_patterns() );
 
 			foreach ( (array) $patterns as $intent => $pack ) {
 				if ( ! is_string( $intent ) || '' === $intent || ! is_array( $pack ) ) {

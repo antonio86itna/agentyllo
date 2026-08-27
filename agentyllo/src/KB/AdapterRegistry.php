@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Holds every KB source adapter, exposes the set through the
- * `agy_kb_source_adapters` filter (addons can plug in new universes), and
+ * `agyl_kb_source_adapters` filter (addons can plug in new universes), and
  * maps the Content Sources settings tab onto the enabled subtype list of
  * each source.
  *
@@ -78,7 +78,7 @@ final class AdapterRegistry {
 		 *
 		 * @param array<string, SourceAdapter> $map Adapters keyed by id.
 		 */
-		$map = apply_filters( 'agy_kb_source_adapters', $map );
+		$map = apply_filters( 'agyl_kb_source_adapters', $map );
 
 		$this->resolved = array();
 		foreach ( (array) $map as $adapter ) {
@@ -155,7 +155,7 @@ final class AdapterRegistry {
 
 			default:
 				// Custom adapters gate themselves (their own settings or the
-				// agy_kb_source_adapters filter); treat them as fully enabled.
+				// agyl_kb_source_adapters filter); treat them as fully enabled.
 				return self::all_subtypes( $adapter );
 		}
 	}

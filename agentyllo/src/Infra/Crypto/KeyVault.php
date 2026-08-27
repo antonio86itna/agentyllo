@@ -13,14 +13,14 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * libsodium secretbox with a DEDICATED random key stored in its own option
- * (agy_vault_key). Never derived from WP salts: hosts and security plugins
+ * (agyl_vault_key). Never derived from WP salts: hosts and security plugins
  * rotate salts, which would silently brick every stored key. A decrypt
  * failure returns null (caller prompts re-entry) — never a fatal.
  * sodium_compat (bundled with WP core) covers hosts without ext/sodium.
  */
 final class KeyVault {
 
-	private const KEY_OPTION = 'agy_vault_key';
+	private const KEY_OPTION = 'agyl_vault_key';
 	public const PREFIX      = 'agyv1:';
 
 	/**

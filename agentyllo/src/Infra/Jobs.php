@@ -35,24 +35,24 @@ defined( 'ABSPATH' ) || exit;
  * (KB jobs use `agentyllo-kb`, local inference `agentyllo-ai`).
  *
  * Recurring hooks carry no args; each run mints a fresh Task so refs stay
- * unique per execution. Ad-hoc tasks ride the generic `agy_task` hook.
+ * unique per execution. Ad-hoc tasks ride the generic `agyl_task` hook.
  */
 final class Jobs {
 
 	public const GROUP    = 'agentyllo';
 	public const GROUP_KB = 'agentyllo-kb';
 
-	public const HOOK_CAPABILITIES_RESCAN = 'agy_capabilities_rescan';
-	public const HOOK_HEALTH_SWEEP        = 'agy_health_sweep';
-	public const HOOK_MAINTENANCE         = 'agy_maintenance';
-	public const HOOK_LEARN               = 'agy_learn';
-	public const HOOK_KB_RECONCILE_ALL    = 'agy_kb_reconcile_all';
-	public const HOOK_KB_LINK_CHECK       = 'agy_kb_link_check';
-	public const HOOK_KB_HEALTH           = 'agy_kb_health_compute';
-	public const HOOK_SITE_PROFILE        = 'agy_site_profile';
-	public const HOOK_RETENTION           = 'agy_retention_daily';
-	public const HOOK_STATS_ROLLUP        = 'agy_stats_rollup';
-	public const HOOK_REGISTRY_SYNC       = 'agy_registry_sync';
+	public const HOOK_CAPABILITIES_RESCAN = 'agyl_capabilities_rescan';
+	public const HOOK_HEALTH_SWEEP        = 'agyl_health_sweep';
+	public const HOOK_MAINTENANCE         = 'agyl_maintenance';
+	public const HOOK_LEARN               = 'agyl_learn';
+	public const HOOK_KB_RECONCILE_ALL    = 'agyl_kb_reconcile_all';
+	public const HOOK_KB_LINK_CHECK       = 'agyl_kb_link_check';
+	public const HOOK_KB_HEALTH           = 'agyl_kb_health_compute';
+	public const HOOK_SITE_PROFILE        = 'agyl_site_profile';
+	public const HOOK_RETENTION           = 'agyl_retention_daily';
+	public const HOOK_STATS_ROLLUP        = 'agyl_stats_rollup';
+	public const HOOK_REGISTRY_SYNC       = 'agyl_registry_sync';
 
 	/**
 	 * Resolver returning the 'models' settings array.
@@ -164,7 +164,7 @@ final class Jobs {
 		 * Fires during hourly maintenance so services can garbage-collect
 		 * (manual-entry trash purge, expired tokens…).
 		 */
-		do_action( 'agy_maintenance' );
+		do_action( 'agyl_maintenance' );
 	}
 
 	/**
@@ -235,7 +235,7 @@ final class Jobs {
 	}
 
 	/**
-	 * Generic async task delivery (Action Scheduler `agy_task`).
+	 * Generic async task delivery (Action Scheduler `agyl_task`).
 	 *
 	 * @param string $agent_id  Target agent id.
 	 * @param array  $task_data Serialized task.

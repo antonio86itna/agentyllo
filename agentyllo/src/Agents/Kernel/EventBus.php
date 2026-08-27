@@ -64,11 +64,11 @@ final class EventBus implements EventBusInterface {
 
 		/**
 		 * Mirrored public hook for every internal event: 'kb.delta' becomes
-		 * `do_action( 'agy_kb_delta', $payload )` and so on. This is the addon
+		 * `do_action( 'agyl_kb_delta', $payload )` and so on. This is the addon
 		 * listening surface.
 		 *
 		 * @param array $payload Event payload.
 		 */
-		do_action( 'agy_' . str_replace( '.', '_', $event ), $payload );
+		do_action( 'agyl_' . str_replace( '.', '_', $event ), $payload );
 	}
 }

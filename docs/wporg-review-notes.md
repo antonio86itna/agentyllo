@@ -1,93 +1,66 @@
 # WordPress.org submission — reviewer notes
 
-Text to paste into the "Notes for the reviewer" field (or the reply email)
-when submitting `agentyllo-x.y.z.zip`. Keep in sync with readme.txt
-(== External Services ==) when anything changes.
+Text to paste when replying to the review thread. Keep in sync with
+readme.txt (== External Services ==, == Source Code & Build ==).
 
 ---
 
-Hello, and thank you for reviewing Agentyllo. A few notes up front on the
-areas that usually deserve a closer look:
+Hello, and thank you for the detailed review. All reported issues are
+addressed in the updated zip (0.2.0). Point-by-point:
 
-**1. No remote code — ever.**
-The plugin periodically fetches a small JSON manifest from
-`https://registry.agentyllo.com/v1/stable.json` (weekly, or on the explicit
-"Sync now" button). It contains DATA ONLY: AI model ids, prices and prompt
-version numbers. It is verified against a Ed25519 signature with a public
-key pinned in the plugin (`src/Infra/Crypto/Ed25519Verifier.php`), with a
-sequence number to prevent rollback. A bundled snapshot
-(`assets/registry/stable.json`) is used when the endpoint is unreachable, so
-the plugin is fully functional offline. Nothing executable is ever
-downloaded, and the sync can be disabled in AI Models settings.
+**Ownership / name.** "Agentyllo" is an invented word with no other use or
+registration; we own and operate agentyllo.com (the Plugin URI). To make
+ownership verifiable: [CHOOSE ONE — (a) this account's email is now
+<name>@agentyllo.com / (b) please transfer this submission to the account
+"<username>", registered with an @agentyllo.com email]. We have also added
+the DNS TXT record `wordpressorg-totaliweb-verification` at the root of
+agentyllo.com. We would like to KEEP the slug `agentyllo`.
 
-**2. No application binaries are downloaded or executed.**
-The WordPress.org build connects to local AI engines the user ALREADY runs
-(llama.cpp llama-server, Ollama, LM Studio — a user-supplied localhost URL).
-The one-click installer for engines/models lives in a separate companion
-plugin ("Agentyllo Local AI") distributed from our own site, not on
-WordPress.org. The capability detector only checks `function_exists`
-availability for `proc_open` — it never executes external processes.
+**Trialware (Guideline 5).** The 30-day analytics restriction is removed —
+all statistics ranges (7/30/90 days) are available to everyone and nothing
+in the plugin is locked, limited or license-checked. Optional extras are
+separate plugins distributed from agentyllo.com; the plugin only lists them
+on its own admin "Addons" page (admin-facing, per the guideline
+clarifications).
 
-**3. Third-party AI services are opt-in and off by default.**
-The plugin ships in "classic" mode: pure-PHP agents answer from the site's
-own content with no AI calls at all. OpenAI (`api.openai.com`) and Anthropic
-(`api.anthropic.com`) are contacted ONLY after the site owner enters their
-own API key and switches the operating mode. What is sent (the visitor
-message plus relevant excerpts of the site's public content), when, and
-under which terms is documented in readme.txt → External Services, with
-links to each provider's terms and privacy policy. API keys are stored
-encrypted (libsodium secretbox) with a random key dedicated to this
-purpose — never derived from WP salts — and are never printed back in full.
+**Phoning home (Guidelines 7/9).** The registry sync is now strictly
+opt-in: nothing is fetched unless the admin presses "Sync now" or
+explicitly enables weekly auto-sync (default OFF). The request carries no
+site data and no plugin version; the endpoint serves a static, Ed25519-
+signed JSON manifest (model ids and prices — data, never code), documented
+in External Services.
 
-**4. The admin "copilot" does not execute arbitrary code.**
-It only runs a fixed registry of predefined, schema-validated actions
-(`src/Copilot/ActionRegistry.php`, `CoreActions.php`): add/edit KB entries,
-change whitelisted non-secret settings, run stats queries, re-crawl.
-Every action is sanitized against a JSON-schema-style argument spec, gated
-by capabilities, and destructive ones require an explicit human click that
-carries a single-use HMAC confirmation token (10-minute TTL, bound to user,
-action and arguments). Everything is written to an audit log.
+**Credit links (Guideline 10).** The "Powered by Agentyllo" link is now
+OFF by default and renders only if the site owner enables the dedicated
+checkbox in Settings → Widget.
 
-**5. Direct database queries.**
-The plugin owns 22 custom tables (prefix `agy_`) for its knowledge base,
-conversations, stats and audit data — content that does not fit posts/meta
-(inverted search index, vectors, sliding-window rate events, append-only
-audit log). All queries go through `$wpdb->prepare()`; table names are
-`$wpdb->prefix` plus literal constants. The repository-level
-`phpcs:disable` headers each carry a justification. The IN()-clause
-placeholder lists are built from `count()` of the values passed to
-`prepare()`.
+**Prefixes.** All declarations, globals and stored data now use the
+4-character prefix `agyl_` (constants `AGYL_`), namespace `Agentyllo\`,
+REST namespace `agentyllo/v1`.
 
-**6. Hook prefix.**
-All hooks, options, tables and REST routes use the `agy_` / `agentyllo/v1`
-prefix consistently (readme's Stable slug is `agentyllo`). `agy_` is our
-registered short prefix; it is used nowhere else on the directory.
+**Writing to uploads.** The plugin no longer writes any .htaccess file.
+Private DSAR exports rely on wp_upload_dir()-resolved paths, index.php
+placeholders, 24-character random filenames and automatic deletion after
+72 hours.
 
-**7. Bundled library.**
-`lib/action-scheduler/` is Action Scheduler 4.1.0, bundled verbatim
-(standard practice, same as WooCommerce ecosystem plugins). It is excluded
-from our coding-standards tooling but unmodified.
+**Public source.** The full source (un-minified TypeScript for
+assets/build/*.js, build config, tests) is public:
+https://github.com/antonio86itna/agentyllo — documented in readme
+"Source Code & Build" together with the build steps
+(`npm install && npm run build`). lib/action-scheduler is Action Scheduler
+4.1.0, unmodified (it self-arbitrates between multiple loaded copies).
 
-**8. Privacy & EU AI Act.**
-Visitor chat is cookieless (HMAC session tokens). IP addresses are stored
-only as salted monthly-rotated hashes (or not at all). Data export/erasure
-integrates with the WordPress core personal-data tools, plus an admin UI.
-The widget always shows an "Automated assistant" / "AI Assistant"
-disclosure (locked on when an AI mode is active), and the plugin can
-generate a transparency page describing the system, per EU AI Act Art. 50.
+**Translation files** are no longer shipped in the zip.
 
-**9. Uninstall.**
-Uninstall behaviour is user-controlled (Settings → Advanced): keep data,
-remove settings, or remove everything (all `agy_` tables, options and
-uploaded files, via WP_Filesystem).
+**Contributors** now lists both accounts.
 
-Test hints: the plugin works with zero configuration on a fresh site —
-activate, let the crawler index (or open Knowledge Base → Rebuild index),
-then ask the front-end widget about any page content. A one-click demo
-blueprint is available at
-https://www.agentyllo.com/downloads/playground-link.html
+**WordPress AI Client.** The direct provider integrations exist because
+the plugin streams answers token-by-token (SSE) into the visitor chat and
+enforces a per-request cost/latency budget with mid-stream fact checking —
+capabilities the core AI Client does not expose yet. Providers only
+activate with the owner's own API key (default is a no-AI classic mode),
+and the plugin honours the wp-config/environment key convention used by
+the AI Client. We plan to adopt the AI Client for non-streaming tasks as
+it matures.
 
-Source repository: https://github.com/antonio86itna/agentyllo
-(PHPStan level 6 clean; PHPUnit suite; CI on PHP 8.2/8.3/8.4).
-
-Thank you!
+Thank you again — happy to clarify anything.

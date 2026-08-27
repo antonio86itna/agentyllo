@@ -18,7 +18,7 @@ $mem   = $c->get( \Agentyllo\Agents\Kernel\MemoryStore::class );
 $sweep = $mem->recall( 'sentinel', 'last_sweep' );
 
 global $wpdb;
-$col = $wpdb->get_row( "SHOW COLUMNS FROM {$wpdb->prefix}agy_agent_memory LIKE 'mem_key'", ARRAY_A );
+$col = $wpdb->get_row( "SHOW COLUMNS FROM {$wpdb->prefix}agyl_agent_memory LIKE 'mem_key'", ARRAY_A );
 
 $healthy = true;
 foreach ( ( $sweep['summary'] ?? array() ) as $agent_summary ) {
@@ -27,11 +27,11 @@ foreach ( ( $sweep['summary'] ?? array() ) as $agent_summary ) {
 
 echo wp_json_encode(
 	array(
-		'db_version'   => (int) get_option( 'agy_db_version' ),
+		'db_version'   => (int) get_option( 'agyl_db_version' ),
 		'mem_key_type' => $col['Type'] ?? null,
 		'sweep_agents' => array_keys( $sweep['summary'] ?? array() ),
 		'all_healthy'  => $healthy,
-		'journal_rows' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}agy_agent_journal" ),
-		'schema_error' => get_option( 'agy_schema_error', null ),
+		'journal_rows' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}agyl_agent_journal" ),
+		'schema_error' => get_option( 'agyl_schema_error', null ),
 	)
 ) . "\n";

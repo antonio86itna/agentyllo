@@ -45,12 +45,12 @@ final class SettingsController extends Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_tab' ),
-					'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+					'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 				),
 				array(
 					'methods'             => 'PUT',
 					'callback'            => array( $this, 'update_tab' ),
-					'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+					'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 					'args'                => array(
 						'values' => array(
 							'type'     => 'object',
@@ -67,7 +67,7 @@ final class SettingsController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'list_tabs' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_settings' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 	}
@@ -89,7 +89,7 @@ final class SettingsController extends Controller {
 		$tab = (string) $request['tab'];
 
 		if ( ! $this->store->has_tab( $tab ) ) {
-			return new WP_Error( 'agy_unknown_tab', __( 'Unknown settings tab.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_tab', __( 'Unknown settings tab.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		return $this->respond( $this->tab_payload( $tab ) );
@@ -105,12 +105,12 @@ final class SettingsController extends Controller {
 		$tab = (string) $request['tab'];
 
 		if ( ! $this->store->has_tab( $tab ) ) {
-			return new WP_Error( 'agy_unknown_tab', __( 'Unknown settings tab.', 'agentyllo' ), array( 'status' => 404 ) );
+			return new WP_Error( 'agyl_unknown_tab', __( 'Unknown settings tab.', 'agentyllo' ), array( 'status' => 404 ) );
 		}
 
 		$values = $request->get_param( 'values' );
 		if ( ! is_array( $values ) ) {
-			return new WP_Error( 'agy_invalid_values', __( 'Settings payload must be an object.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_invalid_values', __( 'Settings payload must be an object.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
 		$this->store->update( $tab, $values );

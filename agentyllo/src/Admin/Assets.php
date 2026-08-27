@@ -28,7 +28,7 @@ final class Assets {
 			return;
 		}
 
-		$asset_file = AGY_DIR . 'assets/build/admin.asset.php';
+		$asset_file = AGYL_DIR . 'assets/build/admin.asset.php';
 		if ( ! file_exists( $asset_file ) ) {
 			add_action(
 				'admin_notices',
@@ -45,34 +45,34 @@ final class Assets {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			AGY_URL . 'assets/build/admin.js',
+			AGYL_URL . 'assets/build/admin.js',
 			$asset['dependencies'] ?? array(),
-			$asset['version'] ?? AGY_VERSION,
+			$asset['version'] ?? AGYL_VERSION,
 			true
 		);
 
 		wp_enqueue_style( 'wp-components' );
 		$style = is_rtl() ? 'style-admin-rtl.css' : 'style-admin.css';
-		if ( file_exists( AGY_DIR . 'assets/build/' . $style ) ) {
+		if ( file_exists( AGYL_DIR . 'assets/build/' . $style ) ) {
 			wp_enqueue_style(
 				self::HANDLE,
-				AGY_URL . 'assets/build/' . $style,
+				AGYL_URL . 'assets/build/' . $style,
 				array( 'wp-components' ),
-				$asset['version'] ?? AGY_VERSION
+				$asset['version'] ?? AGYL_VERSION
 			);
 		}
 
-		wp_set_script_translations( self::HANDLE, 'agentyllo', AGY_DIR . 'languages' );
+		wp_set_script_translations( self::HANDLE, 'agentyllo', AGYL_DIR . 'languages' );
 
 		wp_add_inline_script(
 			self::HANDLE,
-			'window.agyAdmin = ' . wp_json_encode(
+			'window.agylAdmin = ' . wp_json_encode(
 				array(
 					// Site REST root (works with plain and pretty permalinks);
 					// the JS layer prefixes paths with /agentyllo/v1.
 					'restRoot' => esc_url_raw( rest_url() ),
 					'nonce'    => wp_create_nonce( 'wp_rest' ),
-					'version'  => AGY_VERSION,
+					'version'  => AGYL_VERSION,
 				)
 			) . ';',
 			'before'

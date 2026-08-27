@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * settled on a language keeps it until the detector is CONFIDENT about a
  * switch (>= 0.7 confidence AND >= 20 chars — short messages like "ok" or
  * "ciao" never flip the language). The stored session language arrives in
- * meta['session_lang'], set by the REST layer from the agy_sessions row; the
+ * meta['session_lang'], set by the REST layer from the agyl_sessions row; the
  * REST layer persists any switch back via SessionManager::touch(). Without a
  * session language the site language's two-letter code is the floor, so the
  * classic tier always has a definite language to address the visitor in.

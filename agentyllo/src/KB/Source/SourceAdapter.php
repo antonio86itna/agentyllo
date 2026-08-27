@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * One adapter per content universe (posts, products, menus, site identity,
- * taxonomies, manual entries). Registered via the `agy_kb_source_adapters`
+ * taxonomies, manual entries). Registered via the `agyl_kb_source_adapters`
  * filter so addons can plug in new universes.
  */
 interface SourceAdapter {

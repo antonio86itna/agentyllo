@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * action_result). POST /copilot/confirm {action, args, token} → result.
  * GET /copilot/actions → registry descriptions (Help page). POST
  * /copilot/upload (multipart) → parsed preview rows; POST /copilot/ingest
- * {rows} → KB entries. Everything requires agy_use_copilot (actions check
+ * {rows} → KB entries. Everything requires agyl_use_copilot (actions check
  * their own finer capability).
  */
 final class CopilotController extends Controller {
@@ -50,7 +50,7 @@ final class CopilotController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_message' ),
-				'permission_callback' => $this->require_cap( 'agy_use_copilot' ),
+				'permission_callback' => $this->require_cap( 'agyl_use_copilot' ),
 				'args'                => array(
 					'text' => array(
 						'type'              => 'string',
@@ -66,7 +66,7 @@ final class CopilotController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_confirm' ),
-				'permission_callback' => $this->require_cap( 'agy_use_copilot' ),
+				'permission_callback' => $this->require_cap( 'agyl_use_copilot' ),
 				'args'                => array(
 					'action' => array(
 						'type'     => 'string',
@@ -89,7 +89,7 @@ final class CopilotController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_actions' ),
-				'permission_callback' => $this->require_cap( 'agy_use_copilot' ),
+				'permission_callback' => $this->require_cap( 'agyl_use_copilot' ),
 			)
 		);
 		register_rest_route(
@@ -98,7 +98,7 @@ final class CopilotController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_upload' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 			)
 		);
 		register_rest_route(
@@ -107,7 +107,7 @@ final class CopilotController extends Controller {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'post_ingest' ),
-				'permission_callback' => $this->require_cap( 'agy_manage_kb' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_kb' ),
 				'args'                => array(
 					'rows' => array(
 						'type'     => 'array',
@@ -165,7 +165,7 @@ final class CopilotController extends Controller {
 		$files = $request->get_file_params();
 		$file  = $files['file'] ?? null;
 		if ( ! is_array( $file ) || empty( $file['tmp_name'] ) || ! is_uploaded_file( (string) $file['tmp_name'] ) ) {
-			return new WP_Error( 'agy_no_file', __( 'No file uploaded.', 'agentyllo' ), array( 'status' => 400 ) );
+			return new WP_Error( 'agyl_no_file', __( 'No file uploaded.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 		$result = $this->ingest->parse_upload( (string) $file['tmp_name'], (string) ( $file['name'] ?? 'upload' ), (int) ( $file['size'] ?? 0 ) );
 		if ( is_wp_error( $result ) ) {

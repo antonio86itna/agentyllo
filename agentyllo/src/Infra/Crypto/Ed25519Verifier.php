@@ -38,7 +38,7 @@ final class Ed25519Verifier {
 		 *
 		 * @param string $public_key Base64 Ed25519 public key.
 		 */
-		$key_b64 = (string) apply_filters( 'agy_registry_public_key', self::PUBLIC_KEY );
+		$key_b64 = (string) apply_filters( 'agyl_registry_public_key', self::PUBLIC_KEY );
 
 		$key = base64_decode( $key_b64, true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$sig = base64_decode( trim( $signature_b64 ), true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode

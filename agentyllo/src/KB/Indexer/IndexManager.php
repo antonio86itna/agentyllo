@@ -21,17 +21,17 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Owns every KB background job (Action Scheduler group `agentyllo-kb`):
  *
- *  - agy_kb_full_crawl (source, subtype, offset): budget-aware inline batch
+ *  - agyl_kb_full_crawl (source, subtype, offset): budget-aware inline batch
  *    indexing with an adaptive batch size; self-reschedules until the cursor
  *    is exhausted, then chains to the next enabled (source, subtype) in
  *    priority order: site, menu, post:page, post:post, post:{cpt…}, product,
  *    taxonomy.
- *  - agy_kb_index_item (source, external_id): extract → chunk → upsert one
+ *  - agyl_kb_index_item (source, external_id): extract → chunk → upsert one
  *    item (null extraction deletes the document).
- *  - agy_kb_purge (round): drains 'purging' rows in batches, rescheduling
+ *  - agyl_kb_purge (round): drains 'purging' rows in batches, rescheduling
  *    itself with an incremented round so the re-enqueue args always differ
  *    from the running action's.
- *  - agy_kb_reconcile (source, offset, run_id, subtype): pages through the
+ *  - agyl_kb_reconcile (source, offset, run_id, subtype): pages through the
  *    adapter cursor per enabled subtype, re-enqueues changed/doubtful items
  *    (upsert is hash-idempotent, so false positives only touch indexed_at)
  *    and, on the final page of the same run_id, removes docs the source no
@@ -50,10 +50,10 @@ final class IndexManager {
 
 	public const GROUP = 'agentyllo-kb';
 
-	public const HOOK_FULL_CRAWL = 'agy_kb_full_crawl';
-	public const HOOK_INDEX_ITEM = 'agy_kb_index_item';
-	public const HOOK_PURGE      = 'agy_kb_purge';
-	public const HOOK_RECONCILE  = 'agy_kb_reconcile';
+	public const HOOK_FULL_CRAWL = 'agyl_kb_full_crawl';
+	public const HOOK_INDEX_ITEM = 'agyl_kb_index_item';
+	public const HOOK_PURGE      = 'agyl_kb_purge';
+	public const HOOK_RECONCILE  = 'agyl_kb_reconcile';
 
 	private const BATCH_MIN     = 5;
 	private const BATCH_MAX     = 25;
@@ -130,7 +130,7 @@ final class IndexManager {
 		add_action( self::HOOK_INDEX_ITEM, array( $this, 'run_index_item' ), 10, 2 );
 		add_action( self::HOOK_PURGE, array( $this, 'run_purge' ), 10, 1 );
 		add_action( self::HOOK_RECONCILE, array( $this, 'run_reconcile' ), 10, 4 );
-		add_action( 'agy_settings_updated', array( $this, 'on_settings_updated' ), 10, 3 );
+		add_action( 'agyl_settings_updated', array( $this, 'on_settings_updated' ), 10, 3 );
 
 		$this->register_delta_hooks();
 	}
@@ -155,7 +155,7 @@ final class IndexManager {
 				continue;
 			}
 			$this->enqueue_crawl( $source, $subtype, 0 );
-			update_option( 'agy_kb_last_crawl', time(), false );
+			update_option( 'agyl_kb_last_crawl', time(), false );
 			return true;
 		}
 
@@ -163,7 +163,7 @@ final class IndexManager {
 	}
 
 	/**
-	 * Enqueue agy_kb_reconcile(source, 0, run_id, first-subtype) for every
+	 * Enqueue agyl_kb_reconcile(source, 0, run_id, first-subtype) for every
 	 * enabled source. Each run gets a unique run_id: the per-run seen-set
 	 * option (which also records the run start time for the cleanup guard)
 	 * cannot be clobbered by an overlapping run. Sources that already have a
@@ -185,7 +185,7 @@ final class IndexManager {
 
 			$run_id = uniqid();
 			update_option(
-				'agy_kb_reconcile_seen_' . $source . '_' . $run_id,
+				'agyl_kb_reconcile_seen_' . $source . '_' . $run_id,
 				array(
 					'started' => time(),
 					'ids'     => array(),
@@ -286,7 +286,7 @@ final class IndexManager {
 	 * ------------------------------------------------------------------- */
 
 	/**
-	 * agy_kb_full_crawl handler.
+	 * agyl_kb_full_crawl handler.
 	 *
 	 * @param mixed $source  Adapter id.
 	 * @param mixed $subtype Subtype ('' = whole source).
@@ -342,7 +342,7 @@ final class IndexManager {
 	}
 
 	/**
-	 * agy_kb_index_item handler.
+	 * agyl_kb_index_item handler.
 	 *
 	 * @param mixed $source      Adapter id.
 	 * @param mixed $external_id External id.
@@ -355,7 +355,7 @@ final class IndexManager {
 	}
 
 	/**
-	 * agy_kb_purge handler: one batch, reschedule while rows remain. The
+	 * agyl_kb_purge handler: one batch, reschedule while rows remain. The
 	 * incrementing round makes each self-re-enqueue's args differ from the
 	 * currently-running action's, so AS 3.x dedupe cannot drop it.
 	 *
@@ -371,7 +371,7 @@ final class IndexManager {
 	}
 
 	/**
-	 * agy_kb_reconcile handler: one page of adapter ids compared against the
+	 * agyl_kb_reconcile handler: one page of adapter ids compared against the
 	 * store. There is no stored fingerprint column, so the comparison is a
 	 * heuristic — the fingerprint's modified-time prefix (or embedded content
 	 * hash) against the stored row. When in doubt the item is re-enqueued:
@@ -401,7 +401,7 @@ final class IndexManager {
 			return; // Reconciles are only started via start_reconcile().
 		}
 
-		$option = 'agy_kb_reconcile_seen_' . $source . '_' . $run_id;
+		$option = 'agyl_kb_reconcile_seen_' . $source . '_' . $run_id;
 
 		$adapter = $this->adapters->get( $source );
 		$enabled = $this->enabled_subtypes()[ $source ] ?? array();
@@ -501,7 +501,7 @@ final class IndexManager {
 	 * ------------------------------------------------------------------- */
 
 	/**
-	 * agy_settings_updated listener ('sources' tab only): purge on disable,
+	 * agyl_settings_updated listener ('sources' tab only): purge on disable,
 	 * crawl on enable, product re-crawl on wc_* mask change, post re-crawl on
 	 * elementor_enabled change.
 	 *
@@ -828,10 +828,10 @@ final class IndexManager {
 	}
 
 	/**
-	 * Adaptive batch size, persisted in option agy_kb_batch_size (5–25).
+	 * Adaptive batch size, persisted in option agyl_kb_batch_size (5–25).
 	 */
 	private function batch_size(): int {
-		$size = (int) get_option( 'agy_kb_batch_size', self::BATCH_DEFAULT );
+		$size = (int) get_option( 'agyl_kb_batch_size', self::BATCH_DEFAULT );
 		if ( $size <= 0 ) {
 			$size = self::BATCH_DEFAULT;
 		}
@@ -850,7 +850,7 @@ final class IndexManager {
 		$next = max( self::BATCH_MIN, min( self::BATCH_MAX, $next ) );
 
 		if ( $next !== $current ) {
-			update_option( 'agy_kb_batch_size', $next, false );
+			update_option( 'agyl_kb_batch_size', $next, false );
 		}
 	}
 
@@ -964,7 +964,7 @@ final class IndexManager {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT external_id, status, indexed_at FROM ' . $wpdb->prefix . 'agy_kb_documents WHERE source = %s AND status IN (%s, %s)',
+				'SELECT external_id, status, indexed_at FROM ' . $wpdb->prefix . 'agyl_kb_documents WHERE source = %s AND status IN (%s, %s)',
 				$source,
 				Store::STATUS_ACTIVE,
 				Store::STATUS_EXCLUDED
@@ -1104,7 +1104,7 @@ final class IndexManager {
 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$updated = $wpdb->update(
-				$wpdb->prefix . 'agy_kb_documents',
+				$wpdb->prefix . 'agyl_kb_documents',
 				array( 'status' => Store::STATUS_ERROR ),
 				array( 'id' => (int) $row['id'] )
 			);

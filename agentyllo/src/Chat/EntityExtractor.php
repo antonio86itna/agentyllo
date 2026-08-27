@@ -14,7 +14,7 @@ use Agentyllo\KB\Store;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Matches the visitor text against agy_kb_documents titles (post + product
+ * Matches the visitor text against agyl_kb_documents titles (post + product
  * sources, active only). Deliberately simple: one catalog fetch (top 500 by
  * weight), then in-PHP matching — exact title-in-text first, then word
  * overlap (>= 70% of title words present), then levenshtein <= 2 for
@@ -205,7 +205,7 @@ final class EntityExtractor {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT id, external_id, source, title FROM ' . $wpdb->prefix . "agy_kb_documents
+				'SELECT id, external_id, source, title FROM ' . $wpdb->prefix . "agyl_kb_documents
 				 WHERE source IN ('post', 'product') AND status = %s AND title <> ''
 				 ORDER BY weight DESC, id ASC LIMIT %d",
 				Store::STATUS_ACTIVE,

@@ -51,12 +51,12 @@ final class WidgetLoader {
 	 * Enqueue the widget bundle (defer strategy, no dependencies).
 	 */
 	public function enqueue(): void {
-		if ( ! $this->should_render() || ! file_exists( AGY_DIR . 'assets/build/widget.js' ) ) {
+		if ( ! $this->should_render() || ! file_exists( AGYL_DIR . 'assets/build/widget.js' ) ) {
 			return;
 		}
 
-		$version    = AGY_VERSION;
-		$asset_file = AGY_DIR . 'assets/build/widget.asset.php';
+		$version    = AGYL_VERSION;
+		$asset_file = AGYL_DIR . 'assets/build/widget.asset.php';
 		if ( file_exists( $asset_file ) ) {
 			$asset = require $asset_file;
 			if ( is_array( $asset ) && ! empty( $asset['version'] ) ) {
@@ -66,7 +66,7 @@ final class WidgetLoader {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			AGY_URL . 'assets/build/widget.js',
+			AGYL_URL . 'assets/build/widget.js',
 			array(),
 			$version,
 			array(
@@ -120,7 +120,7 @@ final class WidgetLoader {
 
 	/**
 	 * Render conditions: widget enabled, real frontend request, and the
-	 * agy_widget_should_render filter agrees.
+	 * agyl_widget_should_render filter agrees.
 	 */
 	private function should_render(): bool {
 		if ( is_admin() || is_feed() ) {
@@ -141,6 +141,6 @@ final class WidgetLoader {
 		 *
 		 * @param bool $should_render Default true.
 		 */
-		return (bool) apply_filters( 'agy_widget_should_render', true );
+		return (bool) apply_filters( 'agyl_widget_should_render', true );
 	}
 }
