@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,10 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.2.1 =
+* Change: streaming now runs entirely through the WordPress HTTP API - wp_remote_post() with a write callback attached via the core http_api_curl hook (no direct curl calls in the plugin); verified live with progressive SSE delivery.
+* Change: the unused bundled registry signature file (stable.json.sig) is no longer shipped; signature verification only ever applied to remote syncs and is unchanged.
 
 = 0.2.0 =
 * Add: Addons page — a catalog of optional extensions (each a separate plugin that requires Agentyllo); the free plugin remains complete, nothing is locked.

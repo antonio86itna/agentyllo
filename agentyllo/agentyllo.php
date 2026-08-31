@@ -3,7 +3,7 @@
  * Plugin Name:       Agentyllo
  * Plugin URI:        https://www.agentyllo.com
  * Description:       Intelligent AI assistant for your site: classic agents, an automatic knowledge base, free local AI, and optional OpenAI/Anthropic models.
- * Version:           0.2.0
+ * Version:           0.2.1
  * Requires at least: 6.8
  * Requires PHP:      8.2
  * Author:            Agentyllo
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * can render an admin notice instead of a fatal error. No PHP 8 syntax here.
  */
 
-define( 'AGYL_VERSION', '0.2.0' );
+define( 'AGYL_VERSION', '0.2.1' );
 define( 'AGYL_DB_VERSION', 8 );
 define( 'AGYL_API_VERSION', 1 );
 define( 'AGYL_FILE', __FILE__ );

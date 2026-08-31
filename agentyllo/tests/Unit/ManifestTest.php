@@ -35,12 +35,16 @@ final class ManifestTest extends TestCase {
 
 	public function test_bundled_snapshot_is_valid_and_signed(): void {
 		$file = AGYL_DIR . 'assets/registry/stable.json';
+		// The signature is a test fixture, not a shipped file: WP.org allows
+		// only ordinary asset types in the zip, and nothing at runtime reads
+		// a bundled signature (only remote syncs are verified).
+		$sig = AGYL_DIR . 'tests/fixtures/stable.json.sig';
 		self::assertFileExists( $file );
-		self::assertFileExists( $file . '.sig' );
+		self::assertFileExists( $sig );
 
 		$verifier = new Ed25519Verifier();
-		self::assertTrue( $verifier->verify( (string) file_get_contents( $file ), (string) file_get_contents( $file . '.sig' ) ) );
-		self::assertFalse( $verifier->verify( "tampered\n" . file_get_contents( $file ), (string) file_get_contents( $file . '.sig' ) ) );
+		self::assertTrue( $verifier->verify( (string) file_get_contents( $file ), (string) file_get_contents( $sig ) ) );
+		self::assertFalse( $verifier->verify( "tampered\n" . file_get_contents( $file ), (string) file_get_contents( $sig ) ) );
 	}
 
 	public function test_default_models_and_pricing_come_from_the_registry(): void {
