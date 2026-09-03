@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentyllo — the intelligent assistant for WordPress</title>
+<meta name="description" content="Agentyllo adds a smart AI assistant to any WordPress site: classic no-AI agents answer from your own content, with optional free local AI or your own OpenAI/Anthropic keys. One intelligence. Many agents.">
+<link rel="icon" type="image/png" href="/assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="/assets/img/icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agentyllo — the intelligent assistant for WordPress">
+<meta property="og:description" content="Classic no-AI agents answer from your own content — with optional local or cloud AI. Free, private, GDPR & EU AI Act ready.">
+<meta property="og:image" content="https://www.agentyllo.com/assets/img/og.png">
+<meta property="og:url" content="https://www.agentyllo.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Agentyllo","applicationCategory":"BusinessApplication","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://wordpress.org/plugins/agentyllo/","softwareVersion":"0.3.0","author":{"@type":"Organization","name":"Agentyllo","url":"https://www.agentyllo.com"},"sameAs":["https://wordpress.org/plugins/agentyllo/","https://github.com/antonio86itna/agentyllo"]}
+</script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="nav" id="nav">
+	<div class="wrap nav-inner">
+		<a class="nav-logo" href="/"><img src="/assets/img/logo.png" alt="Agentyllo"></a>
+		<nav class="nav-links" id="navLinks">
+			<a href="#how">How it works</a>
+			<a href="#modes">Modes</a>
+			<a href="#features">Features</a>
+			<a href="#cases">Use cases</a>
+			<a href="#tiers">AI tiers</a>
+			<a href="#addons">Add-ons</a>
+		</nav>
+		<div class="nav-cta">
+			<a class="btn btn-ghost" href="https://github.com/antonio86itna/agentyllo" target="_blank" rel="noopener">GitHub</a>
+			<a class="btn btn-primary" href="https://wordpress.org/plugins/agentyllo/" target="_blank" rel="noopener">Add to WordPress — Free</a>
+			<button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+		</div>
+	</div>
+</header>
+
+<!-- 1. HERO -->
+<section class="hero" id="top">
+	<div class="wrap hero-grid">
+		<div class="hero-copy">
+			<h1>One intelligence.<br><span class="t">Many agents.</span></h1>
+			<p class="lead">Agentyllo adds a smart assistant to your WordPress site. Classic agents answer visitors from your own content — pages, posts, products, menus — and optional AI adds natural prose on top. Facts stay verbatim, never invented.</p>
+			<div class="hero-cta">
+				<a class="btn btn-primary" href="https://wordpress.org/plugins/agentyllo/" target="_blank" rel="noopener">Add to WordPress — Free</a>
+				<a class="btn btn-ghost" href="#how">See how it works</a>
+			</div>
+			<p class="hero-note">Free on WordPress.org · Works with WooCommerce & Elementor · No API key required</p>
+		</div>
+		<div class="hero-visual" id="heroVisual">
+			<div class="glow"></div>
+			<img class="octo" src="/assets/img/octopus.png" alt="Agentyllo octopus mascot" width="460" height="460" fetchpriority="high">
+		</div>
+	</div>
+</section>
+
+<!-- 2. TRUST -->
+<div class="trust">
+	<div class="wrap trust-grid">
+		<div class="reveal"><div class="num" data-count="5">5</div><div class="lbl">Operating modes</div></div>
+		<div class="reveal d1"><div class="num t" data-count="0">0</div><div class="lbl">API keys required</div></div>
+		<div class="reveal d2"><div class="num" data-count="17">17</div><div class="lbl">Classic agents</div></div>
+		<div class="reveal d3"><div class="num">100<span class="t">%</span></div><div class="lbl">Your data, your server</div></div>
+	</div>
+</div>
+
+<!-- 3. HOW IT WORKS -->
+<section id="how">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">How it works</p>
+			<h2>Live answers from content you already have</h2>
+			<p>No training, no data export. Agentyllo reads your site and keeps its knowledge fresh automatically.</p>
+		</div>
+		<div class="steps">
+			<div class="step reveal">
+				<h3>Install & activate</h3>
+				<p>One click from WordPress.org. It works instantly, on any hosting, behind any cache.</p>
+			</div>
+			<div class="step reveal d1">
+				<h3>It reads your site</h3>
+				<p>Pages, posts, products, menus and settings become an automatic, self-updating knowledge base.</p>
+			</div>
+			<div class="step reveal d2">
+				<h3>Visitors ask</h3>
+				<p>A modern, accessible chat widget understands the question and searches your content.</p>
+			</div>
+			<div class="step reveal d3">
+				<h3>It answers — honestly</h3>
+				<p>Prices, stock and contacts are quoted verbatim from your data. It links real pages, never bluffs.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 4. MODES -->
+<section id="modes" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">Five operating modes</p>
+			<h2>Start with zero AI. Add more when you want.</h2>
+			<p>The same assistant scales from pure-PHP classic agents to streamed cloud AI — you choose.</p>
+		</div>
+		<div class="modes-toggle reveal" id="modesToggle" role="tablist">
+			<button class="mode-btn" role="tab" aria-selected="true" data-mode="classic">Classic</button>
+			<button class="mode-btn" role="tab" aria-selected="false" data-mode="free">Free AI</button>
+			<button class="mode-btn" role="tab" aria-selected="false" data-mode="paid">Paid AI</button>
+			<button class="mode-btn" role="tab" aria-selected="false" data-mode="cfree">Classic + Free</button>
+			<button class="mode-btn" role="tab" aria-selected="false" data-mode="cpaid">Classic + Paid</button>
+		</div>
+		<div class="mode-panel reveal">
+			<div class="engines">
+				<div class="engine" data-eng="classic"><span class="dot"></span> Classic agents (pure PHP)</div>
+				<div class="engine" data-eng="local"><span class="dot"></span> Local AI (llama.cpp / Ollama)</div>
+				<div class="engine" data-eng="cloud"><span class="dot"></span> Cloud AI (OpenAI / Anthropic)</div>
+			</div>
+			<div class="mode-copy">
+				<h3 id="modeTitle">Classic — instant & reliable</h3>
+				<p id="modeDesc">Pure-PHP agents answer from your content with no AI model at all. Zero cost, zero setup, runs anywhere. This is the floor every other mode builds on.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 5. FEATURES -->
+<section id="features">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">Powerful by design</p>
+			<h2>Everything you need, nothing locked</h2>
+			<p>The free plugin is complete. Optional add-ons only ever add capabilities on top.</p>
+		</div>
+		<div class="features">
+			<div class="feature reveal">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 8h4M8 12h8M8 16h8"/></svg></div>
+				<h3>Automatic knowledge base</h3>
+				<p>Delta sync and nightly reconciliation keep answers fresh. Disable a source and it disappears from replies immediately.</p>
+			</div>
+			<div class="feature reveal d1">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 7.5-8.5 9C7.5 19.5 4 17 4 12V6l8-3 8 3z"/></svg></div>
+				<h3>Fact-guard, no hallucinations</h3>
+				<p>Prices, stock, phone numbers and links come verbatim from your content. A structural guard rejects any answer your data doesn't back.</p>
+			</div>
+			<div class="feature reveal d2">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
+				<h3>Bring your own AI</h3>
+				<p>Free local engine (llama.cpp/Ollama) or your own OpenAI/Anthropic key. Streamed answers, a monthly cost cap, and a circuit breaker that always falls back to classic.</p>
+			</div>
+			<div class="feature reveal">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5L12 20l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/></svg></div>
+				<h3>Backend copilot</h3>
+				<p>Manage the knowledge base, settings and memories by command — every change is proposed first and applied only when you confirm.</p>
+			</div>
+			<div class="feature reveal d1">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+				<h3>GDPR & EU AI Act ready</h3>
+				<p>Consent evidence, retention, PII redaction, data export/erasure, an assistant disclosure badge and a generated transparency page.</p>
+			</div>
+			<div class="feature reveal d2">
+				<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></div>
+				<h3>WooCommerce & Elementor aware</h3>
+				<p>Live product prices and stock via WooCommerce; Elementor content indexed cleanly. Cache-safe on any host.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 6. CHAT DEMO -->
+<section>
+	<div class="wrap">
+		<div class="demo reveal" id="demo">
+			<div>
+				<h2>It answers like it read your whole site — because it did.</h2>
+				<p>Real question, real answer, the exact fact quoted from your content with a link to the source. This is the classic engine — no AI key needed.</p>
+			</div>
+			<div class="chat" id="chat" aria-hidden="true"></div>
+		</div>
+	</div>
+</section>
+
+<!-- 7. USE CASES -->
+<section id="cases">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">Where it shines</p>
+			<h2>One assistant, every kind of site</h2>
+		</div>
+		<div class="cases">
+			<div class="case reveal">
+				<div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></div>
+				<div><h3>E-commerce</h3><p>Answers on products, sizes, stock, shipping and returns — with live WooCommerce prices and a link straight to the product.</p></div>
+			</div>
+			<div class="case reveal d1">
+				<div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+				<div><h3>Local & services</h3><p>Opening hours, contacts, booking info and policies — instantly, in the visitor's language when AI is on.</p></div>
+			</div>
+			<div class="case reveal d2">
+				<div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+				<div><h3>Content & blogs</h3><p>Turns a deep archive into answers. Visitors get the paragraph they need plus a link to the full post.</p></div>
+			</div>
+			<div class="case reveal d3">
+				<div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14M5 8a2 2 0 1 1 0-4h14a2 2 0 1 1 0 4M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/></svg></div>
+				<div><h3>Multilingual sites</h3><p>WPML/Polylang aware — each translation is indexed in its own language and answered natively.</p></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 8. AI TIERS -->
+<section id="tiers" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">Own your AI</p>
+			<h2>Three ways to power it — all free from us</h2>
+			<p>Agentyllo never charges for AI. You either use no AI, run it yourself, or bring your own provider key.</p>
+		</div>
+		<div class="tiers">
+			<div class="tier reveal">
+				<span class="tag">Always free</span>
+				<h3>Classic</h3>
+				<p class="price">No AI · No key · No cost</p>
+				<ul><li>Pure-PHP agents</li><li>Automatic knowledge base</li><li>Runs on any hosting</li><li>Facts verbatim from your site</li></ul>
+			</div>
+			<div class="tier featured reveal d1">
+				<span class="tag">Free local AI</span>
+				<h3>Run it yourself</h3>
+				<p class="price">Your server · No provider fees</p>
+				<ul><li>llama.cpp, Ollama, LM Studio</li><li>Or the free Local AI add-on</li><li>Streamed natural answers</li><li>Data never leaves your server</li></ul>
+			</div>
+			<div class="tier reveal d2">
+				<span class="tag">Your key</span>
+				<h3>Cloud AI</h3>
+				<p class="price">Your OpenAI / Anthropic key</p>
+				<ul><li>You pay the provider directly</li><li>Monthly cost cap you control</li><li>Streamed, with fallback to classic</li><li>Keys stored encrypted</li></ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 9. ADDONS -->
+<section id="addons">
+	<div class="wrap">
+		<div class="section-head reveal">
+			<p class="eyebrow">Grows with you</p>
+			<h2>The add-on ecosystem</h2>
+			<p>Optional plugins that require Agentyllo. The core stays complete — these only add extra powers.</p>
+		</div>
+		<div class="addons">
+			<div class="addon reveal"><span class="badge avail">Available</span><h3>Local AI</h3><p>One-click verified llama.cpp engines and open models on your own server.</p></div>
+			<div class="addon reveal d1"><span class="badge soon">Soon</span><h3>Document Import</h3><p>Feed the knowledge base with PDFs, XLSX and large CSVs.</p></div>
+			<div class="addon reveal d2"><span class="badge soon">Soon</span><h3>Advanced Analytics</h3><p>Unlimited history, CSV export and topic clustering of questions.</p></div>
+			<div class="addon reveal"><span class="badge soon">Soon</span><h3>White Label</h3><p>Full theme control and your brand everywhere — no Agentyllo mentions.</p></div>
+			<div class="addon reveal d1"><span class="badge soon">Soon</span><h3>Leads & CRM</h3><p>Capture leads in the conversation and export to your CRM.</p></div>
+			<div class="addon reveal d2"><span class="badge soon">Soon</span><h3>Forms in Chat</h3><p>Bookings and requests without leaving the chat.</p></div>
+			<div class="addon reveal"><span class="badge soon">Soon</span><h3>Product Advisor</h3><p>Guided selling and recommendations for WooCommerce.</p></div>
+			<div class="addon reveal d1"><span class="badge soon">Soon</span><h3>Handoff Live</h3><p>A human takes over the conversation in one click.</p></div>
+			<div class="addon reveal d2"><span class="badge soon">Soon</span><h3>Omnichannel & Voice</h3><p>WhatsApp, Messenger, Telegram — and talk to your site.</p></div>
+		</div>
+	</div>
+</section>
+
+<!-- 10. FINAL CTA -->
+<section class="final">
+	<div class="wrap">
+		<img class="octo-mini reveal" src="/assets/img/octopus.png" alt="" width="120" height="120">
+		<h2 class="reveal">Give your site a brain today</h2>
+		<p class="reveal d1">Free on WordPress.org. Requires WordPress 6.8+ and PHP 8.2+. Try the live demo in your browser — no install.</p>
+		<div class="hero-cta reveal d2">
+			<a class="btn btn-primary" href="https://wordpress.org/plugins/agentyllo/" target="_blank" rel="noopener">Add to WordPress — Free</a>
+			<a class="btn btn-navy" href="https://www.agentyllo.com/downloads/playground-link.html" target="_blank" rel="noopener">Try the live demo</a>
+		</div>
+	</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div>
+				<div class="wm">Agent<span class="t">yllo</span></div>
+				<p class="footer-tag">The intelligent assistant for WordPress. One intelligence, many agents.</p>
+			</div>
+			<div class="footer-col">
+				<h4>Product</h4>
+				<a href="#features">Features</a>
+				<a href="#tiers">AI tiers</a>
+				<a href="#addons">Add-ons</a>
+				<a href="https://wordpress.org/plugins/agentyllo/" target="_blank" rel="noopener">WordPress.org</a>
+			</div>
+			<div class="footer-col">
+				<h4>Resources</h4>
+				<a href="https://github.com/antonio86itna/agentyllo" target="_blank" rel="noopener">GitHub</a>
+				<a href="https://www.agentyllo.com/downloads/playground-link.html" target="_blank" rel="noopener">Live demo</a>
+				<a href="/terms/">Terms</a>
+				<a href="/privacy/">Privacy</a>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<span>© 2026 Agentyllo · GPL-2.0-or-later</span>
+			<span>Model updates served as a signed, data-only manifest from registry.agentyllo.com</span>
+		</div>
+	</div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>
