@@ -289,14 +289,21 @@ final class ConfigController extends Controller {
 	 * @return array{light: array<string, string>, dark: array<string, string>}
 	 */
 	private function color_tokens( string $primary ): array {
-		$primary = sanitize_hex_color( $primary ) ?: '#3858e9';
+		$primary = sanitize_hex_color( $primary ) ?: '#0a2a4e';
 
 		$primary_fg = self::relative_luminance( $primary ) > 0.5 ? '#111' : '#fff';
+
+		// Teal brand accent — used by the widget for focus rings on dark
+		// surfaces, dark-theme links and the mascot eyes. It is deliberately a
+		// constant (not a second user setting) to keep the options surface
+		// small; the widget only ever paints it where contrast is safe.
+		$accent = '#14d6c7';
 
 		return array(
 			'light' => array(
 				'primary'    => $primary,
 				'primary_fg' => $primary_fg,
+				'accent'     => $accent,
 				'surface'    => '#ffffff',
 				'surface_2'  => '#f6f7f9',
 				'text'       => '#1d2327',
@@ -306,6 +313,7 @@ final class ConfigController extends Controller {
 			'dark'  => array(
 				'primary'    => $primary,
 				'primary_fg' => $primary_fg,
+				'accent'     => $accent,
 				'surface'    => '#1d2327',
 				'surface_2'  => '#2c3338',
 				'text'       => '#f0f0f1',

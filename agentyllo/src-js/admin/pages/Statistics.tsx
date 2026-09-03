@@ -117,7 +117,7 @@ export default function Statistics() {
 						<CardBody>
 							<div className="agy-muted">{ label }</div>
 							<div className="agy-kpi">{ value }</div>
-							{ spark && spark.length > 1 && <Sparkline values={ spark } label={ label } color="#3858e9" /> }
+							{ spark && spark.length > 1 && <Sparkline values={ spark } label={ label } color="#0a2a4e" /> }
 						</CardBody>
 					</Card>
 				) ) }

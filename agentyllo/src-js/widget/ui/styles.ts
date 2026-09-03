@@ -10,8 +10,9 @@
  */
 export const WIDGET_CSS = `
 :host {
-	--agy-primary: #3858e9;
+	--agy-primary: #0a2a4e;
 	--agy-primary-fg: #ffffff;
+	--agy-accent: #14d6c7;
 	--agy-bg: #ffffff;
 	--agy-fg: #1e1e1e;
 	--agy-muted: #646970;
@@ -21,11 +22,11 @@ export const WIDGET_CSS = `
 	--agy-bubble-user-fg: var(--agy-primary-fg);
 	--agy-bubble-bot: var(--agy-surface);
 	--agy-bubble-bot-fg: var(--agy-fg);
-	--agy-info-bg: #e7f0fa;
+	--agy-info-bg: #e6faf8;
 	--agy-info-fg: #0a4b78;
 	--agy-warn-bg: #fcf0e4;
 	--agy-warn-fg: #8a4d00;
-	--agy-ring: #1d35b4;
+	--agy-ring: #0a2a4e;
 	--agy-radius: 16px;
 	--agy-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
 	--agy-z: 99990;
@@ -34,31 +35,33 @@ export const WIDGET_CSS = `
 }
 
 :host([data-theme='dark']) {
+	--agy-accent: #14d6c7;
 	--agy-bg: #1f2023;
 	--agy-fg: #e4e4e7;
 	--agy-muted: #a7aaad;
 	--agy-border: #3c434a;
 	--agy-surface: #2c2d33;
-	--agy-info-bg: #1d2d3f;
-	--agy-info-fg: #9ec2e6;
+	--agy-info-bg: #16333a;
+	--agy-info-fg: #8fe6dd;
 	--agy-warn-bg: #3d2e17;
 	--agy-warn-fg: #f0c37e;
-	--agy-ring: #9db2ff;
+	--agy-ring: var(--agy-accent);
 	--agy-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
 	:host([data-theme='auto']) {
+		--agy-accent: #14d6c7;
 		--agy-bg: #1f2023;
 		--agy-fg: #e4e4e7;
 		--agy-muted: #a7aaad;
 		--agy-border: #3c434a;
 		--agy-surface: #2c2d33;
-		--agy-info-bg: #1d2d3f;
-		--agy-info-fg: #9ec2e6;
+		--agy-info-bg: #16333a;
+		--agy-info-fg: #8fe6dd;
 		--agy-warn-bg: #3d2e17;
 		--agy-warn-fg: #f0c37e;
-		--agy-ring: #9db2ff;
+		--agy-ring: var(--agy-accent);
 		--agy-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
 	}
 }
@@ -210,11 +213,24 @@ export const WIDGET_CSS = `
 	color: var(--agy-primary-fg);
 }
 
+.agy-avatar {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.12);
+	color: var(--agy-primary-fg);
+}
+
 .agy-header-id {
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
 	min-width: 0;
+	flex: 1 1 auto;
 }
 
 .agy-title {

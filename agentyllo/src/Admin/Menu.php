@@ -23,9 +23,10 @@ final class Menu {
 	public const SLUG = 'agentyllo';
 
 	/**
-	 * Chat-bubble menu icon (currentColor so admin color schemes apply).
+	 * Octopus mascot menu icon (currentColor so admin color schemes apply):
+	 * a domed head with two eyes and four curling tentacles.
 	 */
-	private const ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.9 3 3 6.5 3 10.8c0 2.3 1.1 4.4 3 5.8-.1.9-.5 2.2-1.7 3.4-.2.2 0 .6.3.6 2.2-.2 3.8-1 4.8-1.7.8.2 1.7.3 2.6.3 5.1 0 9-3.5 9-7.8S17.1 3 12 3zm-4 9.3c-.8 0-1.5-.7-1.5-1.5S7.2 9.3 8 9.3s1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm4 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm4 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5z"/></svg>';
+	private const ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13a9 9 0 0 1 18 0c0 1.7-1.4 2.5-2.7 2.5-1.3 0-1.3-1.5-2.6-1.5s-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5-1.3 0-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5C4.4 15.6 3 14.7 3 13z"/><circle cx="9.4" cy="11" r="1.4"/><circle cx="14.6" cy="11" r="1.4"/></svg>';
 
 	/**
 	 * Admin pages: slug suffix => [menu label, page id passed to the SPA].

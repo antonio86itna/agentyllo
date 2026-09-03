@@ -32,8 +32,8 @@ export default function App( { page }: { page: string } ) {
 	return (
 		<div className="agy-admin">
 			<header className="agy-admin__header">
-				<h1>
-					{ __( 'Agentyllo', 'agentyllo' ) }
+				<h1 className="agy-wordmark">
+					<span className="agy-wm-a">Agent</span><span className="agy-wm-b">yllo</span>
 					<span className="agy-admin__version">v{ window.agylAdmin.version }</span>
 				</h1>
 			</header>

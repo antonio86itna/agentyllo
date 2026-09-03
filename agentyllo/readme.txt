@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,11 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.3.0 =
+* New brand identity: a friendly octopus mascot and a navy + teal palette across the plugin, the chat widget and the WordPress.org assets. "One intelligence. Many agents."
+* The chat widget launcher and header now show the mascot; the admin menu icon and wordmark are refreshed. Colours are WCAG-checked (white on navy, teal accents on dark surfaces).
+* No functional changes — your settings, knowledge base and data are untouched. A custom widget primary colour you set is still respected.
 
 = 0.2.1 =
 * Change: streaming now runs entirely through the WordPress HTTP API - wp_remote_post() with a write callback attached via the core http_api_curl hook (no direct curl calls in the plugin); verified live with progressive SSE delivery.

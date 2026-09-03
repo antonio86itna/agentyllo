@@ -71,7 +71,6 @@ const DEFAULT_STRINGS: Record< string, string > = {
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
-const ICON_CHAT = 'M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z';
 const ICON_CLOSE = 'M6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12 19 6.4 17.6 5 12 10.6 6.4 5z';
 const ICON_SEND = 'M2 21l21-9L2 3v7l15 2-15 2v7z';
 
@@ -86,6 +85,35 @@ function svgIcon( d: string, size = 24 ): SVGSVGElement {
 	path.setAttribute( 'd', d );
 	path.setAttribute( 'fill', 'currentColor' );
 	svg.appendChild( path );
+	return svg;
+}
+
+// Octopus mascot mark: domed head + four curling tentacles in currentColor
+// (white on the navy launcher/header, flips for a light custom primary), with
+// teal accent eyes. Decorative only — always aria-hidden.
+const ICON_OCTOPUS_BODY =
+	'M3 13a9 9 0 0 1 18 0c0 1.7-1.4 2.5-2.7 2.5-1.3 0-1.3-1.5-2.6-1.5s-1.3 1.7-2.6 1.7'
+	+ '-1.3 0-1.3-1.5-2.6-1.5-1.3 0-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5C4.4 15.6 3 14.7 3 13z';
+
+function octopusMark( size = 28 ): SVGSVGElement {
+	const svg = document.createElementNS( SVG_NS, 'svg' );
+	svg.setAttribute( 'viewBox', '0 0 24 24' );
+	svg.setAttribute( 'width', String( size ) );
+	svg.setAttribute( 'height', String( size ) );
+	svg.setAttribute( 'aria-hidden', 'true' );
+	svg.setAttribute( 'focusable', 'false' );
+	const body = document.createElementNS( SVG_NS, 'path' );
+	body.setAttribute( 'd', ICON_OCTOPUS_BODY );
+	body.setAttribute( 'fill', 'currentColor' );
+	svg.appendChild( body );
+	for ( const cx of [ 9.4, 14.6 ] ) {
+		const eye = document.createElementNS( SVG_NS, 'circle' );
+		eye.setAttribute( 'cx', String( cx ) );
+		eye.setAttribute( 'cy', '11' );
+		eye.setAttribute( 'r', '1.5' );
+		eye.setAttribute( 'fill', 'var(--agy-accent, #14d6c7)' );
+		svg.appendChild( eye );
+	}
 	return svg;
 }
 
@@ -247,6 +275,11 @@ export class AgentylloChat extends HTMLElement {
 		if ( primaryFg ) {
 			this.style.setProperty( '--agy-primary-fg', primaryFg );
 		}
+		// Teal brand accent (focus rings on dark, links, mascot eyes).
+		const accent = c.tokens?.light?.accent || c.tokens?.dark?.accent;
+		if ( accent ) {
+			this.style.setProperty( '--agy-accent', accent );
+		}
 		if ( c.lang ) {
 			this.setAttribute( 'lang', c.lang );
 		}
@@ -279,7 +312,7 @@ export class AgentylloChat extends HTMLElement {
 		launcher.setAttribute( 'aria-expanded', 'false' );
 		launcher.setAttribute( 'aria-controls', 'agy-panel' );
 		launcher.setAttribute( 'aria-haspopup', 'dialog' );
-		launcher.appendChild( svgIcon( ICON_CHAT, 26 ) );
+		launcher.appendChild( octopusMark( 30 ) );
 		launcher.addEventListener( 'click', () => this.toggle() );
 		this.launcher = launcher;
 		this.root.appendChild( launcher );
@@ -347,6 +380,13 @@ export class AgentylloChat extends HTMLElement {
 	private buildHeader(): HTMLElement {
 		const header = document.createElement( 'header' );
 		header.className = 'agy-header';
+
+		// Mascot avatar (decorative; the title text already names the assistant).
+		const avatar = document.createElement( 'span' );
+		avatar.className = 'agy-avatar';
+		avatar.setAttribute( 'aria-hidden', 'true' );
+		avatar.appendChild( octopusMark( 26 ) );
+		header.appendChild( avatar );
 
 		const id = document.createElement( 'div' );
 		id.className = 'agy-header-id';
