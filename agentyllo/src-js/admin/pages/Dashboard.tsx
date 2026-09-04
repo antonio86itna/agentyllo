@@ -268,7 +268,7 @@ export default function Dashboard() {
 					</p>
 					<Sparkline
 						label={ __( 'Conversations per day', 'agentyllo' ) }
-						color="#0a2a4e"
+						color="#4f46e5"
 						values={ ( () => {
 							const byDay: Record< string, number > = {};
 							for ( const row of dashboard.stats?.daily || [] ) {

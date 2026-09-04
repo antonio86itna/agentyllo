@@ -10,9 +10,9 @@
  */
 export const WIDGET_CSS = `
 :host {
-	--agy-primary: #0a2a4e;
+	--agy-primary: #4f46e5;
 	--agy-primary-fg: #ffffff;
-	--agy-accent: #14d6c7;
+	--agy-accent: #818cf8;
 	--agy-bg: #ffffff;
 	--agy-fg: #1e1e1e;
 	--agy-muted: #646970;
@@ -22,11 +22,11 @@ export const WIDGET_CSS = `
 	--agy-bubble-user-fg: var(--agy-primary-fg);
 	--agy-bubble-bot: var(--agy-surface);
 	--agy-bubble-bot-fg: var(--agy-fg);
-	--agy-info-bg: #e6faf8;
-	--agy-info-fg: #0a4b78;
+	--agy-info-bg: #eef2ff;
+	--agy-info-fg: #3730a3;
 	--agy-warn-bg: #fcf0e4;
 	--agy-warn-fg: #8a4d00;
-	--agy-ring: #0a2a4e;
+	--agy-ring: #4f46e5;
 	--agy-radius: 16px;
 	--agy-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
 	--agy-z: 99990;
@@ -35,14 +35,14 @@ export const WIDGET_CSS = `
 }
 
 :host([data-theme='dark']) {
-	--agy-accent: #14d6c7;
+	--agy-accent: #818cf8;
 	--agy-bg: #1f2023;
 	--agy-fg: #e4e4e7;
 	--agy-muted: #a7aaad;
 	--agy-border: #3c434a;
 	--agy-surface: #2c2d33;
-	--agy-info-bg: #16333a;
-	--agy-info-fg: #8fe6dd;
+	--agy-info-bg: #26294a;
+	--agy-info-fg: #c7d2fe;
 	--agy-warn-bg: #3d2e17;
 	--agy-warn-fg: #f0c37e;
 	--agy-ring: var(--agy-accent);
@@ -51,14 +51,14 @@ export const WIDGET_CSS = `
 
 @media (prefers-color-scheme: dark) {
 	:host([data-theme='auto']) {
-		--agy-accent: #14d6c7;
+		--agy-accent: #818cf8;
 		--agy-bg: #1f2023;
 		--agy-fg: #e4e4e7;
 		--agy-muted: #a7aaad;
 		--agy-border: #3c434a;
 		--agy-surface: #2c2d33;
-		--agy-info-bg: #16333a;
-		--agy-info-fg: #8fe6dd;
+		--agy-info-bg: #26294a;
+		--agy-info-fg: #c7d2fe;
 		--agy-warn-bg: #3d2e17;
 		--agy-warn-fg: #f0c37e;
 		--agy-ring: var(--agy-accent);

@@ -20,18 +20,9 @@
 		letter-spacing: -0.01em;
 	}
 
-	.agy-wm-a {
-		color: #0a2a4e;
-	}
-
-	// "yllo" navy→teal gradient with a solid-navy fallback for engines
-	// without background-clip:text (never renders invisible on white).
+	.agy-wm-a,
 	.agy-wm-b {
-		color: #0a2a4e;
-		background: linear-gradient(90deg, #0a2a4e 0%, #0e9e92 55%, #14d6c7 100%);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: #0f172a;
 	}
 
 	&__version {
@@ -68,8 +59,8 @@
 		color: #3c4650;
 	}
 	&[data-tier='t3'] {
-		background: #e6eef7;
-		color: #0a2a4e;
+		background: #eef2ff;
+		color: #4f46e5;
 	}
 }
 
@@ -166,7 +157,7 @@
 
 .agy-sparkline {
 	display: block;
-	color: #0a2a4e;
+	color: #4f46e5;
 }
 
 .agy-transcript {
@@ -181,7 +172,7 @@
 		background: #f6f7f7;
 
 		&--user {
-			background: #eef2f7;
+			background: #eef2ff;
 		}
 	}
 
@@ -240,7 +231,7 @@
 
 	&__fill {
 		height: 100%;
-		background: var(--wp-admin-theme-color, #0a2a4e);
+		background: var(--wp-admin-theme-color, #4f46e5);
 		transition: width .3s ease;
 	}
 }
@@ -258,7 +249,7 @@
 	padding: 8px 14px;
 	border-radius: 999px;
 	border: 0;
-	background: var(--wp-admin-theme-color, #0a2a4e);
+	background: var(--wp-admin-theme-color, #4f46e5);
 	color: #fff;
 	font-weight: 600;
 	cursor: pointer;
@@ -408,7 +399,7 @@ body.agy-cp-open .agy-admin {
 	margin-bottom: 12px;
 
 	&.is-user .agy-cp-text {
-		background: #eef2f7;
+		background: #eef2ff;
 		border-radius: 8px;
 		padding: 8px 10px;
 	}
@@ -431,7 +422,7 @@ body.agy-cp-open .agy-admin {
 
 .agy-cp-card {
 	border: 1px solid #c3c4c7;
-	border-left: 4px solid var(--wp-admin-theme-color, #0a2a4e);
+	border-left: 4px solid var(--wp-admin-theme-color, #4f46e5);
 	border-radius: 4px;
 	padding: 10px 12px;
 	margin: 8px 0;

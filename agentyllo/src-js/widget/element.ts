@@ -88,30 +88,57 @@ function svgIcon( d: string, size = 24 ): SVGSVGElement {
 	return svg;
 }
 
-// Octopus mascot mark: domed head + four curling tentacles in currentColor
-// (white on the navy launcher/header, flips for a light custom primary), with
-// teal accent eyes. Decorative only — always aria-hidden.
-const ICON_OCTOPUS_BODY =
-	'M3 13a9 9 0 0 1 18 0c0 1.7-1.4 2.5-2.7 2.5-1.3 0-1.3-1.5-2.6-1.5s-1.3 1.7-2.6 1.7'
-	+ '-1.3 0-1.3-1.5-2.6-1.5-1.3 0-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5C4.4 15.6 3 14.7 3 13z';
+// Spark-chat launcher mark: a chat bubble in currentColor carrying the brand
+// spark (long top point, echoing the A-Core apex) in the accent color.
+// Decorative only — always aria-hidden.
+const ICON_BUBBLE =
+	'M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-8.6L6 21.6a.9.9 0 0 1-1.5-.7V18H5'
+	+ 'a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z';
+const ICON_SPARK =
+	'M12 4.6 13.4 8.9 17.4 10.5 13.4 12.1 12 16 10.6 12.1 6.6 10.5 10.6 8.9 Z';
 
-function octopusMark( size = 28 ): SVGSVGElement {
+function sparkChatMark( size = 28 ): SVGSVGElement {
 	const svg = document.createElementNS( SVG_NS, 'svg' );
 	svg.setAttribute( 'viewBox', '0 0 24 24' );
 	svg.setAttribute( 'width', String( size ) );
 	svg.setAttribute( 'height', String( size ) );
 	svg.setAttribute( 'aria-hidden', 'true' );
 	svg.setAttribute( 'focusable', 'false' );
-	const body = document.createElementNS( SVG_NS, 'path' );
-	body.setAttribute( 'd', ICON_OCTOPUS_BODY );
-	body.setAttribute( 'fill', 'currentColor' );
-	svg.appendChild( body );
-	for ( const cx of [ 9.4, 14.6 ] ) {
-		const eye = document.createElementNS( SVG_NS, 'circle' );
-		eye.setAttribute( 'cx', String( cx ) );
-		eye.setAttribute( 'cy', '11' );
-		eye.setAttribute( 'r', '1.5' );
-		eye.setAttribute( 'fill', 'var(--agy-accent, #14d6c7)' );
+	const bubble = document.createElementNS( SVG_NS, 'path' );
+	bubble.setAttribute( 'd', ICON_BUBBLE );
+	bubble.setAttribute( 'fill', 'currentColor' );
+	svg.appendChild( bubble );
+	const spark = document.createElementNS( SVG_NS, 'path' );
+	spark.setAttribute( 'd', ICON_SPARK );
+	spark.setAttribute( 'fill', 'var(--agy-accent, #818cf8)' );
+	svg.appendChild( spark );
+	return svg;
+}
+
+// Assistant avatar: the concierge face — a dark panel with two glowing
+// arc eyes in the accent color. Decorative only — always aria-hidden.
+function conciergeFace( size = 26 ): SVGSVGElement {
+	const svg = document.createElementNS( SVG_NS, 'svg' );
+	svg.setAttribute( 'viewBox', '0 0 24 24' );
+	svg.setAttribute( 'width', String( size ) );
+	svg.setAttribute( 'height', String( size ) );
+	svg.setAttribute( 'aria-hidden', 'true' );
+	svg.setAttribute( 'focusable', 'false' );
+	const panel = document.createElementNS( SVG_NS, 'rect' );
+	panel.setAttribute( 'x', '3.4' );
+	panel.setAttribute( 'y', '5' );
+	panel.setAttribute( 'width', '17.2' );
+	panel.setAttribute( 'height', '14' );
+	panel.setAttribute( 'rx', '5.5' );
+	panel.setAttribute( 'fill', 'currentColor' );
+	svg.appendChild( panel );
+	for ( const x of [ 7.1, 12.9 ] ) {
+		const eye = document.createElementNS( SVG_NS, 'path' );
+		eye.setAttribute( 'd', `M${ x } 12.9 q 2 -2.6 4 0` );
+		eye.setAttribute( 'stroke', 'var(--agy-accent, #818cf8)' );
+		eye.setAttribute( 'stroke-width', '1.7' );
+		eye.setAttribute( 'stroke-linecap', 'round' );
+		eye.setAttribute( 'fill', 'none' );
 		svg.appendChild( eye );
 	}
 	return svg;
@@ -312,7 +339,7 @@ export class AgentylloChat extends HTMLElement {
 		launcher.setAttribute( 'aria-expanded', 'false' );
 		launcher.setAttribute( 'aria-controls', 'agy-panel' );
 		launcher.setAttribute( 'aria-haspopup', 'dialog' );
-		launcher.appendChild( octopusMark( 30 ) );
+		launcher.appendChild( sparkChatMark( 30 ) );
 		launcher.addEventListener( 'click', () => this.toggle() );
 		this.launcher = launcher;
 		this.root.appendChild( launcher );
@@ -385,7 +412,7 @@ export class AgentylloChat extends HTMLElement {
 		const avatar = document.createElement( 'span' );
 		avatar.className = 'agy-avatar';
 		avatar.setAttribute( 'aria-hidden', 'true' );
-		avatar.appendChild( octopusMark( 26 ) );
+		avatar.appendChild( conciergeFace( 26 ) );
 		header.appendChild( avatar );
 
 		const id = document.createElement( 'div' );

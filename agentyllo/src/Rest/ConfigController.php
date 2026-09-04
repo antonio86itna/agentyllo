@@ -289,7 +289,7 @@ final class ConfigController extends Controller {
 	 * @return array{light: array<string, string>, dark: array<string, string>}
 	 */
 	private function color_tokens( string $primary ): array {
-		$primary = sanitize_hex_color( $primary ) ?: '#0a2a4e';
+		$primary = sanitize_hex_color( $primary ) ?: '#4f46e5';
 
 		$primary_fg = self::relative_luminance( $primary ) > 0.5 ? '#111' : '#fff';
 
@@ -297,7 +297,7 @@ final class ConfigController extends Controller {
 		// surfaces, dark-theme links and the mascot eyes. It is deliberately a
 		// constant (not a second user setting) to keep the options surface
 		// small; the widget only ever paints it where contrast is safe.
-		$accent = '#14d6c7';
+		$accent = '#818cf8';
 
 		return array(
 			'light' => array(

@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.0 =
+* Visual refresh: the new Indigo brand identity. New A-Core logo, refined widget launcher and assistant avatar, indigo accent palette across the widget and the admin.
 
 = 0.3.0 =
 * New brand identity: a friendly octopus mascot and a navy + teal palette across the plugin, the chat widget and the WordPress.org assets. "One intelligence. Many agents."

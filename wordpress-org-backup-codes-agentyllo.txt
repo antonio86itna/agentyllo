@@ -1,0 +1,15 @@
+Two-Factor backup codes for your WordPress.org account:
+
+1. 83940712
+2. 38756150
+3. 31980275
+4. 04882793
+5. 09561308
+6. 70344872
+7. 81653413
+8. 51916440
+9. 84211506
+10. 49966051
+
+Each code can only be used once.
+These codes are the only way to recover your WordPress.org account if you lose access to your phone, authentication app, or other two-factor method.

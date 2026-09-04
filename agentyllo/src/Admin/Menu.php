@@ -23,10 +23,11 @@ final class Menu {
 	public const SLUG = 'agentyllo';
 
 	/**
-	 * Octopus mascot menu icon (currentColor so admin color schemes apply):
-	 * a domed head with two eyes and four curling tentacles.
+	 * A-Core brand mark menu icon (currentColor so admin color schemes
+	 * apply): an A whose apex is the core node and whose crossbar carries
+	 * the two agent nodes.
 	 */
-	private const ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13a9 9 0 0 1 18 0c0 1.7-1.4 2.5-2.7 2.5-1.3 0-1.3-1.5-2.6-1.5s-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5-1.3 0-1.3 1.7-2.6 1.7-1.3 0-1.3-1.5-2.6-1.5C4.4 15.6 3 14.7 3 13z"/><circle cx="9.4" cy="11" r="1.4"/><circle cx="14.6" cy="11" r="1.4"/></svg>';
+	private const ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M5.7 20.5 12 4.75M18.3 20.5 12 4.75" stroke-width="2"/><path d="M8.45 15.75h7.1" stroke-width="1.4"/><circle cx="8.45" cy="15.75" r="1.45" fill="currentColor" stroke="none"/><circle cx="15.55" cy="15.75" r="1.45" fill="currentColor" stroke="none"/><circle cx="12" cy="4.75" r="2.2" fill="currentColor" stroke="none"/></svg>';
 
 	/**
 	 * Admin pages: slug suffix => [menu label, page id passed to the SPA].

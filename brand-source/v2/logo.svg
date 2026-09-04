@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Agentyllo "A-Core" mark: the indigo core (one intelligence) crowns an A whose
+       crossbar carries the agent nodes (many agents). Ink #0F172A / Indigo #4F46E5;
+       on dark surfaces use white + #818CF8. -->
+  <g fill="none" stroke="#0F172A" stroke-width="4" stroke-linecap="round">
+    <path d="M11.4 41 L24 9.5"/>
+    <path d="M36.6 41 L24 9.5"/>
+  </g>
+  <path d="M16.9 31.5 H31.1" stroke="#0F172A" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="16.9" cy="31.5" r="2.9" fill="#0F172A"/>
+  <circle cx="31.1" cy="31.5" r="2.9" fill="#0F172A"/>
+  <circle cx="24" cy="9.5" r="4.4" fill="#4F46E5"/>
+</svg>

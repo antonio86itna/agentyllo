@@ -46,6 +46,24 @@ final class Migrator {
 	 * @return array<int, callable(): void>
 	 */
 	private function steps(): array {
-		return array();
+		return array(
+			// v9 (plugin 0.4.0): the brand default widget color changed to
+			// indigo. Sites still on a previous DEFAULT get the new default;
+			// any custom color the owner picked is left untouched.
+			9 => static function (): void {
+				$widget = get_option( 'agyl_settings_widget', array() );
+
+				if ( ! is_array( $widget ) || empty( $widget['primary_color'] ) ) {
+					return;
+				}
+
+				$old_defaults = array( '#3858e9', '#0a2a4e' );
+
+				if ( in_array( strtolower( (string) $widget['primary_color'] ), $old_defaults, true ) ) {
+					$widget['primary_color'] = '#4f46e5';
+					update_option( 'agyl_settings_widget', $widget );
+				}
+			},
+		);
 	}
 }

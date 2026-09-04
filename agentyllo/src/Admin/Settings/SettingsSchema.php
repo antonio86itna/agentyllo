@@ -83,7 +83,7 @@ final class SettingsSchema {
 					'values'  => array( 'auto', 'light', 'dark' ),
 					'default' => 'auto',
 				),
-				'primary_color'       => array( 'type' => 'string', 'default' => '#0a2a4e', 'maxlen' => 7 ),
+				'primary_color'       => array( 'type' => 'string', 'default' => '#4f46e5', 'maxlen' => 7 ),
 				'welcome_message'     => array( 'type' => 'text', 'default' => '', 'maxlen' => 300 ),
 				'launcher_teaser'     => array( 'type' => 'string', 'default' => '', 'maxlen' => 100 ),
 				'show_thumbnails'     => array( 'type' => 'bool', 'default' => true ),
