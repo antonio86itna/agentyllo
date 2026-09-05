@@ -141,7 +141,9 @@ final class ChatController extends Controller {
 			}
 		}
 
-		$session = $this->sessions->create( $ip );
+		$ip_mode    = (string) $this->settings->value( 'privacy', 'ip_mode' );
+		$stored_ip  = SessionManager::store_ip( $ip, $ip_mode );
+		$session    = $this->sessions->create_stored( $stored_ip );
 		if ( null === $session ) {
 			return $this->error( 'agyl_session_failed', __( 'Could not start a chat session.', 'agentyllo' ), 500 );
 		}
@@ -494,10 +496,30 @@ final class ChatController extends Controller {
 	}
 
 	/**
-	 * The remote IP, or null when unavailable. REMOTE_ADDR only — proxy
-	 * headers are spoofable and must not feed rate-limit identity.
+	 * The remote IP, or null when unavailable.
+	 *
+	 * Defaults to REMOTE_ADDR (spoof-proof). Sites behind a reverse proxy or
+	 * CDN (Cloudflare, nginx) see the proxy's IP there, which would collapse
+	 * every visitor into ONE rate-limit bucket and 429 the whole widget. When
+	 * the owner opts in via the `trusted_proxy_header` performance setting
+	 * (e.g. CF-Connecting-IP or X-Forwarded-For — set ONLY if a trusted proxy
+	 * always overwrites it), the first valid IP from that header wins.
 	 */
 	private function remote_ip(): ?string {
+		$header = trim( (string) $this->settings->value( 'performance', 'trusted_proxy_header' ) );
+		if ( '' !== $header ) {
+			$key = 'HTTP_' . strtoupper( str_replace( '-', '_', $header ) );
+			if ( ! empty( $_SERVER[ $key ] ) ) {
+				$raw = sanitize_text_field( wp_unslash( (string) $_SERVER[ $key ] ) );
+				foreach ( explode( ',', $raw ) as $candidate ) {
+					$candidate = trim( $candidate );
+					if ( false !== filter_var( $candidate, FILTER_VALIDATE_IP ) ) {
+						return $candidate;
+					}
+				}
+			}
+		}
+
 		if ( empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			return null;
 		}

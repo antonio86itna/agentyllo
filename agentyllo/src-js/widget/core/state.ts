@@ -102,7 +102,10 @@ export class WidgetState {
 			}
 			const parsed = JSON.parse( raw );
 			if ( parsed && 'string' === typeof parsed.token && 'number' === typeof parsed.expires ) {
-				return { token: parsed.token, expires: parsed.expires };
+				// Preserve `gated` across reloads so a visitor who already
+				// passed the pre-chat gate is not asked again (and no duplicate
+				// consent row is logged).
+				return { token: parsed.token, expires: parsed.expires, gated: true === parsed.gated };
 			}
 		} catch ( e ) {
 			// Corrupt or unavailable — start fresh.

@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,15 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.1 =
+* Fix: cloud AI now works out of the box — the bundled model registry ships real OpenAI model ids (GPT-5 mini / 5.4 mini / 5).
+* Fix: honour the privacy IP mode — 'none' stores no IP on sessions, 'truncate' now coarsens to the network prefix (was silently full-hashing).
+* Fix: rate limiting behind a CDN/reverse proxy — optional trusted-proxy header (e.g. CF-Connecting-IP) so visitors are no longer collapsed into one bucket.
+* Fix: the schema migrator no longer stamps the DB version when table creation fails on constrained hosts.
+* Fix: the pre-chat consent gate is remembered across reloads (no duplicate consent rows); chat messages send an idempotency key to prevent double-logged turns.
+* Fix: teaching the copilot the same fact updates the existing note instead of creating duplicates; uploaded files now count in KB health.
+* New: 'Settings' and 'Set up AI' quick links on the Plugins screen, and a first-run redirect to the dashboard.
 
 = 0.4.0 =
 * Visual refresh: the new Indigo brand identity. New A-Core logo, refined widget launcher and assistant avatar, indigo accent palette across the widget and the admin.

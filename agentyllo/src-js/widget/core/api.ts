@@ -201,17 +201,32 @@ export class AgyApi {
 		hooks: StreamHooks = {},
 		transport: 'stream' | 'buffered' = 'stream'
 	): Promise< AssistantMessage > {
+		// One stable id per user submit: the 401-retry below reuses it, so the
+		// server replays its cached response instead of logging/charging the
+		// turn twice.
+		const clientMsgId = this.newClientMsgId();
 		let token = await this.ensureSession();
 		try {
-			return await this.postMessage( text, token, hooks, transport );
+			return await this.postMessage( text, token, hooks, transport, clientMsgId );
 		} catch ( e ) {
 			if ( e instanceof ApiError && 401 === e.status ) {
 				this.session.clear();
 				token = await this.ensureSession();
-				return await this.postMessage( text, token, hooks, transport );
+				return await this.postMessage( text, token, hooks, transport, clientMsgId );
 			}
 			throw e;
 		}
+	}
+
+	private newClientMsgId(): string {
+		try {
+			if ( 'undefined' !== typeof crypto && crypto.randomUUID ) {
+				return crypto.randomUUID();
+			}
+		} catch ( e ) {
+			// fall through
+		}
+		return 'm-' + Date.now().toString( 36 ) + '-' + Math.random().toString( 36 ).slice( 2, 10 );
 	}
 
 	/**
@@ -224,7 +239,8 @@ export class AgyApi {
 		text: string,
 		token: string,
 		hooks: StreamHooks,
-		transport: 'stream' | 'buffered'
+		transport: 'stream' | 'buffered',
+		clientMsgId = ''
 	): Promise< AssistantMessage > {
 		const wantStream = 'stream' === transport && 'undefined' !== typeof ReadableStream;
 		let res: Response;
@@ -237,7 +253,7 @@ export class AgyApi {
 					'X-Agyl-Session': token,
 					Accept: wantStream ? 'text/event-stream, application/json' : 'application/json',
 				},
-				body: JSON.stringify( { text } ),
+				body: JSON.stringify( clientMsgId ? { text, client_msg_id: clientMsgId } : { text } ),
 			} );
 		} catch ( e ) {
 			throw new ApiError( 0, 'agyl_network', 'Network error.' );

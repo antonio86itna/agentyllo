@@ -289,10 +289,22 @@ final class CoreActions {
 					'key'  => array( 'type' => 'string', 'maxlen' => 60 ),
 				),
 				'run'         => function ( array $a ): array {
-					$key = '' !== (string) ( $a['key'] ?? '' ) ? sanitize_key( (string) $a['key'] ) : 'fact_' . substr( sha1( (string) $a['fact'] ), 0, 10 );
-					$this->memory->remember( 'composer', $key, array( 'text' => (string) $a['fact'], 'by' => get_current_user_id() ), 'fact', 80 );
-					// Owner facts also become a manual KB entry so retrieval finds them.
-					$this->entries->create( mb_substr( (string) $a['fact'], 0, 80 ), (string) $a['fact'], 'note' );
+					$key   = '' !== (string) ( $a['key'] ?? '' ) ? sanitize_key( (string) $a['key'] ) : 'fact_' . substr( sha1( (string) $a['fact'] ), 0, 10 );
+					$fact  = (string) $a['fact'];
+					$title = mb_substr( $fact, 0, 80 );
+					// Re-teaching the same key updates the existing KB note instead
+					// of spawning a near-duplicate that pollutes retrieval.
+					$prior   = $this->memory->recall( 'composer', $key );
+					$doc_id  = is_array( $prior ) ? (int) ( $prior['doc_id'] ?? 0 ) : 0;
+					if ( $doc_id > 0 ) {
+						$updated = $this->entries->update( $doc_id, $title, $fact );
+						if ( 0 === $updated ) {
+							$doc_id = $this->entries->create( $title, $fact, 'note' );
+						}
+					} else {
+						$doc_id = $this->entries->create( $title, $fact, 'note' );
+					}
+					$this->memory->remember( 'composer', $key, array( 'text' => $fact, 'by' => get_current_user_id(), 'doc_id' => $doc_id ), 'fact', 80 );
 
 					return array( 'ok' => true, 'message' => __( 'Got it — I will remember that.', 'agentyllo' ), 'data' => array( 'key' => $key ) );
 				},

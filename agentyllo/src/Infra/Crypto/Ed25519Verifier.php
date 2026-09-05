@@ -23,7 +23,7 @@ final class Ed25519Verifier {
 	/**
 	 * Base64 Ed25519 public key of registry.agentyllo.com.
 	 */
-	public const PUBLIC_KEY = '2WS7ieBOamLlyJ88bg2xf0VIhhxZHOTZs37Qc0ROe6I=';
+	public const PUBLIC_KEY = 'Eq4wXSR3uRhLsdV+9zJP1HJ28ELXyLUTbN2OSp3gHss=';
 
 	/**
 	 * Verify a detached signature.

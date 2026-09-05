@@ -54,7 +54,7 @@ final class ManifestTest extends TestCase {
 		self::assertContains( 'openai', $manifest->providers() );
 		self::assertContains( 'anthropic', $manifest->providers() );
 
-		self::assertSame( 'gpt-5.6-luna', $manifest->default_chat_model( 'openai' ) );
+		self::assertSame( 'gpt-5-mini', $manifest->default_chat_model( 'openai' ) );
 		self::assertSame( 'claude-haiku-4-5', $manifest->default_chat_model( 'anthropic' ) );
 		self::assertSame( 'text-embedding-3-small', $manifest->default_embedding_model( 'openai' ) );
 
@@ -64,7 +64,7 @@ final class ManifestTest extends TestCase {
 
 		// Unknown configured id resolves to the provider default, never to null.
 		$resolved = $manifest->resolve_chat_model( 'openai', 'gpt-does-not-exist' );
-		self::assertSame( 'gpt-5.6-luna', $resolved['id'] );
+		self::assertSame( 'gpt-5-mini', $resolved['id'] );
 
 		// Sampling/effort flags are registry-driven per model.
 		self::assertTrue( (bool) $haiku['sampling'] );

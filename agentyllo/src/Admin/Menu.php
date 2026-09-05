@@ -101,9 +101,13 @@ final class Menu {
 			}
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only welcome flag.
+		$welcome = isset( $_GET['welcome'] ) ? '1' : '0';
+
 		printf(
-			'<div id="agentyllo-admin" data-page="%s"></div>',
-			esc_attr( $page )
+			'<div id="agentyllo-admin" data-page="%s" data-welcome="%s"></div>',
+			esc_attr( $page ),
+			esc_attr( $welcome )
 		);
 	}
 

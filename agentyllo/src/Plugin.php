@@ -304,6 +304,51 @@ final class Plugin {
 					$container->get( Assets::class )->maybe_enqueue( $hook );
 				}
 			);
+
+			// Quick access from the Plugins list: Settings + Set up AI.
+			add_filter(
+				'plugin_action_links_' . plugin_basename( AGYL_FILE ),
+				static function ( array $links ): array {
+					$cap = (string) apply_filters( 'agyl_capability_map', 'manage_options', 'agyl_manage' );
+					if ( ! current_user_can( $cap ) ) {
+						return $links;
+					}
+					$own = array(
+						'settings' => sprintf(
+							'<a href="%s">%s</a>',
+							esc_url( admin_url( 'admin.php?page=agentyllo-settings' ) ),
+							esc_html__( 'Settings', 'agentyllo' )
+						),
+						'ai'       => sprintf(
+							'<a href="%s" style="color:#4f46e5;font-weight:600">%s</a>',
+							esc_url( admin_url( 'admin.php?page=agentyllo-models' ) ),
+							esc_html__( 'Set up AI', 'agentyllo' )
+						),
+					);
+					return array_merge( $own, $links );
+				}
+			);
+
+			// First-run: land the user on the dashboard with a welcome flag
+			// instead of nowhere. Fires once, never during bulk/network activation.
+			add_action(
+				'admin_init',
+				static function (): void {
+					if ( ! get_transient( 'agyl_activation_redirect' ) ) {
+						return;
+					}
+					delete_transient( 'agyl_activation_redirect' );
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					if ( isset( $_GET['activate-multi'] ) || wp_doing_ajax() || is_network_admin() ) {
+						return;
+					}
+					$cap = (string) apply_filters( 'agyl_capability_map', 'manage_options', 'agyl_manage' );
+					if ( current_user_can( $cap ) ) {
+						wp_safe_redirect( admin_url( 'admin.php?page=agentyllo&welcome=1' ) );
+						exit;
+					}
+				}
+			);
 		}
 
 		/**

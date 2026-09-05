@@ -30,6 +30,18 @@ final class SessionManager {
 	 * @return array{id: int, token: string, expires: int}|null Null on DB failure.
 	 */
 	public function create( ?string $ip ): ?array {
+		return $this->create_stored( $ip ? self::hash_ip( $ip ) : null );
+	}
+
+	/**
+	 * Create a session from an already-derived stored IP value (or null).
+	 * Callers apply the privacy ip_mode via SessionManager::store_ip() first,
+	 * so what lands in the row honours the transparency promise exactly.
+	 *
+	 * @param string|null $ip_hash Value to store in ip_hash, or null for none.
+	 * @return array{id: int, token: string, expires: int}|null Null on DB failure.
+	 */
+	public function create_stored( ?string $ip_hash ): ?array {
 		global $wpdb;
 
 		$now     = gmdate( 'Y-m-d H:i:s' );
@@ -39,7 +51,7 @@ final class SessionManager {
 		$inserted = $wpdb->insert(
 			$wpdb->prefix . 'agyl_sessions',
 			array(
-				'ip_hash'      => $ip ? self::hash_ip( $ip ) : null,
+				'ip_hash'      => $ip_hash,
 				'created_at'   => $now,
 				'last_seen_at' => $now,
 				'expires_at'   => gmdate( 'Y-m-d H:i:s', $expires ),
@@ -161,5 +173,51 @@ final class SessionManager {
 		}
 
 		return hash( 'sha256', $ip . '|' . $salt );
+	}
+
+	/**
+	 * The value to STORE for an IP, honouring the privacy ip_mode setting:
+	 * - 'none'     → null (nothing stored; the transparency promise)
+	 * - 'truncate' → hash of the network prefix only (/24 IPv4, /48 IPv6),
+	 *                so individual hosts are not distinguishable
+	 * - 'hash'     → salted hash of the full IP (default)
+	 *
+	 * Rate-limit buckets always use the full hash_ip() (ephemeral, never
+	 * persisted); this governs only what lands in a stored row.
+	 *
+	 * @param string|null $ip   Raw IP, or null when unavailable.
+	 * @param string      $mode One of none|truncate|hash.
+	 */
+	public static function store_ip( ?string $ip, string $mode ): ?string {
+		if ( null === $ip || '' === $ip || 'none' === $mode ) {
+			return null;
+		}
+		if ( 'truncate' === $mode ) {
+			return self::hash_ip( self::truncate_ip( $ip ) );
+		}
+		return self::hash_ip( $ip );
+	}
+
+	/**
+	 * Coarsen an IP to its network prefix: /24 for IPv4, /48 for IPv6.
+	 *
+	 * @param string $ip Raw IP.
+	 */
+	private static function truncate_ip( string $ip ): string {
+		if ( false !== filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+			$p = explode( '.', $ip );
+			return $p[0] . '.' . ( $p[1] ?? '0' ) . '.' . ( $p[2] ?? '0' ) . '.0';
+		}
+		if ( false !== filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
+			$packed = inet_pton( $ip );
+			if ( false !== $packed ) {
+				$packed = substr( $packed, 0, 6 ) . str_repeat( "\0", 10 );
+				$out    = inet_ntop( $packed );
+				if ( false !== $out ) {
+					return $out;
+				}
+			}
+		}
+		return $ip;
 	}
 }

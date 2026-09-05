@@ -52,9 +52,11 @@ final class ManualAdapter implements SourceAdapter {
 	 */
 	public function subtypes(): array {
 		return array(
-			'note'   => __( 'Notes', 'agentyllo' ),
-			'faq'    => __( 'FAQs', 'agentyllo' ),
-			'upload' => __( 'Uploads', 'agentyllo' ),
+			'note' => __( 'Notes', 'agentyllo' ),
+			'faq'  => __( 'FAQs', 'agentyllo' ),
+			// Must match the subtype FileIngest writes ('file'), or ingested
+			// uploads never appear in KB health coverage.
+			'file' => __( 'Uploads', 'agentyllo' ),
 		);
 	}
 

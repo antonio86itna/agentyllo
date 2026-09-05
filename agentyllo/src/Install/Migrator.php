@@ -28,7 +28,13 @@ final class Migrator {
 			return;
 		}
 
-		Schema::install();
+		// Schema::install() stamps agyl_db_version itself on success and sets
+		// agyl_schema_error on failure. If it could not create every table,
+		// do NOT run data migrations or stamp the version — a constrained host
+		// must be retried on the next request, never left silently half-built.
+		if ( ! Schema::install() ) {
+			return;
+		}
 
 		foreach ( $this->steps() as $version => $step ) {
 			if ( $installed < $version ) {

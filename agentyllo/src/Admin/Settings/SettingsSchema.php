@@ -164,6 +164,11 @@ final class SettingsSchema {
 				'rate_limit_session_per_min' => array( 'type' => 'int', 'default' => 10, 'min' => 1, 'max' => 120 ),
 				'rate_limit_ip_per_hour'     => array( 'type' => 'int', 'default' => 40, 'min' => 5, 'max' => 1000 ),
 				'rate_limit_ip_per_day'      => array( 'type' => 'int', 'default' => 200, 'min' => 10, 'max' => 10000 ),
+				// Set ONLY behind a trusted reverse proxy/CDN that always
+				// overwrites this header (e.g. CF-Connecting-IP). Empty = use
+				// REMOTE_ADDR. Prevents every visitor collapsing into one
+				// rate-limit bucket behind Cloudflare/nginx.
+				'trusted_proxy_header'       => array( 'type' => 'string', 'default' => '', 'maxlen' => 60 ),
 			),
 			'advanced' => array(
 				'uninstall_mode' => array(
