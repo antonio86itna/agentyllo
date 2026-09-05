@@ -110,19 +110,22 @@ section { padding: 96px 0; position: relative; }
 .concierge-copy .eyebrow { color: var(--primary-200); }
 .concierge-copy h2 { color: #fff; font-size: clamp(26px, 3.4vw, 38px); }
 .concierge-copy p { color: #cbd5e1; margin-top: 14px; font-size: 16px; max-width: 480px; }
-.concierge-model { position: relative; height: 480px; display: flex; align-items: stretch; justify-content: center; }
+.concierge-stage { overflow: visible; }
+.concierge-model { position: relative; height: 500px; display: flex; align-items: stretch; justify-content: center; z-index: 3; }
 .concierge-model .c3d { width: 100%; height: 100%; }
-.c3d canvas { width: 100% !important; height: 100% !important; }
+.c3d { position: relative; z-index: 3; }
+.c3d canvas { width: 100% !important; height: 100% !important; display: block; }
 .concierge-model img.fallback { max-height: 100%; animation: hover-bob 6s ease-in-out infinite; }
 @keyframes hover-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-/* extra concierge cameos */
-.peek-bot { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); width: 300px; height: 168px; pointer-events: none; overflow: hidden; }
+/* extra concierge cameos — sit above neighbouring sections, never clipped */
+.peek-bot { position: absolute; left: 50%; bottom: calc(100% - 40px); transform: translateX(-50%); width: 320px; height: 200px; pointer-events: none; overflow: hidden; z-index: 6; }
 .peek-bot .c3d { width: 100%; height: 100%; }
-.point-bot { position: absolute; right: max(16px, calc(50% - 700px)); top: 60px; width: 210px; height: 300px; pointer-events: none; }
+.point-bot { position: absolute; right: max(8px, calc(50% - 720px)); top: 30px; width: 250px; height: 340px; pointer-events: none; z-index: 6; }
 .point-bot .c3d { width: 100%; height: 100%; }
+#tiers, #addons { overflow: visible; }
 @media (max-width: 1250px) { .point-bot { display: none; } }
-@media (max-width: 700px) { .peek-bot { width: 220px; height: 124px; } }
+@media (max-width: 700px) { .peek-bot { width: 230px; height: 140px; bottom: calc(100% - 24px); } }
 .concierge-shadow { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); width: 55%; height: 16px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,.5), transparent 70%); animation: shadow-bob 6s ease-in-out infinite; }
 @keyframes shadow-bob { 0%,100% { transform: translateX(-50%) scale(1); opacity: .8; } 50% { transform: translateX(-50%) scale(.86); opacity: .5; } }
 

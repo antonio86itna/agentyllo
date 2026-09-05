@@ -163,55 +163,119 @@ class FaceCtl {
 /* ------------------------------------------------------------------ */
 /* Procedural rig                                                     */
 /* ------------------------------------------------------------------ */
-// Region thresholds in model space (bbox y ±0.95, x ±0.53).
-const RIG = {
-	headY: 0.32, headBlend: 0.10,
-	armX: 0.285, armBlend: 0.045, armYMax: 0.38,
-	shoulderL: [ -0.36, 0.22, 0 ], shoulderR: [ 0.36, 0.22, 0 ],
-	headPivot: [ 0, 0.30, 0 ], spinePivot: [ 0, -0.5, 0 ],
+// The Meshy mesh is a single skin. We approximate a skeleton with smooth,
+// distance-based weights so nothing candy-wraps: every vertex is weighted to
+// the nearest bone SEGMENTS by inverse-distance, then normalised. Two-segment
+// arms (shoulder + forearm) give a natural elbow bend. Model space: the mesh
+// is normalised at load to a fixed height with feet-ish tail near y≈-0.95 and
+// head cap near y≈0.62.
+//
+const BONE_ORDER = [ 'spine', 'head', 'shoulderR', 'foreR', 'shoulderL', 'foreL' ];
+
+// Landmarks as fractions of the mesh bounding box (fy = fraction of height
+// above minY; fx = fraction of half-width). Resolved to model space at load,
+// so the rig fits whatever the mesh actually measures.
+const LM = {
+	tail: 0.03, spineTop: 0.70, headPivot: 0.72, headTop: 0.99,
+	shoulderY: 0.70, elbowY: 0.42, handY: 0.20,
+	shoulderX: 0.56, elbowX: 0.74, handX: 0.78,
 };
 
+function resolveRig( geometry ) {
+	geometry.computeBoundingBox();
+	const bb = geometry.boundingBox;
+	const H = bb.max.y - bb.min.y, hx = ( bb.max.x - bb.min.x ) / 2;
+	const Y = ( f ) => bb.min.y + f * H;
+	const X = ( f ) => f * hx;
+	const P = {
+		spine:     [ 0, Y( 0.40 ), 0 ],
+		head:      [ 0, Y( LM.headPivot ), 0 ],
+		shoulderR: [ X( LM.shoulderX ), Y( LM.shoulderY ), 0 ],
+		foreR:     [ X( LM.elbowX ), Y( LM.elbowY ), 0 ],
+		shoulderL: [ -X( LM.shoulderX ), Y( LM.shoulderY ), 0 ],
+		foreL:     [ -X( LM.elbowX ), Y( LM.elbowY ), 0 ],
+	};
+	const S = {
+		spine:     [ [ 0, Y( LM.tail ), 0 ], [ 0, Y( 0.68 ), 0 ] ],
+		head:      [ [ 0, Y( LM.headPivot ), 0 ], [ 0, Y( LM.headTop ), 0 ] ],
+		shoulderR: [ [ X( LM.shoulderX ), Y( LM.shoulderY ), 0 ], [ X( LM.elbowX ), Y( LM.elbowY ), 0 ] ],
+		foreR:     [ [ X( LM.elbowX ), Y( LM.elbowY ), 0 ], [ X( LM.handX ), Y( LM.handY ), 0 ] ],
+		shoulderL: [ [ -X( LM.shoulderX ), Y( LM.shoulderY ), 0 ], [ -X( LM.elbowX ), Y( LM.elbowY ), 0 ] ],
+		foreL:     [ [ -X( LM.elbowX ), Y( LM.elbowY ), 0 ], [ -X( LM.handX ), Y( LM.handY ), 0 ] ],
+	};
+	return { P, S };
+}
+
+function segDist( px, py, pz, s ) {
+	const [ a, b ] = s;
+	const abx = b[ 0 ] - a[ 0 ], aby = b[ 1 ] - a[ 1 ], abz = b[ 2 ] - a[ 2 ];
+	const apx = px - a[ 0 ], apy = py - a[ 1 ], apz = pz - a[ 2 ];
+	const len2 = abx * abx + aby * aby + abz * abz || 1e-9;
+	let t = ( apx * abx + apy * aby + apz * abz ) / len2;
+	t = t < 0 ? 0 : t > 1 ? 1 : t;
+	const dx = px - ( a[ 0 ] + abx * t ), dy = py - ( a[ 1 ] + aby * t ), dz = pz - ( a[ 2 ] + abz * t );
+	return Math.sqrt( dx * dx + dy * dy + dz * dz );
+}
+
 function buildSkinned( geometry, material ) {
+	const { P: PIVOT, S: SEG } = resolveRig( geometry );
 	const pos = geometry.attributes.position;
 	const count = pos.count;
 	const si = new Uint16Array( count * 4 );
 	const sw = new Float32Array( count * 4 );
-	// bones: 0 spine, 1 head, 2 armL, 3 armR
+	const wk = new Float32Array( BONE_ORDER.length );
+	const bb = geometry.boundingBox, H = bb.max.y - bb.min.y;
+	// Above the neck line only spine+head act — the head/neck can never be
+	// dragged by an arm swing. Below the chin the arms fade in over a band.
+	const neckY = bb.min.y + 0.66 * H;
+	const bandY = bb.min.y + 0.58 * H;
+
 	for ( let i = 0; i < count; i++ ) {
-		const x = pos.getX( i ), y = pos.getY( i );
-		let a = 0, b = 0, t = 0; // bone a=spine default
-		if ( y > RIG.headY - RIG.headBlend && Math.abs( x ) < RIG.armX ) {
-			b = 1;
-			t = Math.min( 1, Math.max( 0, ( y - ( RIG.headY - RIG.headBlend ) ) / ( 2 * RIG.headBlend ) ) );
-		} else if ( x < -RIG.armX + RIG.armBlend && y < RIG.armYMax ) {
-			b = 2;
-			t = Math.min( 1, Math.max( 0, ( -x - ( RIG.armX - RIG.armBlend ) ) / ( 2 * RIG.armBlend ) ) );
-		} else if ( x > RIG.armX - RIG.armBlend && y < RIG.armYMax ) {
-			b = 3;
-			t = Math.min( 1, Math.max( 0, ( x - ( RIG.armX - RIG.armBlend ) ) / ( 2 * RIG.armBlend ) ) );
+		const x = pos.getX( i ), y = pos.getY( i ), z = pos.getZ( i );
+		let armGate = 1;
+		if ( y > neckY ) armGate = 0;
+		else if ( y > bandY ) armGate = ( neckY - y ) / ( neckY - bandY );
+		for ( let b = 0; b < BONE_ORDER.length; b++ ) {
+			const seg = SEG[ BONE_ORDER[ b ] ];
+			const d = segDist( x, y, z, seg );
+			let w = 1 / ( Math.pow( d, 4 ) + 1e-7 );
+			if ( b >= 2 ) w *= armGate; // shoulderR/foreR/shoulderL/foreL
+			wk[ b ] = w;
 		}
-		t = t * t * ( 3 - 2 * t ); // smoothstep
-		si[ i * 4 ] = a; si[ i * 4 + 1 ] = b;
-		sw[ i * 4 ] = 1 - t; sw[ i * 4 + 1 ] = t;
+		// pick top 4
+		const idx = [ 0, 1, 2, 3, 4, 5 ].sort( ( m, n ) => wk[ n ] - wk[ m ] ).slice( 0, 4 );
+		let tsum = 0;
+		for ( let k = 0; k < 4; k++ ) tsum += wk[ idx[ k ] ];
+		if ( tsum <= 0 ) { idx[ 0 ] = 0; tsum = wk[ 0 ] = 1; }
+		for ( let k = 0; k < 4; k++ ) {
+			si[ i * 4 + k ] = idx[ k ];
+			sw[ i * 4 + k ] = wk[ idx[ k ] ] / tsum;
+		}
 	}
 	geometry.setAttribute( 'skinIndex', new Uint16BufferAttribute( si, 4 ) );
 	geometry.setAttribute( 'skinWeight', new Float32BufferAttribute( sw, 4 ) );
 
-	const spine = new Bone(); spine.position.set( ...RIG.spinePivot );
-	const head = new Bone(); head.position.set(
-		RIG.headPivot[ 0 ] - RIG.spinePivot[ 0 ], RIG.headPivot[ 1 ] - RIG.spinePivot[ 1 ], 0 );
-	const armL = new Bone(); armL.position.set(
-		RIG.shoulderL[ 0 ] - RIG.spinePivot[ 0 ], RIG.shoulderL[ 1 ] - RIG.spinePivot[ 1 ], 0 );
-	const armR = new Bone(); armR.position.set(
-		RIG.shoulderR[ 0 ] - RIG.spinePivot[ 0 ], RIG.shoulderR[ 1 ] - RIG.spinePivot[ 1 ], 0 );
-	spine.add( head ); spine.add( armL ); spine.add( armR );
+	const mk = ( name, parentPivot ) => {
+		const bone = new Bone();
+		const p = PIVOT[ name ], pp = parentPivot || [ 0, 0, 0 ];
+		bone.position.set( p[ 0 ] - pp[ 0 ], p[ 1 ] - pp[ 1 ], p[ 2 ] - pp[ 2 ] );
+		return bone;
+	};
+	const spine = mk( 'spine' );
+	const head = mk( 'head', PIVOT.spine );
+	const shoulderR = mk( 'shoulderR', PIVOT.spine );
+	const foreR = mk( 'foreR', PIVOT.shoulderR );
+	const shoulderL = mk( 'shoulderL', PIVOT.spine );
+	const foreL = mk( 'foreL', PIVOT.shoulderL );
+	spine.add( head ); spine.add( shoulderR ); spine.add( shoulderL );
+	shoulderR.add( foreR ); shoulderL.add( foreL );
 
 	material.skinning = true;
 	const mesh = new SkinnedMesh( geometry, material );
 	mesh.add( spine );
-	mesh.bind( new Skeleton( [ spine, head, armL, armR ] ) );
+	mesh.bind( new Skeleton( [ spine, head, shoulderR, foreR, shoulderL, foreL ] ) );
 	mesh.frustumCulled = false;
-	return { mesh, bones: { spine, head, armL, armR } };
+	return { mesh, bones: { spine, head, shoulderR, foreR, shoulderL, foreL } };
 }
 
 /* ------------------------------------------------------------------ */
@@ -295,16 +359,18 @@ class Concierge {
 		this.renderer.domElement.style.cssText = 'width:100%;height:100%;display:block;';
 
 		this.scene = new Scene();
-		this.camera = new PerspectiveCamera( 34, 1, 0.1, 20 );
+		this.camera = new PerspectiveCamera( 32, 1, 0.1, 20 );
 		if ( 'peek' === this.mode ) {
-			this.camera.position.set( 0, 0.40, 1.75 );
-			this.camera.lookAt( 0, 0.40, 0 );
+			// half-bust rising over the container edge
+			this.camera.position.set( 0, 0.34, 2.5 );
+			this.camera.lookAt( 0, 0.34, 0 );
 		} else if ( 'point' === this.mode ) {
-			this.camera.position.set( 0.28, 0.1, 3.3 );
-			this.camera.lookAt( 0.28, -0.05, 0 );
+			this.camera.position.set( 0.16, 0.02, 4.7 );
+			this.camera.lookAt( 0.16, 0.02, 0 );
 		} else {
-			this.camera.position.set( 0, 0.05, 3.45 );
-			this.camera.lookAt( 0, -0.02, 0 );
+			// full body with ~25% margin all round so a raised arm never clips
+			this.camera.position.set( 0, 0, 4.3 );
+			this.camera.lookAt( 0, 0, 0 );
 		}
 
 		this.scene.add( new AmbientLight( 0xbfc6ff, 0.55 ) );
@@ -322,7 +388,14 @@ class Concierge {
 		this.scene.add( this.holder );
 
 		this.clock = new Clock();
-		this.pose = { spineZ: 0, spineX: 0, headZ: 0, headX: 0, headY: 0, armLZ: 0, armLX: 0, armRZ: 0, armRX: 0, posX: 0, posY: 0, rotY: 0 };
+		// Rest pose: arms hang with a slight outward + elbow bend.
+		this.rest = {
+			spineZ: 0, spineX: 0, headX: 0, headY: 0, headZ: 0,
+			shRZ: -0.04, shRX: 0, foRZ: 0, foRX: -0.14,
+			shLZ: 0.04, shLX: 0, foLZ: 0, foLX: -0.14,
+			posX: 0, posY: 0, rotY: 0,
+		};
+		this.pose = { ...this.rest };
 		this.target = { ...this.pose };
 		this.blend = 1;
 		this.blendDur = 0.6;
@@ -361,19 +434,23 @@ class Concierge {
 		this.bones = bones;
 		this.holder.add( mesh );
 
+		// Props ride on the holder (upright, no bone shear); positioned to
+		// meet the hands at their respective poses.
 		this.laptop = makeLaptop(); this.laptop.visible = false;
-		this.laptop.position.set( 0, -0.10, 0.42 ); this.laptop.rotation.x = 0.12;
+		this.laptop.position.set( 0, -0.14, 0.44 ); this.laptop.rotation.x = 0.12;
 		this.holder.add( this.laptop );
 		this.coffee = makeCoffee(); this.coffee.visible = false;
-		this.coffee.position.set( 0.04, -0.64, 0.16 );
-		bones.armR.add( this.coffee );
+		this.coffee.position.set( 0.30, -0.16, 0.40 );
+		this.holder.add( this.coffee );
 
 		if ( 'peek' === this.mode ) {
-			this.setTarget( { armLZ: 0.15, armLX: -0.8, armRZ: -0.15, armRX: -0.8 }, 0 );
+			Object.assign( this.rest, { shLZ: 0.2, shLX: 0.2, foLX: -1.55, shRZ: -0.2, shRX: 0.2, foRX: -1.55 } );
+			this.pose = { ...this.rest }; this.target = { ...this.rest };
 		} else if ( 'point' === this.mode ) {
-			this.setTarget( { armRZ: 0.55, armRX: -0.7, headZ: -0.1, headX: 0.18 }, 0 );
+			Object.assign( this.rest, { shRZ: -0.5, shRX: 0.35, foRX: -0.15, foRZ: -0.15, headY: -0.15, headX: 0.12 } );
+			this.pose = { ...this.rest }; this.target = { ...this.rest };
 		}
-		this.schedule( 0.5 );
+		this.schedule( 0.6 );
 		this.scheduleFace( 1.2 );
 		this.loop();
 	}
@@ -394,54 +471,57 @@ class Concierge {
 	nextState() {
 		if ( this.reduced ) return;
 		if ( 'hero' !== this.mode ) { this.microState(); return; }
-		const pool = [ 'wave', 'flyL', 'flyR', 'tilt', 'laptop', 'coffee', 'idle', 'idle' ];
+		const pool = [ 'wave', 'flyL', 'flyR', 'tilt', 'laptop', 'coffee', 'look', 'idle', 'idle' ];
 		let s = pool[ Math.floor( Math.random() * pool.length ) ];
 		if ( s === this.state ) s = 'idle';
 		this.state = s;
 		this.stateT = 0;
 		this.laptop.visible = false;
 		this.coffee.visible = false;
-		const D = { wave: 3.6, flyL: 6, flyR: 6, tilt: 3, laptop: 6.5, coffee: 6.5, idle: 4 };
+		const D = { wave: 3.4, flyL: 5.5, flyR: 5.5, tilt: 3, look: 3, laptop: 6, coffee: 6, idle: 3.5 };
 		switch ( s ) {
 			case 'wave':
-				this.setTarget( { armRZ: 2.35, armRX: 0.25, headZ: -0.12, posX: this.pose.posX }, 0.55 );
+				// raise right upper arm out/up, bend forearm up; forearm oscillates.
+				this.setTarget( { shRZ: -1.2, shRX: -0.1, foRX: -0.95, foRZ: 0.1, headZ: -0.05 }, 0.5 );
 				this.face.draw( 'happy' );
 				break;
 			case 'flyL':
-				this.setTarget( { posX: -0.55, spineZ: 0.14, rotY: 0.35 }, 1.6 );
+				this.setTarget( { posX: -0.28, spineZ: 0.08, rotY: 0.28 }, 1.5 );
 				break;
 			case 'flyR':
-				this.setTarget( { posX: 0.55, spineZ: -0.14, rotY: -0.35 }, 1.6 );
+				this.setTarget( { posX: 0.28, spineZ: -0.08, rotY: -0.28 }, 1.5 );
 				break;
 			case 'tilt':
-				this.setTarget( { headZ: 0.22, headY: 0.3, spineZ: -0.04 }, 0.7 );
+				this.setTarget( { headZ: 0.2, headY: 0.22 }, 0.7 );
 				this.face.draw( 'surprised' );
 				break;
+			case 'look':
+				this.setTarget( { headY: ( Math.random() < 0.5 ? -0.3 : 0.3 ), headX: 0.05 }, 0.8 );
+				break;
 			case 'laptop':
-				this.setTarget( { armLZ: -0.3, armLX: -0.95, armRZ: 0.3, armRX: -0.95, headX: 0.22, posX: 0, rotY: 0 }, 0.7 );
-				setTimeout( () => { if ( 'laptop' === this.state ) this.laptop.visible = true; }, 650 );
+				this.setTarget( { shRZ: -0.2, foRX: -1.25, shLZ: 0.2, foLX: -1.25, headX: 0.2, posX: 0, rotY: 0 }, 0.7 );
+				setTimeout( () => { if ( 'laptop' === this.state ) this.laptop.visible = true; }, 640 );
 				break;
 			case 'coffee':
-				this.setTarget( { armRZ: 0.35, armRX: -1.0, headZ: 0.1, posX: 0, rotY: 0 }, 0.7 );
-				setTimeout( () => { if ( 'coffee' === this.state ) this.coffee.visible = true; }, 650 );
+				this.setTarget( { shRZ: -0.12, foRX: -1.45, foRZ: -0.1, headZ: 0.08, posX: 0, rotY: 0 }, 0.7 );
+				setTimeout( () => { if ( 'coffee' === this.state ) this.coffee.visible = true; }, 640 );
 				this.face.draw( 'smile' );
 				break;
 			default:
-				this.setTarget( { spineZ: 0, spineX: 0, headZ: 0, headX: 0, headY: 0, armLZ: 0, armLX: 0, armRZ: 0, armRX: 0, posX: 0, rotY: 0 }, 1.0 );
+				this.setTarget( { ...this.rest }, 0.9 );
 		}
 		this.schedule( D[ s ] || 4 );
 	}
 
 	microState() {
-		// point / peek: tiny variations only
+		// point / peek: gentle variations around the fixed rest pose only.
+		const j = ( a ) => a * ( Math.random() - 0.5 );
 		if ( 'point' === this.mode ) {
-			const j = 0.12 * ( Math.random() - 0.5 );
-			this.setTarget( { armRZ: 0.55 + j, armRX: -0.7 + j * 0.5, headZ: -0.08 + j, headX: 0.18 }, 1.2 );
+			this.setTarget( { shRZ: this.rest.shRZ + j( 0.16 ), foRZ: this.rest.foRZ + j( 0.2 ), headY: this.rest.headY + j( 0.1 ) }, 1.3 );
 		} else {
-			const j = 0.06 * ( Math.random() - 0.5 );
-			this.setTarget( { headZ: j, headY: j * 2, spineZ: j * 0.4 }, 1.5 );
+			this.setTarget( { headY: j( 0.18 ), headZ: j( 0.1 ), foRX: this.rest.foRX + j( 0.12 ), foLX: this.rest.foLX + j( 0.12 ) }, 1.5 );
 		}
-		this.schedule( 2.5 + Math.random() * 2.5 );
+		this.schedule( 2.4 + Math.random() * 2.4 );
 	}
 
 	/* ---- face scheduler ---- */
@@ -487,45 +567,52 @@ class Concierge {
 		}
 
 		const p = this.pose;
-		const bobAmp = 'hero' === this.mode ? 0.045 : 0.02;
-		const bob = this.reduced ? 0 : Math.sin( t * 1.4 ) * bobAmp;
-		const sway = this.reduced ? 0 : Math.sin( t * 0.7 ) * 0.03;
+		const bobAmp = 'hero' === this.mode ? 0.04 : 0.018;
+		const bob = this.reduced ? 0 : Math.sin( t * 1.2 ) * bobAmp;
+		// Ambient life — subtle, and NEVER a constant head tilt.
+		const breathe = this.reduced ? 0 : Math.sin( t * 0.6 ) * 0.012; // spine only
+		const gLook = this.reduced ? 0 : Math.sin( t * 0.45 ) * 0.05;   // gentle head turn
+		const gNod = this.reduced ? 0 : Math.sin( t * 0.8 + 1 ) * 0.02; // gentle nod
+		const armIdle = this.reduced ? 0 : Math.sin( t * 0.9 ) * 0.03;
 
 		if ( this.bones ) {
 			const b = this.bones;
-			b.spine.rotation.z = p.spineZ + sway * 0.4;
+			b.spine.rotation.z = p.spineZ + breathe;
 			b.spine.rotation.x = p.spineX;
-			b.head.rotation.z = p.headZ + sway * 0.5;
-			b.head.rotation.x = p.headX + ( this.reduced ? 0 : Math.sin( t * 0.9 ) * 0.02 );
-			b.head.rotation.y = p.headY;
-			// wave: oscillate forearm-ish
+			b.head.rotation.z = p.headZ;
+			b.head.rotation.x = p.headX + gNod;
+			b.head.rotation.y = p.headY + gLook;
+			// wave: oscillate the forearm (elbow), not the whole arm.
 			let waveOsc = 0;
 			if ( 'wave' === this.state && this.blend >= 1 ) {
-				waveOsc = Math.sin( this.stateT * 9 ) * 0.28;
+				waveOsc = Math.sin( this.stateT * 8 ) * 0.35;
 			}
-			b.armL.rotation.z = p.armLZ - sway * 0.3;
-			b.armL.rotation.x = p.armLX;
-			b.armR.rotation.z = p.armRZ + waveOsc + sway * 0.3;
-			b.armR.rotation.x = p.armRX;
+			b.shoulderR.rotation.z = p.shRZ;
+			b.shoulderR.rotation.x = p.shRX;
+			b.foreR.rotation.z = p.foRZ + waveOsc + armIdle * 0.5;
+			b.foreR.rotation.x = p.foRX;
+			b.shoulderL.rotation.z = p.shLZ;
+			b.shoulderL.rotation.x = p.shLX;
+			b.foreL.rotation.z = p.foLZ - armIdle * 0.5;
+			b.foreL.rotation.x = p.foLX;
 		}
 		this.holder.position.x = p.posX;
 		this.holder.position.y = p.posY + bob;
 		this.holder.rotation.y = p.rotY;
 
 		if ( this.coffee.visible ) {
-			this.coffee.rotation.x = -this.bones.armR.rotation.x;
-			this.coffee.rotation.z = -this.bones.armR.rotation.z;
-		}
-		if ( this.coffee.visible && this.coffee.userData.steam ) {
-			this.coffee.userData.steam.forEach( ( s, i ) => {
-				s.position.y = 0.11 + ( ( t * 0.06 + i * 0.05 ) % 0.1 );
-				s.material.opacity = 0.7 * ( 1 - ( ( t * 0.06 + i * 0.05 ) % 0.1 ) / 0.1 );
-			} );
+			this.coffee.position.y = -0.16 + bob * 0.5;
+			if ( this.coffee.userData.steam ) {
+				this.coffee.userData.steam.forEach( ( s, i ) => {
+					const ph = ( t * 0.06 + i * 0.05 ) % 0.1;
+					s.position.y = 0.11 + ph;
+					s.material.opacity = 0.7 * ( 1 - ph / 0.1 );
+				} );
+			}
 		}
 		if ( this.laptop.visible ) {
-			this.laptop.position.y = -0.10 + bob * 0.4;
+			this.laptop.position.y = -0.14 + bob * 0.5;
 		}
-
 
 		this.renderer.render( this.scene, this.camera );
 	}
