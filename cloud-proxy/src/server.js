@@ -150,6 +150,28 @@ function handleUsage( req, res ) {
 	return send( res, 200, store.usageFor( domain ) );
 }
 
+async function handleTelemetry( req, res ) {
+	// Anonymous, unauthenticated technical telemetry (opt-in on the plugin
+	// side). Rate-limited per IP; appended to a JSONL log for the dashboard.
+	const ip = clientIp( req );
+	if ( ! allow( 'tel:' + ip, 30, 3600_000 ) ) return send( res, 429, { ok: false } );
+	const body = await readBody( req, 64 * 1024 );
+	store.appendTelemetry( {
+		at: Math.floor( Date.now() / 1000 ),
+		domain: String( body.domain || '' ).slice( 0, 120 ),
+		plugin: String( body.plugin_version || '' ).slice( 0, 20 ),
+		wp: String( body.wp || '' ).slice( 0, 20 ),
+		php: String( body.php || '' ).slice( 0, 20 ),
+		locale: String( body.locale || '' ).slice( 0, 12 ),
+		events: Array.isArray( body.events ) ? body.events.slice( 0, 50 ).map( ( e ) => ( {
+			fp: String( e.fp || '' ).slice( 0, 16 ),
+			code: String( e.code || '' ).slice( 0, 40 ),
+			count: Math.max( 1, Math.min( 100000, Number( e.count ) || 1 ) ),
+		} ) ) : [],
+	} );
+	return send( res, 200, { ok: true } );
+}
+
 /* ── server ───────────────────────────────────────────────────────────── */
 const server = http.createServer( async ( req, res ) => {
 	try {
@@ -162,6 +184,7 @@ const server = http.createServer( async ( req, res ) => {
 		if ( 'POST' === req.method && '/v1/register' === path ) return await handleRegister( req, res );
 		if ( 'POST' === req.method && '/v1/chat' === path ) return await handleChat( req, res );
 		if ( 'GET' === req.method && '/v1/usage' === path ) return handleUsage( req, res );
+		if ( 'POST' === req.method && '/v1/telemetry' === path ) return await handleTelemetry( req, res );
 		if ( 'GET' === req.method && '/admin/stats' === path ) {
 			if ( ! config.adminToken || bearer( req ) !== config.adminToken ) return send( res, 401, { ok: false } );
 			return send( res, 200, { ok: true, ...store.stats() } );

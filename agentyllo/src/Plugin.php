@@ -90,6 +90,7 @@ use Agentyllo\Infra\Crypto\KeyVault;
 use Agentyllo\Infra\Http\StreamingClient;
 use Agentyllo\Infra\Jobs;
 use Agentyllo\Infra\Options;
+use Agentyllo\Infra\Telemetry;
 use Agentyllo\Install\Migrator;
 use Agentyllo\KB\AdapterRegistry;
 use Agentyllo\KB\Health;
@@ -353,6 +354,9 @@ final class Plugin {
 				}
 			);
 		}
+
+		// Opt-in anonymous telemetry (off by default).
+		$container->get( Telemetry::class )->register();
 
 		/**
 		 * Fires once Agentyllo core is wired. Addons register agents,
@@ -868,6 +872,10 @@ final class Plugin {
 
 		$c->singleton( Menu::class, static fn (): Menu => new Menu() );
 		$c->singleton( Assets::class, static fn (): Assets => new Assets() );
+		$c->singleton(
+			Telemetry::class,
+			static fn ( Container $c ): Telemetry => new Telemetry( static fn (): array => (array) $c->get( SettingsStore::class )->get( 'advanced' ) )
+		);
 
 		return $c;
 	}

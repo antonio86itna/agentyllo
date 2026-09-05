@@ -384,7 +384,7 @@ function LocalCard( { local, settings, onSaved }: { local: Overview[ 'local' ]; 
 	const [ model, setModel ] = useState( String( settings.local_model || '' ) );
 	const [ key, setKey ] = useState( '' );
 	const [ minTps, setMinTps ] = useState( String( settings.local_min_tok_s ?? 8 ) );
-	const [ busy, setBusy ] = useState< '' | 'save' | 'test' >( '' );
+	const [ busy, setBusy ] = useState< '' | 'save' | 'test' | 'retry' >( '' );
 	const [ notice, setNotice ] = useState< { status: 'success' | 'error' | 'info'; text: string } | null >( null );
 
 	useEffect( () => {
@@ -430,6 +430,20 @@ function LocalCard( { local, settings, onSaved }: { local: Overview[ 'local' ]; 
 			onSaved();
 		} catch ( e: any ) {
 			setNotice( { status: 'error', text: e?.message || __( 'Test failed.', 'agentyllo' ) } );
+		} finally {
+			setBusy( '' );
+		}
+	};
+
+	const onRetry = async () => {
+		setBusy( 'retry' );
+		setNotice( null );
+		try {
+			const res: any = await apiFetch( { path: '/models/circuit-reset', method: 'POST', data: { provider: 'local_endpoint' } } );
+			setNotice( { status: res.ok ? 'success' : 'error', text: res.ok ? __( 'Local engine re-enabled — it will be tried again on the next message.', 'agentyllo' ) : ( res.message || __( 'Could not reset.', 'agentyllo' ) ) } );
+			onSaved();
+		} catch ( e: any ) {
+			setNotice( { status: 'error', text: e?.message || __( 'Could not reset.', 'agentyllo' ) } );
 		} finally {
 			setBusy( '' );
 		}
@@ -511,6 +525,11 @@ function LocalCard( { local, settings, onSaved }: { local: Overview[ 'local' ]; 
 				{ local.circuit.open && (
 					<Notice status="warning" isDismissible={ false }>
 						{ sprintf( /* translators: %s: last error */ __( 'Paused after repeated failures (%s).', 'agentyllo' ), local.circuit.last_error || '—' ) }
+						<div style={ { marginTop: 8 } }>
+							<Button variant="secondary" isBusy={ 'retry' === busy } disabled={ '' !== busy } onClick={ onRetry }>
+								{ __( 'Retry now', 'agentyllo' ) }
+							</Button>
+						</div>
 					</Notice>
 				) }
 			</CardBody>

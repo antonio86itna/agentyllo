@@ -257,6 +257,11 @@ final class ModelsController extends Controller {
 		$result = $provider->test_connection();
 		if ( $result['ok'] ) {
 			$this->budget->reset_circuit( $id );
+			// Persist the measured speed so the local speed gate reflects the
+			// test immediately (was discarded before → gate said "not measured").
+			if ( isset( $result['tok_per_s'] ) && (float) $result['tok_per_s'] > 0 ) {
+				$this->budget->seed_ema( $id, (float) $result['tok_per_s'] );
+			}
 		}
 
 		return $this->respond( $result );

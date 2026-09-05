@@ -215,8 +215,12 @@ final class Stats {
 		$assistant_msgs = max( 1, (int) floor( $sum['messages'] / 2 ) );
 
 		return $sum + array(
-			'deflection_rate' => $sum['conversations'] > 0 ? round( $sum['resolved'] / $sum['conversations'], 3 ) : null,
-			'kb_coverage'     => round( $sum['kb_hit_answers'] / $assistant_msgs, 3 ),
+			// Rates are clamped to 1.0: conversations/resolved come from
+			// per-(day,tier) rollups, so a hybrid conversation spanning tiers
+			// can be counted more than once — clamping keeps the headline
+			// figures sane until the rollup stores conversation-scoped rows.
+			'deflection_rate' => $sum['conversations'] > 0 ? min( 1.0, round( $sum['resolved'] / $sum['conversations'], 3 ) ) : null,
+			'kb_coverage'     => min( 1.0, round( $sum['kb_hit_answers'] / $assistant_msgs, 3 ) ),
 			'avg_latency_ms'  => $latencies ? (int) round( array_sum( $latencies ) / count( $latencies ) ) : null,
 			'by_tier'         => $by_tier,
 		);

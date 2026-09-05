@@ -7,7 +7,7 @@
  *   tokens:    { [token]:  domain }
  *   usage:     { [`${domain}|${period}`]: count }   // period = YYYY-MM (UTC)
  */
-import { mkdirSync, readFileSync, writeFileSync, renameSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, renameSync, appendFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { config } from './config.js';
@@ -89,6 +89,16 @@ export function incrementUsage( domain ) {
 	state.usage[ key ] = ( state.usage[ key ] || 0 ) + 1;
 	scheduleFlush();
 	return usageFor( domain );
+}
+
+export function appendTelemetry( entry ) {
+	try {
+		const file = config.dataFile.replace( /\.json$/, '' ) + '-telemetry.jsonl';
+		mkdirSync( dirname( file ), { recursive: true } );
+		appendFileSync( file, JSON.stringify( entry ) + '\n', 'utf8' );
+	} catch ( e ) {
+		console.error( 'telemetry append failed:', e.message );
+	}
 }
 
 export function stats() {

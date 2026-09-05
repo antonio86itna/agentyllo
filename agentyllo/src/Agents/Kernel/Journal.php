@@ -59,6 +59,18 @@ final class Journal implements JournalInterface {
 				'created_at'  => gmdate( 'Y-m-d H:i:s' ),
 			)
 		);
+
+		if ( 'error' === $level ) {
+			/**
+			 * Fires when a plugin error is journaled. Opt-in anonymous
+			 * telemetry (Infra\Telemetry) listens to surface technical failures.
+			 *
+			 * @param string $event   Short error event/code.
+			 * @param string $message Error message (may be hashed by the listener).
+			 * @param string $agent   Agent id.
+			 */
+			do_action( 'agyl_error_logged', $event, $message, $agent_id );
+		}
 	}
 
 	/**

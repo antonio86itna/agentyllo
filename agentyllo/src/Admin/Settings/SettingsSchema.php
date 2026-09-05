@@ -188,6 +188,14 @@ final class SettingsSchema {
 					'type'    => 'bool',
 					'default' => false,
 				),
+				// Anonymous technical telemetry (OFF by default, opt-in). Sends
+				// only the site domain, plugin/WP/PHP versions and error
+				// fingerprints (codes + counts) to help find and fix bugs —
+				// never visitor data, content, keys or personal data.
+				'telemetry_enabled' => array(
+					'type'    => 'bool',
+					'default' => false,
+				),
 			),
 		);
 

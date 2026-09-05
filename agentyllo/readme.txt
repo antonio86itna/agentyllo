@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.2
+Stable tag: 0.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ Agentyllo makes no external request in its default configuration. Every integrat
 * **Your own local AI endpoint** — only when you enter the URL of an OpenAI-compatible server you operate (llama-server, Ollama, LM Studio…). Data stays on that server.
 * **Agentyllo Cloud (api.agentyllo.com)** — the optional free AI tier, OFF by default. Only after you click "Turn on free AI" in AI Models: the plugin registers your site once (sending your site domain, site URL and plugin version) to obtain a per-site token, then — while enabled — sends visitor messages (optionally with personal data masked), a few relevant knowledge-base excerpts and your assistant instructions to the service to generate answers with pooled free AI models, within a monthly per-domain quota. No API key is required and no other site or visitor data is sent. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
 * **Agentyllo model registry (registry.agentyllo.com)** — OFF by default. Only when you press "Sync now" or explicitly enable weekly auto-sync in AI Models, the plugin fetches a small, Ed25519-signed JSON manifest containing model identifiers, prices and prompt-pack versions. It contains data only, never code; the request carries no site data. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
+* **Anonymous telemetry (api.agentyllo.com/v1/telemetry)** — OFF by default, opt-in in Settings → Advanced. When enabled, at most once a day the plugin sends only your site domain, the plugin/WordPress/PHP versions and error fingerprints (short error codes + counts) so we can find and fix bugs. It never sends visitor data, message or knowledge-base content, API keys or any personal data. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
 * **agentyllo.com** — a "Powered by Agentyllo" footer link exists but is OFF by default; it appears only if you explicitly enable it in Settings → Widget (no data is transmitted).
 
 == Installation ==
@@ -85,6 +86,11 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.3 =
+* New: optional anonymous technical telemetry (Settings -> Advanced, off by default) — domain, versions and error fingerprints only, to help fix bugs.
+* Improved: Local engine now has a "Retry now" button when it's paused, and the measured speed from "Test & measure speed" is remembered so the chat gate is accurate immediately.
+* Fix: statistics rates (deflection, KB coverage) are clamped so hybrid conversations can no longer show above 100%.
 
 = 0.4.2 =
 * New: **Agentyllo Cloud** — one-click free AI with no API key (optional, off by default). Turn it on from AI Models; a monthly per-site quota with a live usage bar.

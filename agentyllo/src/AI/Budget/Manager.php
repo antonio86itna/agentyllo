@@ -194,6 +194,26 @@ final class Manager {
 	}
 
 	/**
+	 * Seed/update a provider's EMA from an out-of-band measurement (e.g. the
+	 * "Test & measure speed" button), so the speed gate isn't "not measured"
+	 * right after a successful test.
+	 *
+	 * @param string $provider Provider id.
+	 * @param float  $tps      Measured tokens/second.
+	 */
+	public function seed_ema( string $provider, float $tps ): void {
+		if ( '' === $provider || $tps <= 0 ) {
+			return;
+		}
+		$ema = get_option( self::OPTION_EMA );
+		$ema = is_array( $ema ) ? $ema : array();
+		$old = (float) ( $ema[ $provider ] ?? 0.0 );
+
+		$ema[ $provider ] = round( $old > 0 ? 0.7 * $old + 0.3 * $tps : $tps, 2 );
+		update_option( self::OPTION_EMA, $ema, false );
+	}
+
+	/**
 	 * Fold a measured result into the EMA (α = 0.3).
 	 *
 	 * @param ChatResult $result Result.
