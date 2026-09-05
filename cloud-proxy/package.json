@@ -1,0 +1,16 @@
+{
+  "name": "agentyllo-cloud-proxy",
+  "version": "1.0.0",
+  "description": "Agentyllo Cloud — free-AI proxy: OpenRouter free-model routing with key rotation, best-model selection, per-domain monthly quotas and a hard paid-model block. Zero runtime dependencies.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=18.17"
+  },
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "license": "GPL-2.0-or-later"
+}
