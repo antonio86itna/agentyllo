@@ -1,6 +1,8 @@
 .agy-admin {
-	max-width: 1080px;
-	margin: 20px 20px 0 0;
+	/* Full native WordPress admin width — matches core .wrap spacing so the
+	   plugin feels built into wp-admin, not boxed inside it. */
+	max-width: none;
+	margin: 10px 20px 0 2px;
 
 	&__header {
 		display: flex;
@@ -344,10 +346,21 @@ body.agy-cp-open .agy-cp-toggle {
 	}
 }
 
-/* Wide screens: the page content yields to the open drawer and reflows
-   (the card grids are auto-fill, so columns adapt on their own). */
-body.agy-cp-open .agy-admin {
-	margin-right: calc(var(--agy-cp-w) + 20px);
+/* Native adaptive layout: the copilot is docked to the right edge, so when
+   it opens the WHOLE WordPress content column (menu-aware #wpcontent) yields
+   to it and reflows — the drawer sits BESIDE the page, never over it. This
+   only affects Agentyllo screens (the copilot, and thus .agy-cp-open, load
+   nowhere else). Card grids are auto-fill, so columns re-pack on their own. */
+#wpcontent,
+#wpfooter {
+	transition: padding-right .25s ease;
+}
+
+body.agy-cp-open {
+	#wpcontent,
+	#wpfooter {
+		padding-right: var(--agy-cp-w);
+	}
 }
 
 .agy-admin {
@@ -358,8 +371,11 @@ body.agy-cp-open .agy-admin {
    column helps nobody — let the drawer overlay instead, like the WP
    admin menu does. */
 @media screen and (max-width: 1100px) {
-	body.agy-cp-open .agy-admin {
-		margin-right: 20px;
+	body.agy-cp-open {
+		#wpcontent,
+		#wpfooter {
+			padding-right: 0;
+		}
 	}
 }
 
