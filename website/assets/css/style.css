@@ -110,10 +110,19 @@ section { padding: 96px 0; position: relative; }
 .concierge-copy .eyebrow { color: var(--primary-200); }
 .concierge-copy h2 { color: #fff; font-size: clamp(26px, 3.4vw, 38px); }
 .concierge-copy p { color: #cbd5e1; margin-top: 14px; font-size: 16px; max-width: 480px; }
-.concierge-model { position: relative; height: 420px; display: flex; align-items: flex-end; justify-content: center; }
-.concierge-model model-viewer { width: 100%; height: 118%; --poster-color: transparent; background: transparent; animation: hover-bob 6s ease-in-out infinite; }
+.concierge-model { position: relative; height: 480px; display: flex; align-items: stretch; justify-content: center; }
+.concierge-model .c3d { width: 100%; height: 100%; }
+.c3d canvas { width: 100% !important; height: 100% !important; }
 .concierge-model img.fallback { max-height: 100%; animation: hover-bob 6s ease-in-out infinite; }
 @keyframes hover-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* extra concierge cameos */
+.peek-bot { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); width: 300px; height: 168px; pointer-events: none; overflow: hidden; }
+.peek-bot .c3d { width: 100%; height: 100%; }
+.point-bot { position: absolute; right: max(16px, calc(50% - 700px)); top: 60px; width: 210px; height: 300px; pointer-events: none; }
+.point-bot .c3d { width: 100%; height: 100%; }
+@media (max-width: 1250px) { .point-bot { display: none; } }
+@media (max-width: 700px) { .peek-bot { width: 220px; height: 124px; } }
 .concierge-shadow { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); width: 55%; height: 16px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,.5), transparent 70%); animation: shadow-bob 6s ease-in-out infinite; }
 @keyframes shadow-bob { 0%,100% { transform: translateX(-50%) scale(1); opacity: .8; } 50% { transform: translateX(-50%) scale(.86); opacity: .5; } }
 

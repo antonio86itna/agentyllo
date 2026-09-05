@@ -128,7 +128,7 @@
 				<p>One intelligence coordinates seventeen specialized agents that read, index and answer from your site — around the clock, on your own server.</p>
 			</div>
 			<div class="concierge-model" id="conciergeModel">
-				<model-viewer src="/assets/model/concierge.glb" alt="The Agentyllo assistant" camera-controls disable-zoom disable-pan auto-rotate auto-rotate-delay="1500" rotation-per-second="8deg" interaction-prompt="none" camera-orbit="0deg 88deg 105%" exposure="1.1"></model-viewer>
+				<div class="c3d" data-concierge="hero" aria-label="The Agentyllo assistant, floating and waving" role="img"></div>
 				<div class="concierge-shadow" aria-hidden="true"></div>
 			</div>
 		</div>
@@ -289,6 +289,7 @@
 
 <!-- 8. AI TIERS -->
 <section id="tiers" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+	<div class="peek-bot" aria-hidden="true"><div class="c3d" data-concierge="peek"></div></div>
 	<div class="wrap">
 		<div class="section-head reveal">
 			<p class="eyebrow">Own your AI</p>
@@ -320,6 +321,7 @@
 
 <!-- 9. ADDONS -->
 <section id="addons">
+	<div class="point-bot" aria-hidden="true"><div class="c3d" data-concierge="point"></div></div>
 	<div class="wrap">
 		<div class="section-head reveal">
 			<p class="eyebrow">Grows with you</p>
@@ -384,6 +386,6 @@
 </footer>
 
 <script src="/assets/js/main.js" defer></script>
-<script type="module" src="/assets/js/model-viewer.min.js"></script>
+<script src="/assets/js/concierge3d.min.js" defer></script>
 </body>
 </html>
