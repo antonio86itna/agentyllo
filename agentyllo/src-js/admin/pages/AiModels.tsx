@@ -77,6 +77,13 @@ type Overview = {
 		stats: { calls: number; errors: number; avg_latency_ms: number; avg_tok_per_s: number; cost_usd: number } | null;
 	};
 	vectors: { provider: string; model_key: string; count: number; remaining: number | null; ran_at: number };
+	cloud: {
+		enabled: boolean;
+		connected: boolean;
+		active: boolean;
+		endpoint: string;
+		usage: { used?: number; limit?: number; remaining?: number; resets_at?: number; period?: string } | null;
+	};
 };
 
 const REASONS: Record< string, string > = {
@@ -105,6 +112,88 @@ function modelOptions( models: ModelDef[] ): Array< { value: string; label: stri
 					: '' ),
 		} ) ),
 	];
+}
+
+function CloudCard( { cloud, onSaved }: { cloud: Overview[ 'cloud' ]; onSaved: () => void } ) {
+	const [ busy, setBusy ] = useState< '' | 'enable' | 'disconnect' >( '' );
+	const [ notice, setNotice ] = useState< { status: 'success' | 'error' | 'info'; text: string } | null >( null );
+
+	const enable = async () => {
+		setBusy( 'enable' );
+		setNotice( null );
+		try {
+			const res: any = await apiFetch( { path: '/models/cloud-enable', method: 'POST' } );
+			setNotice( { status: res.ok ? 'success' : 'error', text: res.message } );
+			onSaved();
+		} catch ( e: any ) {
+			setNotice( { status: 'error', text: e?.message || __( 'Could not connect.', 'agentyllo' ) } );
+		} finally {
+			setBusy( '' );
+		}
+	};
+
+	const disconnect = async () => {
+		setBusy( 'disconnect' );
+		try {
+			const res: any = await apiFetch( { path: '/models/cloud-disconnect', method: 'POST' } );
+			setNotice( { status: 'info', text: res.message } );
+			onSaved();
+		} catch ( e: any ) {
+			setNotice( { status: 'error', text: e?.message || __( 'Failed.', 'agentyllo' ) } );
+		} finally {
+			setBusy( '' );
+		}
+	};
+
+	const u = cloud.usage;
+	const pct = u && u.limit ? Math.min( 100, Math.round( ( ( u.used || 0 ) / u.limit ) * 100 ) ) : 0;
+
+	return (
+		<Card className="agy-cloud-card">
+			<CardBody>
+				<div className="agy-cloud-card__head">
+					<div>
+						<span className="agy-badge agy-badge--ok">{ __( 'Recommended', 'agentyllo' ) }</span>
+						<h3>{ __( 'Agentyllo Cloud — Free AI, no API key', 'agentyllo' ) }</h3>
+						<p className="agy-muted">
+							{ __( 'One click turns your assistant into a real AI, on us. A generous monthly quota per site, powered by our pooled free models. Facts stay verbatim from your content; the AI writes the prose around them.', 'agentyllo' ) }
+						</p>
+					</div>
+				</div>
+
+				{ notice && (
+					<Notice status={ notice.status } isDismissible={ false }>{ notice.text }</Notice>
+				) }
+
+				{ cloud.enabled && cloud.connected ? (
+					<>
+						{ u && u.limit ? (
+							<div className="agy-usage">
+								<div className="agy-usage__bar"><span style={ { width: pct + '%' } } /></div>
+								<div className="agy-usage__label">
+									{ sprintf(
+										/* translators: 1: used, 2: limit */
+										__( '%1$s / %2$s requests used this month', 'agentyllo' ),
+										String( u.used || 0 ),
+										String( u.limit )
+									) }
+								</div>
+							</div>
+						) : (
+							<p className="agy-muted">{ __( 'Connected. Usage will appear once your visitors start chatting.', 'agentyllo' ) }</p>
+						) }
+						<Button variant="secondary" isDestructive isBusy={ 'disconnect' === busy } disabled={ !! busy } onClick={ disconnect }>
+							{ __( 'Disconnect', 'agentyllo' ) }
+						</Button>
+					</>
+				) : (
+					<Button variant="primary" isBusy={ 'enable' === busy } disabled={ !! busy } onClick={ enable }>
+						{ __( 'Turn on free AI', 'agentyllo' ) }
+					</Button>
+				) }
+			</CardBody>
+		</Card>
+	);
 }
 
 function ProviderCard( {
@@ -531,6 +620,8 @@ export default function AiModels() {
 	return (
 		<div className="agy-ai-models">
 			<h2>{ __( 'AI Models', 'agentyllo' ) }</h2>
+
+			{ data.cloud && <CloudCard cloud={ data.cloud } onSaved={ load } /> }
 
 			<Card>
 				<CardHeader>

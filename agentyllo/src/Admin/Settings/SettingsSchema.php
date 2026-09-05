@@ -108,9 +108,10 @@ final class SettingsSchema {
 				'fixed_locale'        => array( 'type' => 'string', 'default' => '', 'maxlen' => 10 ),
 			),
 			'models'   => array(
+				'cloud_free_enabled'     => array( 'type' => 'bool', 'default' => false ),
 				'chat_provider'          => array(
 					'type'    => 'enum',
-					'values'  => array( 'none', 'openai', 'anthropic' ),
+					'values'  => array( 'none', 'agentyllo_cloud', 'openai', 'anthropic' ),
 					'default' => 'none',
 				),
 				'openai_api_key'         => array( 'type' => 'secret', 'default' => '' ),

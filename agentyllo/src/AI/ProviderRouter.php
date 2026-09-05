@@ -168,7 +168,10 @@ final class ProviderRouter {
 			if ( ! $provider->is_available() || $this->budget->circuit_open( $provider->id() ) ) {
 				continue;
 			}
-			if ( 'cloud' === (string) ( $provider->capabilities()['tier'] ?? 'cloud' ) ) {
+			$caps = $provider->capabilities();
+			// The monthly cost cap only governs paid cloud spend — free
+			// providers (Agentyllo Cloud) are never gated by it.
+			if ( 'cloud' === (string) ( $caps['tier'] ?? 'cloud' ) && empty( $caps['free'] ) ) {
 				$cap_reached ??= $this->budget->cap_reached();
 				if ( $cap_reached ) {
 					continue;
@@ -219,7 +222,8 @@ final class ProviderRouter {
 			if ( ! $provider->is_available() || $this->budget->circuit_open( $provider->id() ) ) {
 				continue;
 			}
-			if ( 'cloud' === (string) ( $provider->capabilities()['tier'] ?? 'cloud' ) && $this->budget->cap_reached() ) {
+			$caps = $provider->capabilities();
+			if ( 'cloud' === (string) ( $caps['tier'] ?? 'cloud' ) && empty( $caps['free'] ) && $this->budget->cap_reached() ) {
 				continue;
 			}
 			return $provider;

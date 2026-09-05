@@ -60,6 +60,7 @@ final class ModelsController extends Controller {
 		private readonly EmbeddingRouter $embeddings,
 		private readonly VectorStore $vectors,
 		private readonly VectorIndexer $vector_indexer,
+		private readonly \Agentyllo\AI\Cloud\CloudClient $cloud,
 	) {
 	}
 
@@ -90,6 +91,24 @@ final class ModelsController extends Controller {
 						'enum'     => array( 'openai', 'anthropic', 'local_endpoint' ),
 					),
 				),
+			)
+		);
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/models/cloud-enable',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'post_cloud_enable' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
+			)
+		);
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/models/cloud-disconnect',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'post_cloud_disconnect' ),
+				'permission_callback' => $this->require_cap( 'agyl_manage_settings' ),
 			)
 		);
 		register_rest_route(
@@ -205,6 +224,13 @@ final class ModelsController extends Controller {
 					'circuit'    => $this->budget->circuit_state( LocalEndpointProvider::ID ),
 					'stats'      => $stats[ LocalEndpointProvider::ID ] ?? null,
 				),
+				'cloud'     => array(
+					'enabled'    => (bool) ( $values['cloud_free_enabled'] ?? false ),
+					'connected'  => $this->cloud->registered(),
+					'active'     => 'agentyllo_cloud' === (string) ( $values['chat_provider'] ?? 'none' ),
+					'endpoint'   => $this->cloud->endpoint(),
+					'usage'      => $this->cloud->usage(),
+				),
 				'vectors'   => array(
 					'provider'  => $this->embeddings->active()?->id() ?? '',
 					'model_key' => $vec_model,
@@ -234,6 +260,47 @@ final class ModelsController extends Controller {
 		}
 
 		return $this->respond( $result );
+	}
+
+	/**
+	 * POST /models/cloud-enable — one-click free AI: register the site with
+	 * Agentyllo Cloud, then route AI through it in a classic+AI hybrid so
+	 * facts stay verbatim while the cloud writes the prose.
+	 */
+	public function post_cloud_enable(): WP_REST_Response {
+		$reg = $this->cloud->register();
+		if ( empty( $reg['ok'] ) ) {
+			return $this->respond( array( 'ok' => false, 'message' => (string) $reg['message'] ) );
+		}
+
+		$this->settings->update( 'models', array( 'cloud_free_enabled' => true, 'chat_provider' => 'agentyllo_cloud' ) );
+
+		$general = $this->settings->get( 'general' );
+		if ( 'classic' === (string) ( $general['operating_mode'] ?? 'classic' ) ) {
+			$this->settings->update( 'general', array( 'operating_mode' => 'classic_paid_ai' ) );
+		}
+
+		return $this->respond(
+			array(
+				'ok'      => true,
+				'message' => __( 'Agentyllo Cloud is on — your assistant now answers with free AI.', 'agentyllo' ),
+				'usage'   => $this->cloud->usage( true ),
+			)
+		);
+	}
+
+	/**
+	 * POST /models/cloud-disconnect — turn the free tier off and forget the token.
+	 */
+	public function post_cloud_disconnect(): WP_REST_Response {
+		$change = array( 'cloud_free_enabled' => false );
+		if ( 'agentyllo_cloud' === (string) ( $this->settings->value( 'models', 'chat_provider' ) ) ) {
+			$change['chat_provider'] = 'none';
+		}
+		$this->settings->update( 'models', $change );
+		$this->cloud->disconnect();
+
+		return $this->respond( array( 'ok' => true, 'message' => __( 'Disconnected from Agentyllo Cloud.', 'agentyllo' ) ) );
 	}
 
 	/**

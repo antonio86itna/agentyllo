@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,7 @@ Agentyllo makes no external request in its default configuration. Every integrat
 * **OpenAI API (api.openai.com)** — only when you enter your own OpenAI API key and select an AI operating mode. Visitor messages (optionally with personal data masked), a few relevant knowledge-base excerpts and your assistant instructions are sent to OpenAI to generate the answer or to compute embeddings; requests are sent with storage disabled. Terms: https://openai.com/policies/terms-of-use — Privacy: https://openai.com/policies/privacy-policy
 * **Anthropic API (api.anthropic.com)** — only when you enter your own Anthropic API key and select an AI operating mode. Same data as above is sent to Anthropic to generate the answer. Terms: https://www.anthropic.com/legal/consumer-terms — Privacy: https://www.anthropic.com/legal/privacy
 * **Your own local AI endpoint** — only when you enter the URL of an OpenAI-compatible server you operate (llama-server, Ollama, LM Studio…). Data stays on that server.
+* **Agentyllo Cloud (api.agentyllo.com)** — the optional free AI tier, OFF by default. Only after you click "Turn on free AI" in AI Models: the plugin registers your site once (sending your site domain, site URL and plugin version) to obtain a per-site token, then — while enabled — sends visitor messages (optionally with personal data masked), a few relevant knowledge-base excerpts and your assistant instructions to the service to generate answers with pooled free AI models, within a monthly per-domain quota. No API key is required and no other site or visitor data is sent. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
 * **Agentyllo model registry (registry.agentyllo.com)** — OFF by default. Only when you press "Sync now" or explicitly enable weekly auto-sync in AI Models, the plugin fetches a small, Ed25519-signed JSON manifest containing model identifiers, prices and prompt-pack versions. It contains data only, never code; the request carries no site data. Terms: https://www.agentyllo.com/terms — Privacy: https://www.agentyllo.com/privacy
 * **agentyllo.com** — a "Powered by Agentyllo" footer link exists but is OFF by default; it appears only if you explicitly enable it in Settings → Widget (no data is transmitted).
 
@@ -84,6 +85,12 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.2 =
+* New: **Agentyllo Cloud** — one-click free AI with no API key (optional, off by default). Turn it on from AI Models; a monthly per-site quota with a live usage bar.
+* New: the backend **Copilot is now a real AI assistant** — when a chat AI provider is connected it answers grounded in your site and turns plain English into proposed actions (still confirmed before running), with proactive suggestions from unanswered questions. Toggle in Settings → General.
+* Improved: **native full-width admin layout**; opening the Copilot now docks it beside the page and reflows the content instead of overlapping it.
+* Improved: AI Models page now leads with the free-AI option and shows provider status more clearly.
 
 = 0.4.1 =
 * Fix: cloud AI now works out of the box — the bundled model registry ships real OpenAI model ids (GPT-5 mini / 5.4 mini / 5).

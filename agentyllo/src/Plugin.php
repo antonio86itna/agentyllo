@@ -14,9 +14,11 @@ defined( 'ABSPATH' ) || exit;
 use Agentyllo\AI\Budget\Manager as BudgetManager;
 use Agentyllo\AI\Budget\ResponseCache;
 use Agentyllo\AI\Capability\Detector;
+use Agentyllo\AI\Cloud\CloudClient;
 use Agentyllo\AI\Prompt\ChatPromptBuilder;
 use Agentyllo\AI\ProviderRouter;
 use Agentyllo\AI\EmbeddingRouter;
+use Agentyllo\AI\Providers\AgentylloCloudProvider;
 use Agentyllo\AI\Providers\AnthropicProvider;
 use Agentyllo\AI\Providers\LocalEndpointEmbeddings;
 use Agentyllo\AI\Providers\LocalEndpointProvider;
@@ -615,11 +617,16 @@ final class Plugin {
 			LocalEndpointProvider::class,
 			static fn ( Container $c ): LocalEndpointProvider => new LocalEndpointProvider( $c->get( KeyVault::class ), $c->get( StreamingClient::class ), $models_settings( $c ) )
 		);
+		$c->singleton( CloudClient::class, static fn (): CloudClient => new CloudClient() );
+		$c->singleton(
+			AgentylloCloudProvider::class,
+			static fn ( Container $c ): AgentylloCloudProvider => new AgentylloCloudProvider( $c->get( CloudClient::class ), $models_settings( $c ) )
+		);
 		$c->singleton(
 			ProviderRouter::class,
 			static fn ( Container $c ): ProviderRouter => new ProviderRouter(
 				$c->get( BudgetManager::class ),
-				array( $c->get( OpenAIProvider::class ), $c->get( AnthropicProvider::class ), $c->get( LocalEndpointProvider::class ) ),
+				array( $c->get( AgentylloCloudProvider::class ), $c->get( OpenAIProvider::class ), $c->get( AnthropicProvider::class ), $c->get( LocalEndpointProvider::class ) ),
 				static fn (): array => $c->get( SettingsStore::class )->get( 'general' ),
 				$models_settings( $c )
 			)
@@ -672,7 +679,8 @@ final class Plugin {
 				$c->get( StreamingClient::class ),
 				$c->get( EmbeddingRouter::class ),
 				$c->get( VectorStore::class ),
-				$c->get( VectorIndexer::class )
+				$c->get( VectorIndexer::class ),
+				$c->get( CloudClient::class )
 			)
 		);
 
