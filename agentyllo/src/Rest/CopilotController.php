@@ -11,6 +11,7 @@ namespace Agentyllo\Rest;
 
 use Agentyllo\Copilot\Copilot;
 use Agentyllo\Copilot\FileIngest;
+use Agentyllo\Stats\Stats;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -33,10 +34,12 @@ final class CopilotController extends Controller {
 	 *
 	 * @param Copilot    $copilot Copilot orchestrator.
 	 * @param FileIngest $ingest  File ingestion.
+	 * @param Stats      $stats   Statistics (proactive suggestions).
 	 */
 	public function __construct(
 		private readonly Copilot $copilot,
 		private readonly FileIngest $ingest,
+		private readonly Stats $stats,
 	) {
 	}
 
@@ -52,12 +55,25 @@ final class CopilotController extends Controller {
 				'callback'            => array( $this, 'post_message' ),
 				'permission_callback' => $this->require_cap( 'agyl_use_copilot' ),
 				'args'                => array(
-					'text' => array(
+					'text'    => array(
 						'type'              => 'string',
 						'required'          => true,
 						'sanitize_callback' => 'sanitize_textarea_field',
 					),
+					'history' => array(
+						'type'     => 'array',
+						'required' => false,
+					),
 				),
+			)
+		);
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/copilot/suggestions',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_suggestions' ),
+				'permission_callback' => $this->require_cap( 'agyl_use_copilot' ),
 			)
 		);
 		register_rest_route(
@@ -129,7 +145,54 @@ final class CopilotController extends Controller {
 			return $this->respond( array( 'blocks' => array() ) );
 		}
 
-		return $this->respond( $this->copilot->handle( mb_substr( $text, 0, 4000 ) ) );
+		$history = array();
+		$raw     = $request->get_param( 'history' );
+		if ( is_array( $raw ) ) {
+			foreach ( array_slice( $raw, -6 ) as $turn ) {
+				if ( is_array( $turn ) ) {
+					$history[] = array(
+						'role' => 'assistant' === ( $turn['role'] ?? '' ) ? 'assistant' : 'user',
+						'text' => sanitize_textarea_field( (string) ( $turn['text'] ?? '' ) ),
+					);
+				}
+			}
+		}
+
+		return $this->respond( $this->copilot->handle( mb_substr( $text, 0, 4000 ), $history ) );
+	}
+
+	/**
+	 * GET /copilot/suggestions — proactive, one-click cards the owner can act
+	 * on (top unanswered visitor questions → draft a KB answer). Clicking a
+	 * card prefills the composer; with AI on, the copilot drafts the entry and
+	 * proposes it for confirmation.
+	 */
+	public function get_suggestions(): WP_REST_Response {
+		$items = array();
+		foreach ( $this->stats->unanswered( 5 ) as $row ) {
+			$q = trim( (string) ( $row['question_sample'] ?? '' ) );
+			if ( '' === $q ) {
+				continue;
+			}
+			$hits = (int) ( $row['hits'] ?? 1 );
+			$items[] = array(
+				'id'      => 'unanswered_' . (int) ( $row['id'] ?? 0 ),
+				'icon'    => 'help',
+				'title'   => sprintf(
+					/* translators: %d: number of times asked */
+					_n( 'A visitor asked (unanswered):', '%d visitors asked (unanswered):', $hits, 'agentyllo' ),
+					$hits
+				),
+				'text'    => mb_substr( $q, 0, 140 ),
+				'prefill' => sprintf(
+					/* translators: %s: the visitor question */
+					__( 'Draft a knowledge base entry that answers: "%s"', 'agentyllo' ),
+					mb_substr( $q, 0, 200 )
+				),
+			);
+		}
+
+		return $this->respond( array( 'suggestions' => $items ) );
 	}
 
 	/**

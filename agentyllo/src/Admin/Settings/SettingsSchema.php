@@ -69,6 +69,13 @@ final class SettingsSchema {
 					'default' => '',
 					'maxlen'  => 500,
 				),
+				// When a chat AI provider is connected, let the backend Copilot
+				// reason with it (grounded in your site) and turn plain English
+				// into proposed actions. Turn off to keep the Copilot classic.
+				'copilot_use_ai'      => array(
+					'type'    => 'bool',
+					'default' => true,
+				),
 			),
 			'sources'  => $this->sources_tab(),
 			'widget'   => array(

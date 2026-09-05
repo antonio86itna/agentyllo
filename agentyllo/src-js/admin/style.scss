@@ -420,6 +420,55 @@ body.agy-cp-open .agy-admin {
 	list-style: disc;
 }
 
+.agy-cp-suggest {
+	margin-top: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	&__label {
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #646970;
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		text-align: left;
+		padding: 10px 12px;
+		border: 1px solid #dcdcde;
+		border-radius: 8px;
+		background: #f6f7f7;
+		cursor: pointer;
+		transition: border-color 0.15s, background 0.15s;
+
+		&:hover:not(:disabled) {
+			border-color: var(--wp-admin-theme-color, #4f46e5);
+			background: #eef2ff;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+
+	&__title {
+		font-size: 11px;
+		font-weight: 600;
+		color: #646970;
+	}
+
+	&__text {
+		font-size: 13px;
+		color: #1d2327;
+	}
+}
+
 .agy-cp-card {
 	border: 1px solid #c3c4c7;
 	border-left: 4px solid var(--wp-admin-theme-color, #4f46e5);

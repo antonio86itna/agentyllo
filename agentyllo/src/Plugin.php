@@ -68,6 +68,7 @@ use Agentyllo\Chat\Templates;
 use Agentyllo\Compliance\AiAct;
 use Agentyllo\Copilot\ActionRegistry;
 use Agentyllo\Copilot\Copilot;
+use Agentyllo\Copilot\CopilotBrain;
 use Agentyllo\Copilot\CoreActions;
 use Agentyllo\Copilot\FileIngest;
 use Agentyllo\Compliance\Consent;
@@ -832,8 +833,21 @@ final class Plugin {
 			}
 		);
 		$c->singleton(
+			CopilotBrain::class,
+			static fn ( Container $c ): CopilotBrain => new CopilotBrain(
+				$c->get( ProviderRouter::class ),
+				$c->get( HybridRetriever::class ),
+				$c->get( ActionRegistry::class ),
+				static fn (): array => (array) $c->get( SettingsStore::class )->get( 'general' )
+			)
+		);
+		$c->singleton(
 			Copilot::class,
-			static fn ( Container $c ): Copilot => new Copilot( $c->get( ActionRegistry::class ), $c->get( HybridRetriever::class ) )
+			static fn ( Container $c ): Copilot => new Copilot(
+				$c->get( ActionRegistry::class ),
+				$c->get( HybridRetriever::class ),
+				$c->get( CopilotBrain::class )
+			)
 		);
 		$c->singleton(
 			FileIngest::class,
@@ -841,7 +855,7 @@ final class Plugin {
 		);
 		$c->singleton(
 			CopilotController::class,
-			static fn ( Container $c ): CopilotController => new CopilotController( $c->get( Copilot::class ), $c->get( FileIngest::class ) )
+			static fn ( Container $c ): CopilotController => new CopilotController( $c->get( Copilot::class ), $c->get( FileIngest::class ), $c->get( Stats::class ) )
 		);
 
 		$c->singleton( Menu::class, static fn (): Menu => new Menu() );

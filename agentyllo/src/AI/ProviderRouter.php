@@ -196,6 +196,39 @@ final class ProviderRouter {
 	}
 
 	/**
+	 * Best usable provider IGNORING the operating mode — used by the admin
+	 * copilot, which may reason with AI even when the public widget is in
+	 * classic mode. Prefers the configured cloud provider, then any available
+	 * local engine. Respects availability, circuit breaker and (cloud) cost
+	 * cap. Returns null when no provider can serve.
+	 */
+	public function any_available(): ?LLMProvider {
+		$ordered = array();
+
+		$configured = $this->configured_cloud_provider();
+		if ( '' !== $configured && isset( $this->providers()[ $configured ] ) ) {
+			$ordered[] = $this->providers()[ $configured ];
+		}
+		foreach ( $this->providers() as $provider ) {
+			if ( 'cloud' !== (string) ( $provider->capabilities()['tier'] ?? 'cloud' ) ) {
+				$ordered[] = $provider;
+			}
+		}
+
+		foreach ( $ordered as $provider ) {
+			if ( ! $provider->is_available() || $this->budget->circuit_open( $provider->id() ) ) {
+				continue;
+			}
+			if ( 'cloud' === (string) ( $provider->capabilities()['tier'] ?? 'cloud' ) && $this->budget->cap_reached() ) {
+				continue;
+			}
+			return $provider;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Diagnostic status for the AI Models page and dashboard.
 	 *
 	 * @return array{mode: string, ai_enabled: bool, active: ?string, reason: string, cap_reached: bool}

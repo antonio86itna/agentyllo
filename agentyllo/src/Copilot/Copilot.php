@@ -32,32 +32,68 @@ final class Copilot {
 	/**
 	 * Constructor.
 	 *
-	 * @param ActionRegistry  $registry  Action registry.
-	 * @param HybridRetriever $retriever KB retriever (free-text questions).
+	 * @param ActionRegistry    $registry  Action registry.
+	 * @param HybridRetriever   $retriever KB retriever (free-text questions).
+	 * @param CopilotBrain|null $brain     Optional AI reasoning (null = classic only).
 	 */
 	public function __construct(
 		private readonly ActionRegistry $registry,
 		private readonly HybridRetriever $retriever,
+		private readonly ?CopilotBrain $brain = null,
 	) {
 	}
 
 	/**
 	 * Handle one admin message. Returns blocks for the drawer.
 	 *
-	 * @param string $text Message.
+	 * Slash commands always take the deterministic path. Free text goes to the
+	 * AI brain when it is available (grounded answer, or a proposed action that
+	 * still flows through the confirm-token safety layer); otherwise it falls
+	 * back to the classic extractive KB answer.
+	 *
+	 * @param string                                        $text    Message.
+	 * @param array<int, array{role: string, text: string}> $history Prior turns.
 	 * @return array{blocks: array<int, array<string, mixed>>}
 	 */
-	public function handle( string $text ): array {
+	public function handle( string $text, array $history = array() ): array {
 		$parsed = SlashParser::parse( $text );
 
 		if ( null === $parsed ) {
-			return array( 'blocks' => $this->answer_question( $text ) );
+			return array( 'blocks' => $this->answer_free_text( $text, $history ) );
 		}
 		if ( $parsed['help'] || '' === $parsed['action'] ) {
 			return array( 'blocks' => $this->help_blocks() );
 		}
 
 		return array( 'blocks' => $this->propose( $parsed['action'], $parsed['args'] ) );
+	}
+
+	/**
+	 * Free text: AI reasoning when available, else classic extractive answer.
+	 *
+	 * @param string                                        $text    Message.
+	 * @param array<int, array{role: string, text: string}> $history Prior turns.
+	 * @return array<int, array<string, mixed>>
+	 */
+	private function answer_free_text( string $text, array $history ): array {
+		if ( null !== $this->brain && $this->brain->available() ) {
+			$decision = $this->brain->reason( $text, $history );
+
+			if ( 'action' === ( $decision['kind'] ?? '' ) ) {
+				return $this->propose( (string) $decision['action_id'], (array) ( $decision['args'] ?? array() ) );
+			}
+			if ( 'answer' === ( $decision['kind'] ?? '' ) && '' !== trim( (string) ( $decision['answer'] ?? '' ) ) ) {
+				$blocks = array( $this->text( (string) $decision['answer'] ) );
+				$links  = (array) ( $decision['links'] ?? array() );
+				if ( $links ) {
+					$blocks[] = array( 'type' => 'links', 'items' => array_slice( $links, 0, 3 ) );
+				}
+				return $blocks;
+			}
+			// kind === 'none' → fall through to classic.
+		}
+
+		return $this->answer_question( $text );
 	}
 
 	/**

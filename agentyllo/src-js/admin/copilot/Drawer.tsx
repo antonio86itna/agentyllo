@@ -55,8 +55,10 @@ export default function Drawer() {
 	const [ input, setInput ] = useState( '' );
 	const [ busy, setBusy ] = useState( false );
 	const [ preview, setPreview ] = useState< { filename: string; rows: PreviewRow[] } | null >( null );
+	const [ suggestions, setSuggestions ] = useState< any[] >( [] );
 	const logRef = useRef< HTMLDivElement | null >( null );
 	const fileRef = useRef< HTMLInputElement | null >( null );
+	const loadedSuggestions = useRef( false );
 
 	useEffect( () => {
 		window.localStorage.setItem( STORAGE_KEY, open ? '1' : '0' );
@@ -95,16 +97,41 @@ export default function Drawer() {
 
 	const push = useCallback( ( turn: Turn ) => setTurns( ( t ) => [ ...t.slice( -60 ), turn ] ), [] );
 
-	const send = async () => {
-		const text = input.trim();
+	// Proactive suggestions (top unanswered visitor questions) loaded once when
+	// the drawer is first opened.
+	useEffect( () => {
+		if ( ! open || loadedSuggestions.current ) {
+			return;
+		}
+		loadedSuggestions.current = true;
+		apiFetch( { path: '/copilot/suggestions' } )
+			.then( ( res: any ) => setSuggestions( Array.isArray( res.suggestions ) ? res.suggestions : [] ) )
+			.catch( () => {} );
+	}, [ open ] );
+
+	// Compact history (last turns as {role, text}) sent for conversational memory.
+	const toHistory = ( list: Turn[] ) =>
+		list.slice( -6 ).map( ( turn ) => ( {
+			role: turn.role,
+			text: turn.blocks
+				.map( ( b ) => ( b.type === 'text' ? b.md : b.type === 'action_result' ? b.message : b.type === 'action_proposal' ? b.summary : '' ) )
+				.filter( Boolean )
+				.join( ' ' )
+				.slice( 0, 1500 ),
+		} ) ).filter( ( t ) => t.text );
+
+	const send = async ( override?: string ) => {
+		const text = ( override ?? input ).trim();
 		if ( ! text || busy ) {
 			return;
 		}
+		const history = toHistory( turns );
 		setInput( '' );
+		setSuggestions( [] );
 		push( { role: 'user', id: 'u' + Date.now(), blocks: [ { type: 'text', md: text } ] } );
 		setBusy( true );
 		try {
-			const res: any = await apiFetch( { path: '/copilot/message', method: 'POST', data: { text } } );
+			const res: any = await apiFetch( { path: '/copilot/message', method: 'POST', data: { text, history } } );
 			push( { role: 'assistant', id: 'a' + Date.now(), blocks: Array.isArray( res.blocks ) ? res.blocks : [] } );
 		} catch ( e: any ) {
 			push( { role: 'assistant', id: 'e' + Date.now(), blocks: [ { type: 'text', md: e?.message || __( 'Request failed.', 'agentyllo' ) } ] } );
@@ -234,14 +261,33 @@ export default function Drawer() {
 			<aside id="agy-copilot" className={ 'agy-cp' + ( open ? ' is-open' : '' ) } aria-label={ __( 'Agentyllo copilot', 'agentyllo' ) }>
 				<header className="agy-cp__header">
 					<strong>{ __( 'Copilot', 'agentyllo' ) }</strong>
-					<span className="agy-muted">{ __( 'Type /help for commands', 'agentyllo' ) }</span>
+					<span className="agy-muted">{ __( 'Ask in plain language or type /help', 'agentyllo' ) }</span>
 					<button type="button" className="agy-cp__close" onClick={ () => setOpen( false ) } aria-label={ __( 'Close copilot', 'agentyllo' ) } title="Ctrl+Shift+K">
 						✕
 					</button>
 				</header>
 				<div className="agy-cp__log" ref={ logRef } role="log" aria-live="polite">
 					{ 0 === turns.length && (
-						<TextBlockView md={ __( 'Hi! I can add or edit knowledge-base entries, change settings, remember facts about your business, summarize statistics and import files. Every change is proposed first — nothing runs until you confirm.\n\nTry: `/kb add title:"Opening hours" content:"Mon–Fri 9–18"` or `/help`.', 'agentyllo' ) } />
+						<>
+							<TextBlockView md={ __( 'Hi! Ask me anything about your site, or tell me what to do in plain language — I can add or edit knowledge-base entries, change settings, remember facts, summarize statistics and import files. Every change is proposed first — nothing runs until you confirm.', 'agentyllo' ) } />
+							{ suggestions.length > 0 && (
+								<div className="agy-cp-suggest">
+									<div className="agy-cp-suggest__label">{ __( 'Suggestions for you', 'agentyllo' ) }</div>
+									{ suggestions.map( ( s ) => (
+										<button
+											key={ s.id }
+											type="button"
+											className="agy-cp-suggest__item"
+											disabled={ busy }
+											onClick={ () => send( s.prefill ) }
+										>
+											<span className="agy-cp-suggest__title">{ s.title }</span>
+											<span className="agy-cp-suggest__text">{ s.text }</span>
+										</button>
+									) ) }
+								</div>
+							) }
+						</>
 					) }
 					{ turns.map( ( turn ) => (
 						<div key={ turn.id } className={ 'agy-cp-turn is-' + turn.role }>
