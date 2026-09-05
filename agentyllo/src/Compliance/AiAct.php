@@ -43,16 +43,6 @@ final class AiAct {
 	}
 
 	/**
-	 * Whether AI disclosure is currently mandatory (any AI mode active) —
-	 * the setting is locked ON in that case.
-	 */
-	public function disclosure_locked(): bool {
-		$mode = (string) $this->settings->value( 'general', 'operating_mode' );
-
-		return 'classic' !== $mode;
-	}
-
-	/**
 	 * Create (or return the existing) transparency page as a draft.
 	 * Returns the page id.
 	 */

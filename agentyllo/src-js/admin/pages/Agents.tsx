@@ -175,6 +175,7 @@ export default function Agents() {
 										<ToggleControl
 											__nextHasNoMarginBottom
 											label=""
+											aria-label={ sprintf( /* translators: %s: agent id */ __( 'Enable the %s agent', 'agentyllo' ), agent.id ) }
 											checked={ agent.enabled }
 											onChange={ ( v: boolean ) => toggle( agent.id, v ) }
 										/>

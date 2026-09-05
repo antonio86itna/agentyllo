@@ -88,9 +88,12 @@ final class EmbeddingRouter {
 		if ( 'none' === $choice || '' === $choice ) {
 			return null;
 		}
-		// Setting values are short ids ('openai'); provider ids may carry a suffix.
+		// Setting values are short ids ('openai'); provider ids may carry a
+		// suffix separated by '_' (e.g. 'local_endpoint'). Match the exact id
+		// or an id in the '<choice>_*' family — never a bare prefix, which
+		// could collide with unrelated future provider ids.
 		foreach ( $this->providers() as $id => $provider ) {
-			if ( ( $id === $choice || str_starts_with( $id, $choice . '_' ) || str_starts_with( $id, $choice ) ) && $provider->is_available() ) {
+			if ( ( $id === $choice || str_starts_with( $id, $choice . '_' ) ) && $provider->is_available() ) {
 				return $provider;
 			}
 		}
@@ -100,8 +103,15 @@ final class EmbeddingRouter {
 
 	/**
 	 * Stable model key for the active provider (vector rows are tagged with it).
+	 *
+	 * @param bool $allow_probe When the dimensionality is unknown, whether to
+	 *                          make a one-off network probe to learn it. The
+	 *                          admin overview passes false so opening AI Models
+	 *                          never blocks on a slow/hung local endpoint; the
+	 *                          indexer passes true. Once learned, the size is
+	 *                          cached so the probe happens at most once.
 	 */
-	public function model_key(): string {
+	public function model_key( bool $allow_probe = true ): string {
 		$provider = $this->active();
 		if ( null === $provider ) {
 			return '';
@@ -110,12 +120,19 @@ final class EmbeddingRouter {
 		$field    = str_starts_with( $provider->id(), 'local' ) ? 'local_embedding_model' : 'openai_embedding_model';
 		$model    = is_array( $settings ) ? (string) ( $settings[ $field ] ?? '' ) : '';
 
+		$cache_key = 'agyl_embed_dims_' . $provider->id() . '_' . md5( $model );
 		$dims = $provider->dimensions();
 		if ( 0 === $dims ) {
+			$dims = (int) get_option( $cache_key, 0 );
+		}
+		if ( 0 === $dims && $allow_probe ) {
 			// Local endpoints learn their dimensionality on the first call —
-			// probe once so vectors are never tagged with an unknown size.
+			// probe once, then cache so it never blocks again.
 			$probe = $provider->embed( array( 'agentyllo' ) );
 			$dims  = isset( $probe[0] ) && is_array( $probe[0] ) ? count( $probe[0] ) : 0;
+			if ( $dims > 0 ) {
+				update_option( $cache_key, $dims, false );
+			}
 		}
 
 		return $provider->id() . ':' . ( '' !== $model ? $model : 'default' ) . ':' . $dims;

@@ -94,7 +94,7 @@ const FIELD_HELP: Record< string, string > = {
 	retention_days: __( 'Conversations older than this are deleted daily. 0 keeps them forever (not recommended).', 'agentyllo' ),
 	ip_mode: __( '"hash" stores a salted one-way hash (rotated monthly); "none" stores nothing.', 'agentyllo' ),
 	pii_redaction: __( '"logs" masks emails/phones/IBAN/cards in stored transcripts; "before_ai" also masks before any external AI call.', 'agentyllo' ),
-	ai_disclosure: __( 'Locked ON whenever an AI mode is active (EU AI Act Art. 50).', 'agentyllo' ),
+	ai_disclosure: __( 'Always on while an AI mode is active (EU AI Act Art. 50); this switch only applies in classic mode.', 'agentyllo' ),
 	legal_disclaimer_text: __( 'Empty = default "AI responses may contain mistakes" line.', 'agentyllo' ),
 	transport: __( '"auto" streams status and AI text live (SSE); "buffered" sends complete answers only — use it if a proxy or firewall breaks streaming.', 'agentyllo' ),
 };
@@ -233,7 +233,7 @@ export default function SchemaForm( {
 								type="password"
 								autoComplete="new-password"
 								label={ label }
-								help={ help || __( 'Stored encrypted. Leave empty to keep the saved value; type __clear__ to remove it.', 'agentyllo' ) }
+								help={ help || __( 'Stored encrypted. Leave empty to keep the saved value; use the Remove button to delete it.', 'agentyllo' ) }
 								placeholder={ isMasked( value ) ? String( value ) : '' }
 								value={ isMasked( value ) ? '' : String( value ?? '' ) }
 								onChange={ ( v: string ) => onChange( key, v ) }

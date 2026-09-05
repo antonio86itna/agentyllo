@@ -191,7 +191,9 @@ final class ModelsController extends Controller {
 		$local     = $this->router->provider( LocalEndpointProvider::ID );
 		$local_url = $local instanceof LocalEndpointProvider ? $local->base_url() : '';
 		$vec_state = get_option( 'agyl_kb_vectors_status' );
-		$vec_model = $this->embeddings->model_key();
+		// Non-blocking: never probe a slow/hung local embeddings endpoint just
+		// to render this page.
+		$vec_model = $this->embeddings->model_key( false );
 
 		return $this->respond(
 			array(

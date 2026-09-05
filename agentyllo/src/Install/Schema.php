@@ -113,6 +113,7 @@ final class Schema {
   thumbnail_id BIGINT UNSIGNED NULL,
   structured LONGTEXT NULL,
   content_hash CHAR(40) NOT NULL,
+  source_fingerprint VARCHAR(190) NULL,
   weight TINYINT UNSIGNED NOT NULL DEFAULT 50,
   sort_order SMALLINT NOT NULL DEFAULT 0,
   chunk_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,

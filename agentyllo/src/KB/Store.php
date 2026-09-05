@@ -47,7 +47,7 @@ final class Store {
 	 * @param DocumentDraft $draft  Normalized document.
 	 * @param array         $chunks Chunk rows from the Chunker.
 	 */
-	public function upsert( DocumentDraft $draft, array $chunks ): int {
+	public function upsert( DocumentDraft $draft, array $chunks, ?string $fingerprint = null ): int {
 		global $wpdb;
 
 		$now  = gmdate( 'Y-m-d H:i:s' );
@@ -65,6 +65,7 @@ final class Store {
 				array(
 					'indexed_at'          => $now,
 					'source_modified_gmt' => $draft->source_modified_gmt,
+					'source_fingerprint'  => null === $fingerprint ? null : substr( $fingerprint, 0, 190 ),
 				),
 				array( 'id' => (int) $row['id'] )
 			);
@@ -83,6 +84,7 @@ final class Store {
 			'thumbnail_id'        => $draft->thumbnail_id,
 			'structured'          => empty( $draft->structured ) ? null : (string) wp_json_encode( $draft->structured ),
 			'content_hash'        => $hash,
+			'source_fingerprint'  => null === $fingerprint ? null : substr( $fingerprint, 0, 190 ),
 			'weight'              => max( 0, min( 100, $draft->weight ) ),
 			'chunk_count'         => count( $chunks ),
 			'source_modified_gmt' => $draft->source_modified_gmt,

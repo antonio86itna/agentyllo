@@ -34,7 +34,7 @@ final class Retention {
 	/**
 	 * Run every retention task. Returns counters for the journal/dashboard.
 	 *
-	 * @return array{conversations: int, messages: int, consents: int, exports: int, salt_rotated: bool}
+	 * @return array{conversations: int, messages: int, consents: int, unanswered: int, exports: int, salt_rotated: bool}
 	 */
 	public function run(): array {
 		global $wpdb;
@@ -47,6 +47,7 @@ final class Retention {
 			'conversations' => 0,
 			'messages'      => 0,
 			'consents'      => 0,
+			'unanswered'    => 0,
 			'exports'       => 0,
 			'salt_rotated'  => false,
 		);
@@ -69,6 +70,14 @@ final class Retention {
 				$wpdb->prepare(
 					"DELETE FROM {$p}agyl_consents WHERE created_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
 					$days * 2
+				)
+			);
+			// Unanswered questions store verbatim visitor question text — expire
+			// them on the same window so nothing lingers indefinitely.
+			$out['unanswered'] = (int) $wpdb->query(
+				$wpdb->prepare(
+					"DELETE FROM {$p}agyl_stats_unanswered WHERE last_seen < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
+					$days
 				)
 			);
 			// phpcs:enable

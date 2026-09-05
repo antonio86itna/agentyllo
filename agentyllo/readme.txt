@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.4
+Stable tag: 0.4.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,16 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.5 =
+* Privacy: the DSAR export no longer leaves a copy of personal data on disk — it is returned only to the admin who requests it.
+* Privacy: unanswered-question text now expires with your retention window instead of being kept indefinitely.
+* Reliability: product changes to stock or price (that don't touch the modified date) are now picked up by reconciliation (new fingerprint column).
+* Reliability: session creation is always rate-limited, even when the visitor IP is unavailable; documents that produce no content are no longer counted as indexed.
+* AI Models page no longer blocks on a slow local embeddings endpoint; the local engine "Retry now" button and remembered speed carry over.
+* Widget: citation markers no longer flash as raw [#1] while an answer streams.
+* Multilingual sites: cross-language questions are no longer wrongly refused by the relevance-score gate.
+* Polish: clearer secret-field help, accessible labels, and internal cleanups.
 
 = 0.4.4 =
 * New: a first-run welcome guide with one-click "Turn on free AI", "View my site" and quick links to settings and the knowledge base.

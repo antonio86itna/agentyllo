@@ -915,7 +915,9 @@ export class AgentylloChat extends HTMLElement {
 					preview = this.appendPreviewNode();
 				}
 				previewText += delta;
-				preview.textContent = previewText;
+				// Hide raw citation markers like [#1] while streaming — the
+				// authoritative final message renders them as source chips.
+				preview.textContent = previewText.replace( /\[#\d+\]/g, '' );
 				this.log.scrollTop = this.log.scrollHeight;
 			},
 			onReset: () => {

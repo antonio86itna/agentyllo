@@ -186,8 +186,11 @@ final class PrivacyController extends Controller {
 	}
 
 	/**
-	 * POST /privacy/export — returns the export inline (JSON) and stores a
-	 * copy in the protected uploads dir for 72h.
+	 * POST /privacy/export — returns the export inline (JSON) to the admin.
+	 *
+	 * The response IS the deliverable; we deliberately do NOT drop a copy of
+	 * the subject's personal data on disk (that would leave unencrypted PII in
+	 * the uploads tree for no benefit).
 	 *
 	 * @param WP_REST_Request $request Request.
 	 * @return WP_REST_Response|WP_Error
@@ -198,9 +201,10 @@ final class PrivacyController extends Controller {
 			return new WP_Error( 'agyl_invalid_email', __( 'Enter a valid email address.', 'agentyllo' ), array( 'status' => 400 ) );
 		}
 
-		$this->dsar->export_to_file( $email );
+		$data = $this->dsar->export( $email );
+		\Agentyllo\Compliance\Audit::log( 'privacy.export', $email );
 
-		return $this->respond( $this->dsar->export( $email ) );
+		return $this->respond( $data );
 	}
 
 	/**

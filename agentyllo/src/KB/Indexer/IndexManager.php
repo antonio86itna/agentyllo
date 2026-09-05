@@ -246,8 +246,32 @@ final class IndexManager {
 				);
 			}
 
+			// The adapter's cheap fingerprint (e.g. product modified:stock:price)
+			// is stored so the reconciler can detect changes that don't move the
+			// modified time — without re-extracting.
+			$fingerprint = null;
+			try {
+				$fingerprint = $adapter->fingerprint( $external_id );
+			} catch ( Throwable $e ) {
+				$fingerprint = null;
+			}
+
 			$chunks = $this->chunker->chunk( $draft );
-			$doc_id = $this->store->upsert( $draft, $chunks );
+
+			// A document that yields no chunks is not retrievable; keeping it
+			// active would only inflate KB coverage. Drop any existing row and
+			// skip instead of storing a phantom.
+			if ( ! $chunks ) {
+				$this->store->delete( $source, $external_id );
+
+				return array(
+					'ok'     => true,
+					'action' => 'skipped',
+					'reason' => 'empty',
+				);
+			}
+
+			$doc_id = $this->store->upsert( $draft, $chunks, $fingerprint );
 
 			if ( $doc_id <= 0 ) {
 				return array(
@@ -939,6 +963,15 @@ final class IndexManager {
 	 * @param array  $row         Document row.
 	 */
 	private function fingerprint_current( string $fingerprint, array $row ): bool {
+		// Exact match on the stored full fingerprint is authoritative: it
+		// captures stock/price changes that leave the modified time untouched
+		// (rows indexed before this column exists fall through to the
+		// heuristics below).
+		$stored = (string) ( $row['source_fingerprint'] ?? '' );
+		if ( '' !== $stored ) {
+			return $stored === $fingerprint;
+		}
+
 		$modified = (string) ( $row['source_modified_gmt'] ?? '' );
 		if ( '' !== $modified && str_starts_with( $fingerprint, $modified ) ) {
 			return true;

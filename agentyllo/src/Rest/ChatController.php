@@ -129,16 +129,18 @@ final class ChatController extends Controller {
 	public function post_session( WP_REST_Request $request ): WP_REST_Response {
 		$ip = $this->remote_ip();
 
-		if ( null !== $ip ) {
-			$bucket = RateLimiter::bucket_ip( SessionManager::hash_ip( $ip ), 'session' );
-			if ( ! $this->limiter->allow( $bucket, self::SESSION_RATE_LIMIT, MINUTE_IN_SECONDS ) ) {
-				return $this->error(
-					'agyl_rate_limited',
-					__( 'Too many requests — please slow down.', 'agentyllo' ),
-					429,
-					array( 'Retry-After' => '60' )
-				);
-			}
+		// Throttle by IP; when the IP is unavailable, fall back to a shared
+		// bucket so session creation is never completely unthrottled.
+		$bucket = null !== $ip
+			? RateLimiter::bucket_ip( SessionManager::hash_ip( $ip ), 'session' )
+			: RateLimiter::bucket_ip( 'noip', 'session' );
+		if ( ! $this->limiter->allow( $bucket, self::SESSION_RATE_LIMIT, MINUTE_IN_SECONDS ) ) {
+			return $this->error(
+				'agyl_rate_limited',
+				__( 'Too many requests — please slow down.', 'agentyllo' ),
+				429,
+				array( 'Retry-After' => '60' )
+			);
 		}
 
 		$ip_mode    = (string) $this->settings->value( 'privacy', 'ip_mode' );

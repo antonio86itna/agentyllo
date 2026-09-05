@@ -9,8 +9,6 @@ declare( strict_types=1 );
 
 namespace Agentyllo\Compliance;
 
-use Agentyllo\Infra\Uploads;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -94,23 +92,6 @@ final class Dsar {
 			'conversations' => $conversations,
 			'consents'      => $consents,
 		);
-	}
-
-	/**
-	 * Write an export to the protected uploads dir. Returns the absolute path.
-	 *
-	 * @param string $email Email.
-	 */
-	public function export_to_file( string $email ): ?string {
-		Uploads::ensure();
-		$path = Uploads::dir( 'private' ) . '/dsar-' . wp_generate_password( 24, false, false ) . '.json';
-		$json = wp_json_encode( $this->export( $email ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
-		if ( false === $json || false === file_put_contents( $path, $json ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-			return null;
-		}
-		Audit::log( 'privacy.export', $email );
-
-		return $path;
 	}
 
 	/**

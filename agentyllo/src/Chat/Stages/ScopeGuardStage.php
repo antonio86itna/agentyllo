@@ -161,8 +161,12 @@ final class ScopeGuardStage implements Stage {
 		$detected      = strtolower( (string) ( $context->meta['lang_detected'] ?? '' ) );
 		$cross_lingual = '' !== $detected && $detected !== $site_two && $context->lang_confidence >= 0.4;
 		$thin_match    = ! $cross_lingual && $coverage < self::MIN_COVERAGE && $matched < 2;
+		// Cross-lingual matches score low by nature (only shared tokens align),
+		// so the score floor is relaxed too — the presence of ≥1 shared content
+		// term (no_terms already guards zero) carries the on-topic signal.
+		$low_score     = ! $cross_lingual && $top_score < $threshold;
 
-		if ( ! $context->chunks || $no_terms || $thin_match || $top_score < $threshold ) {
+		if ( ! $context->chunks || $no_terms || $thin_match || $low_score ) {
 			$this->refuse( $context, $no_terms || $thin_match ? 'low_coverage' : 'low_score', $settings );
 		}
 	}
