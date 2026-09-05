@@ -88,30 +88,45 @@ function svgIcon( d: string, size = 24 ): SVGSVGElement {
 	return svg;
 }
 
-// Spark-chat launcher mark: a chat bubble in currentColor carrying the brand
-// spark (long top point, echoing the A-Core apex) in the accent color.
-// Decorative only — always aria-hidden.
-const ICON_BUBBLE =
-	'M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-8.6L6 21.6a.9.9 0 0 1-1.5-.7V18H5'
-	+ 'a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z';
-const ICON_SPARK =
-	'M12 4.6 13.4 8.9 17.4 10.5 13.4 12.1 12 16 10.6 12.1 6.6 10.5 10.6 8.9 Z';
-
+// Bubble-bot launcher mark — the brand icon: a chat bubble carrying the
+// concierge face. Bubble in currentColor, head punched in the launcher
+// color, glowing accent eyes + smile. Decorative only — always aria-hidden.
 function sparkChatMark( size = 28 ): SVGSVGElement {
 	const svg = document.createElementNS( SVG_NS, 'svg' );
-	svg.setAttribute( 'viewBox', '0 0 24 24' );
+	svg.setAttribute( 'viewBox', '0 0 48 48' );
 	svg.setAttribute( 'width', String( size ) );
 	svg.setAttribute( 'height', String( size ) );
 	svg.setAttribute( 'aria-hidden', 'true' );
 	svg.setAttribute( 'focusable', 'false' );
 	const bubble = document.createElementNS( SVG_NS, 'path' );
-	bubble.setAttribute( 'd', ICON_BUBBLE );
+	bubble.setAttribute(
+		'd',
+		'M11 4h26a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8H21.5l-8.3 7.1c-1.4 1.2-3.6.2-3.6-1.7v-5.6A8 8 0 0 1 3 30V12a8 8 0 0 1 8-8z'
+	);
 	bubble.setAttribute( 'fill', 'currentColor' );
 	svg.appendChild( bubble );
-	const spark = document.createElementNS( SVG_NS, 'path' );
-	spark.setAttribute( 'd', ICON_SPARK );
-	spark.setAttribute( 'fill', 'var(--agy-accent, #818cf8)' );
-	svg.appendChild( spark );
+	const head = document.createElementNS( SVG_NS, 'rect' );
+	head.setAttribute( 'x', '11.5' );
+	head.setAttribute( 'y', '9' );
+	head.setAttribute( 'width', '25' );
+	head.setAttribute( 'height', '23.4' );
+	head.setAttribute( 'rx', '9.4' );
+	head.setAttribute( 'fill', 'var(--agy-primary, #4f46e5)' );
+	svg.appendChild( head );
+	const strokes: Array< [ string, string ] > = [
+		[ 'M17.3 21.8 q 2 -2.6 4 0', '1.9' ],
+		[ 'M26.7 21.8 q 2 -2.6 4 0', '1.9' ],
+		[ 'M21.6 25.4 q 2.4 2 4.8 0', '1.5' ],
+	];
+	for ( const [ d, w ] of strokes ) {
+		const s = document.createElementNS( SVG_NS, 'path' );
+		s.setAttribute( 'd', d );
+		s.setAttribute( 'stroke', 'var(--agy-accent, #818cf8)' );
+		s.setAttribute( 'stroke-width', w );
+		s.setAttribute( 'stroke-linecap', 'round' );
+		s.setAttribute( 'fill', 'none' );
+		svg.appendChild( s );
+	}
 	return svg;
 }
 
