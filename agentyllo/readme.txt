@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, woocommerce, support
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.3
+Stable tag: 0.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,11 @@ It ships the tools: consent evidence, retention, PII redaction, DSAR export/eras
 8. Privacy & Legal: consent, retention, DSAR and the EU AI Act transparency page.
 
 == Changelog ==
+
+= 0.4.4 =
+* New: a first-run welcome guide with one-click "Turn on free AI", "View my site" and quick links to settings and the knowledge base.
+* Fix: reindexing a single content source no longer re-crawls all the other sources.
+* Fix: statistics count each conversation once (from the conversations table) instead of once per AI tier, so totals and deflection are accurate.
 
 = 0.4.3 =
 * New: optional anonymous technical telemetry (Settings -> Advanced, off by default) — domain, versions and error fingerprints only, to help fix bugs.

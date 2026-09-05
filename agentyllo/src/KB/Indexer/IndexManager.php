@@ -154,7 +154,9 @@ final class IndexManager {
 			if ( null !== $only_source && $source !== $only_source ) {
 				continue;
 			}
-			$this->enqueue_crawl( $source, $subtype, 0 );
+			// Pass the scope so the crawl chain stops after this source's
+			// subtypes instead of continuing into every lower-priority source.
+			$this->enqueue_crawl( $source, $subtype, 0, (string) ( $only_source ?? '' ) );
 			update_option( 'agyl_kb_last_crawl', time(), false );
 			return true;
 		}
@@ -291,13 +293,16 @@ final class IndexManager {
 	 * @param mixed $source  Adapter id.
 	 * @param mixed $subtype Subtype ('' = whole source).
 	 * @param mixed $offset  Cursor offset.
+	 * @param mixed $scope   When non-empty, restrict the chain to this source
+	 *                       (single-source reindex); '' = full priority walk.
 	 */
-	public function run_full_crawl( $source = '', $subtype = '', $offset = 0 ): void {
+	public function run_full_crawl( $source = '', $subtype = '', $offset = 0, $scope = '' ): void {
 		$this->reset_deadline();
 
 		$source  = (string) $source;
 		$subtype = (string) $subtype;
 		$offset  = max( 0, (int) $offset );
+		$scope   = (string) $scope;
 
 		$adapter = $this->adapters->get( $source );
 		$enabled = $this->enabled_subtypes()[ $source ] ?? array();
@@ -305,7 +310,7 @@ final class IndexManager {
 
 		if ( ! $active ) {
 			// Toggled off (or gone) mid-chain: keep walking the priority order.
-			$this->chain_next( $source, $subtype );
+			$this->chain_next( $source, $subtype, $scope );
 			return;
 		}
 
@@ -329,16 +334,16 @@ final class IndexManager {
 		$this->adapt_batch_size( $batch, $stopped );
 
 		if ( $stopped ) {
-			$this->enqueue_crawl( $source, $subtype, $offset + $processed );
+			$this->enqueue_crawl( $source, $subtype, $offset + $processed, $scope );
 			return;
 		}
 
 		if ( count( $ids ) < $batch ) {
-			$this->chain_next( $source, $subtype ); // Cursor exhausted.
+			$this->chain_next( $source, $subtype, $scope ); // Cursor exhausted.
 			return;
 		}
 
-		$this->enqueue_crawl( $source, $subtype, $offset + count( $ids ) );
+		$this->enqueue_crawl( $source, $subtype, $offset + count( $ids ), $scope );
 	}
 
 	/**
@@ -740,7 +745,7 @@ final class IndexManager {
 	 * @param string $source  Just-finished source.
 	 * @param string $subtype Just-finished subtype.
 	 */
-	private function chain_next( string $source, string $subtype ): void {
+	private function chain_next( string $source, string $subtype, string $scope = '' ): void {
 		$full = $this->full_targets();
 
 		$rank = null;
@@ -765,7 +770,12 @@ final class IndexManager {
 		foreach ( $this->enabled_targets() as $pair ) {
 			$pair_rank = array_search( $pair, $full, true );
 			if ( false !== $pair_rank && $pair_rank > $rank ) {
-				$this->enqueue_crawl( $pair[0], $pair[1], 0 );
+				// Single-source reindex: stop once the chain would leave the
+				// scoped source instead of re-crawling lower-priority sources.
+				if ( '' !== $scope && $pair[0] !== $scope ) {
+					return;
+				}
+				$this->enqueue_crawl( $pair[0], $pair[1], 0, $scope );
 				return;
 			}
 		}
@@ -1125,11 +1135,12 @@ final class IndexManager {
 	 * @param string $subtype Subtype.
 	 * @param int    $offset  Cursor offset.
 	 */
-	private function enqueue_crawl( string $source, string $subtype, int $offset ): void {
+	private function enqueue_crawl( string $source, string $subtype, int $offset, string $scope = '' ): void {
 		$this->enqueue( self::HOOK_FULL_CRAWL, array(
 			'source'  => $source,
 			'subtype' => $subtype,
 			'offset'  => $offset,
+			'scope'   => $scope,
 		) );
 	}
 

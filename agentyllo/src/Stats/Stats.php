@@ -149,6 +149,37 @@ final class Stats {
 	}
 
 	/**
+	 * Distinct conversation-scoped totals for a range, counted directly from
+	 * the conversations table so a conversation is counted exactly once
+	 * regardless of how many AI tiers it touched.
+	 *
+	 * @param int $days Range length.
+	 * @return array{conversations: int, resolved: int, handoffs: int}
+	 */
+	private function conversation_totals( int $days ): array {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				'SELECT COUNT(*) AS conversations,
+				        COALESCE(SUM(CASE WHEN resolved = 1 THEN 1 ELSE 0 END), 0) AS resolved,
+				        COALESCE(SUM(handoff), 0) AS handoffs
+				 FROM ' . $wpdb->prefix . 'agyl_conversations
+				 WHERE started_at >= DATE_SUB(CURDATE(), INTERVAL %d DAY)',
+				max( 1, $days )
+			),
+			ARRAY_A
+		);
+
+		return array(
+			'conversations' => (int) ( $row['conversations'] ?? 0 ),
+			'resolved'      => (int) ( $row['resolved'] ?? 0 ),
+			'handoffs'      => (int) ( $row['handoffs'] ?? 0 ),
+		);
+	}
+
+	/**
 	 * Report: daily series for a range.
 	 *
 	 * @param int $days Range length (7|30|90).
@@ -212,13 +243,18 @@ final class Stats {
 		}
 		unset( $t );
 
+		// Conversation-scoped figures come straight from the conversations
+		// table (distinct rows), NOT from the per-(day,tier) rollup — a hybrid
+		// conversation touching several tiers would otherwise be counted once
+		// per tier, inflating the totals and the deflection rate.
+		$conv = $this->conversation_totals( $days );
+		$sum['conversations'] = $conv['conversations'];
+		$sum['resolved']      = $conv['resolved'];
+		$sum['handoffs']      = $conv['handoffs'];
+
 		$assistant_msgs = max( 1, (int) floor( $sum['messages'] / 2 ) );
 
 		return $sum + array(
-			// Rates are clamped to 1.0: conversations/resolved come from
-			// per-(day,tier) rollups, so a hybrid conversation spanning tiers
-			// can be counted more than once — clamping keeps the headline
-			// figures sane until the rollup stores conversation-scoped rows.
 			'deflection_rate' => $sum['conversations'] > 0 ? min( 1.0, round( $sum['resolved'] / $sum['conversations'], 3 ) ) : null,
 			'kb_coverage'     => min( 1.0, round( $sum['kb_hit_answers'] / $assistant_msgs, 3 ) ),
 			'avg_latency_ms'  => $latencies ? (int) round( array_sum( $latencies ) / count( $latencies ) ) : null,

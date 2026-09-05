@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 
+import Welcome from './components/Welcome';
 import Drawer from './copilot/Drawer';
 import Addons from './pages/Addons';
 import Agents from './pages/Agents';
@@ -28,7 +29,17 @@ const PAGES: Record< string, () => JSX.Element > = {
 	settings: Settings,
 };
 
-export default function App( { page }: { page: string } ) {
+export default function App( { page, welcome = false }: { page: string; welcome?: boolean } ) {
+	const navigate = ( target: string ) => {
+		const map: Record< string, string > = {
+			dashboard: 'agentyllo',
+			models: 'agentyllo-models',
+			settings: 'agentyllo-settings',
+			kb: 'agentyllo-kb',
+		};
+		window.location.href = 'admin.php?page=' + ( map[ target ] || 'agentyllo' );
+	};
+
 	return (
 		<div className="agy-admin">
 			<header className="agy-admin__header">
@@ -38,6 +49,7 @@ export default function App( { page }: { page: string } ) {
 				</h1>
 			</header>
 			<main className="agy-admin__main">
+				{ ( 'dashboard' === page || welcome ) && <Welcome onGo={ navigate } /> }
 				{ ( () => {
 					const Page = PAGES[ page ] || Dashboard;
 					return <Page />;

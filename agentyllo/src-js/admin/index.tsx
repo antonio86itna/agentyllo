@@ -18,5 +18,7 @@ apiFetch.use( apiFetch.createNonceMiddleware( window.agylAdmin.nonce ) );
 
 const mount = document.getElementById( 'agentyllo-admin' );
 if ( mount ) {
-	createRoot( mount ).render( <App page={ mount.dataset.page || 'dashboard' } /> );
+	createRoot( mount ).render(
+		<App page={ mount.dataset.page || 'dashboard' } welcome={ '1' === mount.dataset.welcome } />
+	);
 }
